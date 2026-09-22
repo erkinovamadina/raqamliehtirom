@@ -6,6 +6,7 @@
   <title>Raqamli Ehtirom - Angren Universiteti</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
     :root {
       --primary-color: #2563eb;
@@ -29,383 +30,1027 @@
       --border-color: #334155;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: background-color 0.3s, color 0.3s; }
-    body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 60px; }
-    
-    header { background-color: var(--card-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; padding: 1rem 2rem; }
-    .header-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-    .logo { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.25rem; color: var(--primary-color); }
-    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
 
-    .btn { padding: 8px 16px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 0.9rem; }
-    .btn-primary { background-color: var(--primary-color); color: white; }
-    .btn-primary:hover { background-color: var(--primary-hover); }
-    .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
-    .btn-icon { padding: 8px; border-radius: 50%; width: 40px; height: 40px; justify-content: center; }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding-bottom: 60px;
+    }
 
-    .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
-    .hero { text-align: center; margin-bottom: 3rem; }
-    .hero h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-main); }
-    .hero p { color: var(--text-muted); font-size: 1.1rem; }
+    header {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-    .search-box { margin: 2rem auto; max-width: 600px; position: relative; }
-    .search-box input { width: 100%; padding: 12px 20px 12px 45px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-main); font-size: 1rem; outline: none; }
-    .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-    .section-title { font-size: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-main);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-    .top-teachers { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
-    .top-card { background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 2px solid #f59e0b; display: flex; align-items: center; gap: 1rem; position: relative; overflow: hidden; }
-    .top-badge { position: absolute; top: 0; right: 0; background: #f59e0b; color: white; padding: 4px 12px; border-bottom-left-radius: 12px; font-weight: 700; font-size: 0.8rem; }
+    .logo span {
+      color: var(--primary-color);
+    }
 
-    .teachers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-    .teacher-card { background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; }
-    .teacher-name { font-weight: 700; font-size: 1.1rem; margin-bottom: 0.25rem; }
-    .teacher-dept { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-    .card-actions { display: flex; gap: 10px; width: 100%; margin-top: auto; }
-    .btn-like { flex: 1; border: 1px solid var(--border-color); background: transparent; color: var(--text-main); border-radius: 8px; padding: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn-toggle, .btn-univ, .btn-admin {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; padding: 1rem; }
-    .modal-content { background: var(--card-bg); border-radius: 16px; width: 100%; max-width: 500px; padding: 2rem; position: relative; max-height: 90vh; overflow-y: auto; }
-    .close-modal { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; }
+    .btn-toggle {
+      background: var(--border-color);
+      color: var(--text-main);
+    }
 
-    .form-group { margin-bottom: 1.2rem; }
-    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; }
-    .form-group input, .form-group textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-main); outline: none; }
+    .btn-univ {
+      background: #e0e7ff;
+      color: #3730a3;
+      text-decoration: none;
+    }
 
-    .wishes-list { margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem; }
-    .wish-item { background: var(--bg-color); border-radius: 8px; padding: 1rem; border: 1px solid var(--border-color); }
-    .wish-author { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--primary-color); }
-    .wish-text { font-size: 0.95rem; }
-    .wish-media { margin-top: 0.5rem; max-width: 100%; border-radius: 8px; }
+    .btn-admin {
+      background: #f3f4f6;
+      color: #374151;
+    }
 
-    .admin-panel { display: none; margin-top: 3rem; background: var(--card-bg); border-radius: 16px; padding: 2rem; border: 1px solid var(--border-color); }
-    .admin-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid var(--border-color); }
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .search-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      width: 100%;
+      background: transparent;
+      color: var(--text-main);
+      font-size: 0.95rem;
+    }
+
+    .top-rating {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 40px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+
+    .top-rating h3 {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .top-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .top-item {
+      background: var(--bg-color);
+      padding: 12px 20px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .top-item .likes {
+      color: var(--danger-color);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .teachers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .teacher-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .teacher-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }
+
+    .avatar-circle {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0 auto 15px auto;
+      border: 3px solid #dbeafe;
+    }
+
+    .teacher-card h4 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .teacher-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .view-section {
+      display: none;
+      background: var(--card-bg);
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      padding: 30px;
+      max-width: 700px;
+      margin: 0 auto;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    }
+
+    .btn-back {
+      background: none;
+      border: none;
+      color: var(--primary-color);
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .profile-header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .ehtirom-badge-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fef2f2;
+      color: #dc2626;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+      margin-top: 12px;
+      border: 1px solid #fca5a5;
+      cursor: pointer;
+      transition: transform 0.1s, background-color 0.2s;
+    }
+
+    .ehtirom-badge-btn:active {
+      transform: scale(0.95);
+      background-color: #fee2e2;
+    }
+
+    .form-card {
+      background: var(--bg-color);
+      padding: 24px;
+      border-radius: 16px;
+      margin-top: 25px;
+      border: 1px solid var(--border-color);
+    }
+
+    .form-card h3 {
+      font-size: 1rem;
+      margin-bottom: 18px;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .form-group input[type="text"], .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-main);
+      outline: none;
+      font-size: 0.9rem;
+    }
+
+    .form-group input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      font-size: 0.85rem;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--primary-color);
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wishes-list {
+      margin-top: 30px;
+    }
+
+    .wish-card {
+      background: var(--bg-color);
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .wish-card h5 {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .wish-card p {
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .wish-card img {
+      max-width: 100%;
+      max-height: 250px;
+      border-radius: 8px;
+      margin-top: 10px;
+      object-fit: cover;
+    }
+
+    .wish-card audio {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .admin-panel {
+      display: none;
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    .admin-table th, .admin-table td {
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    .btn-approve {
+      background: var(--success-color);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-right: 4px;
+    }
+
+    .btn-reject {
+      background: var(--danger-color);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="header-container">
-      <div class="logo">
-        <i class="fa-solid fa-graduation-cap"></i>
-        <span>Angren Universiteti</span>
-      </div>
+    <div class="nav-container">
+      <a href="javascript:void(0)" class="logo" onclick="showMainView()">RAQAMLI <span>EHTIROM</span></a>
       <div class="nav-actions">
-        <button class="btn btn-outline btn-icon" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
-        <button class="btn btn-outline" id="adminBtn"><i class="fa-solid fa-lock"></i> Tasdiqlash Paneli</button>
+        <button class="btn-toggle" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i> To'q rejim</button>
+        <a href="javascript:void(0)" class="btn-univ">ANGREN UNIVERSITETI</a>
+        <button class="btn-admin" onclick="openAdminPanel()"><i class="fa-solid fa-user-check"></i> Tasdiqlash Paneli</button>
       </div>
     </div>
   </header>
 
   <div class="container">
-    <div class="hero">
-      <h1>Raqamli Ehtirom</h1>
-      <p>Ustozlarimizga bo'lgan samimiy minnatdorchiligingizni raqamli shaklda bildiring</p>
-      
+    
+    <!-- MAIN VIEW -->
+    <div id="main-view">
+      <div class="hero">
+        <h1>RAQAMLI EHTIROM</h1>
+        <p>Ustozlarimizga talabalarning dildan bildirilgan ehtiromi!</p>
+      </div>
+
       <div class="search-box">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="searchInput" placeholder="Ustozning ismi yoki kafedrasi bo'yicha qidiruv...">
+        <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted)"></i>
+        <input type="text" id="search-input" placeholder="Ustoz ismini yoki lavozimini izlang..." oninput="filterTeachers()">
+      </div>
+
+      <div class="top-rating">
+        <h3><i class="fa-solid fa-trophy" style="color: #eab308"></i> Eng Ko'p Ehtirom Bildirilgan Ustozlar</h3>
+        <div class="top-list" id="top-teachers-list"></div>
+      </div>
+
+      <div class="teachers-grid" id="teachers-grid"></div>
+    </div>
+
+    <!-- TEACHER PROFILE -->
+    <div id="teacher-view" class="view-section">
+      <button class="btn-back" onclick="showMainView()"><i class="fa-solid fa-arrow-left"></i> Bosh sahifaga qaytish</button>
+      
+      <div class="profile-header">
+        <div id="prof-avatar" class="avatar-circle">AA</div>
+        <h2 id="prof-name">Ustoz Ismi</h2>
+        <p id="prof-role" style="color: var(--text-muted)">Lavozim</p>
+        <button class="ehtirom-badge-btn" onclick="likeCurrentTeacher()">
+          <i class="fa-solid fa-heart"></i> Ehtirom bildirildi (<span id="prof-likes">0</span>)
+        </button>
+      </div>
+
+      <div class="form-card">
+        <h3>✍️ Ustozga tabrik / audio / foto yuborish</h3>
+        <form id="ehtirom-form" onsubmit="submitWish(event)">
+          <div class="form-group">
+            <input type="text" id="student-name" placeholder="Ismingiz va guruh/bosqichingiz" required>
+          </div>
+          <div class="form-group">
+            <textarea id="wish-text" rows="3" placeholder="Tabrik matnini yozing..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>🎙️ Ovozli tabrik (ixtiyoriy):</label>
+            <input type="file" id="audio-file" accept="audio/*">
+          </div>
+
+          <div class="form-group">
+            <label>📷 Birgalikdagi rasm (ixtiyoriy):</label>
+            <input type="file" id="photo-file" accept="image/*">
+          </div>
+
+          <button type="submit" class="btn-submit">Yuborish 🚀</button>
+        </form>
+      </div>
+
+      <div class="wishes-list">
+        <h4 style="margin-bottom: 15px;">Bildirilgan ehtiromlar:</h4>
+        <div id="approved-wishes-container"></div>
       </div>
     </div>
 
-    <div id="topSection">
-      <h2 class="section-title"><i class="fa-solid fa-trophy" style="color:#f59e0b;"></i> TOP 3 E'tirof Etilgan Ustozlar</h2>
-      <div class="top-teachers" id="topTeachersGrid"></div>
+    <!-- ADMIN PANEL -->
+    <div id="admin-view" class="admin-panel">
+      <button class="btn-back" onclick="showMainView()"><i class="fa-solid fa-arrow-left"></i> Bosh sahifaga qaytish</button>
+      <h2>Tasdiqlash Paneli</h2>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px;">Kelib tushgan tabriklarni ko'rib chiqish va tasdiqlash</p>
+
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Ustoz</th>
+            <th>Talaba</th>
+            <th>Matn / Fayllar</th>
+            <th>Amallar</th>
+          </tr>
+        </thead>
+        <tbody id="admin-requests-list"></tbody>
+      </table>
     </div>
 
-    <h2 class="section-title"><i class="fa-solid fa-users"></i> Barcha Ustozlar</h2>
-    <div class="teachers-grid" id="teachersGrid"></div>
-
-    <div class="admin-panel" id="adminPanel">
-      <h2 class="section-title"><i class="fa-solid fa-shield-halved"></i> Tasdiqlash Paneli (Kutilayotgan tabriklar)</h2>
-      <div id="pendingWishesList"></div>
-    </div>
   </div>
 
-  <!-- Wish Modal -->
-  <div class="modal" id="wishModal">
-    <div class="modal-content">
-      <button class="close-modal" id="closeWishModal">&times;</button>
-      <h3 id="modalTeacherName" style="margin-bottom: 1rem;"></h3>
-      
-      <form id="wishForm">
-        <input type="hidden" id="selectedTeacherId">
-        <div class="form-group">
-          <label>Ismingiz (ixtiyoriy)</label>
-          <input type="text" id="studentName" placeholder="Talaba">
-        </div>
-        <div class="form-group">
-          <label>Ehtirom so'zlaringiz va dil izhoringiz</label>
-          <textarea id="wishText" rows="4" required placeholder="Ustozga dil izhoringizni yozing..."></textarea>
-        </div>
-        <div class="form-group">
-          <label>Rasm yuklash (ixtiyoriy)</label>
-          <input type="file" id="wishPhoto" accept="image/*">
-        </div>
-        <div class="form-group">
-          <label>Ovozli xabar yuklash (ixtiyoriy)</label>
-          <input type="file" id="wishAudio" accept="audio/*">
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%;">Yuborish (Tasdiqlashga)</button>
-      </form>
-
-      <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid var(--border-color);">
-      <h4>Tasdiqlangan tabriklar</h4>
-      <div class="wishes-list" id="approvedWishesList"></div>
-    </div>
-  </div>
-
-  <!-- Firebase Script -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, set, push, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBA1TxG83DB0xKmZLMHNQ_yue1qbAHsKBw",
-      authDomain: "raqamliehtirom.firebaseapp.com",
-      databaseURL: "https://raqamliehtirom-default-rtdb.firebaseio.com",
-      projectId: "raqamliehtirom",
-      storageBucket: "raqamliehtirom.firebasestorage.app",
-      messagingSenderId: "646201230706",
-      appId: "1:646201230706:web:df86413a182ebd657809eb",
-      measurementId: "G-VK507MT7JF"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    const initialTeachers = [
-      { id: "1", name: "Prof. Alimov Anvar", dept: "Axborot Texnologiyalari", likes: 0 },
-      { id: "2", name: "Doc. Karimova Nargiza", dept: "Xorijiy Tillar", likes: 0 },
-      { id: "3", name: "Dr. Rahimov Sardor", dept: "Oliy Matematika", likes: 0 },
-      { id: "4", name: "Toshmatova Zilola", dept: "Iqtisodiyot va Moliya", likes: 0 },
-      { id: "5", name: "Sultonov Jamshid", dept: "Fizika va Muhandislik", likes: 0 }
+  <script>
+    const rawTeachers = [
+      "Raubjonov Xusanboy Mamatolibovich - katta o'qituvchi",
+      "Mamataliyev Axror Baxromjon o'g'li - o'qituvchi",
+      "Adilova Muxabbatxon Salaxitdinovna - dotsent",
+      "Turonov Bobur Sobir o'g'li - dotsent",
+      "Umarov Amiriddin Suvonovich - dotsent",
+      "Babaxanov Oybek Abdiraimovich - dotsent v.b.",
+      "Imanov Furkat Yeraliyevich - dotsent v.b.",
+      "Xakimov Sarvar Abduazimovich - dotsent v.b.",
+      "Fazilov Abduqaxxar Vaxidovich - professor",
+      "Abdiyev Farxodjon Abdumalikovich - o'qituvchi",
+      "Numonov Xikmatulla Negmatullayevich - o'qituvchi",
+      "G'oyibov Nodir Hasanovich - o'qituvchi",
+      "Qodirov Mo'minjon Tolifjon o'g'li - assistent",
+      "Xolisov Farxod Kamoliddinovich - o'qituvchi",
+      "Djabbarov Baxodir Mamatkarimovich - o'qituvchi",
+      "Xabibullayev Nodirbek Mirzamaxmud o'g'li - o'qituvchi",
+      "Rejavaliyev Quvonchbek Ravshanbek o'g'li - o'qituvchi",
+      "Axmedov Mansur Xusniddinovich - o'qituvchi",
+      "Abdullayev Ziyodulla Norzullayevich - o'qituvchi",
+      "Xodjinazarov Laziz Tadjibayevich - o'qituvchi",
+      "Noraliyeva Sabohat Zaynilabidinovna - o'qituvchi",
+      "Raxmanova Nargiza Jorayevna - o'qituvchi",
+      "Turgunova Munavvar Zikirillayevna - assistent",
+      "Butayev Sharifjon Abdug'apparovich - assistent",
+      "Sirojeva Ma'mura Abduraupovna - assistent",
+      "Temirov Nodir To'lqinovich - assistent",
+      "Abdullayeva Tojinur Amirovna - assistent",
+      "Otaboyeva Minavvarxon Xasanovna - assistent",
+      "Shirinova Maxliyo Xayrullayevna - assistent",
+      "Davletova Svetlana Askarovna - assistent",
+      "Abdug'affarova Sayyora Nodirjon qizi - assistent",
+      "Burxanova Marhabo Abdurahmanovna - assistent",
+      "Xolisov Alisher Farxod o'g'li - o'qituvchi",
+      "Solixov Javlonbek Tohir o'g'li - assistent",
+      "Ergasheva Muborak Qozoqboyevna - assistent",
+      "Xasanova Nodira G'ayratovna - assistent",
+      "Sharipov Yashnarbek Ilhom o'g'li - assistent",
+      "Mamajonova Zahro Rahmonjon qizi - Kabinet mudiri",
+      "Irkabayev Djumanali Usmanovich - Kafedra mudiri / dotsent v.b.",
+      "Sheraliyev Sa'dullo Suyunboyevich - professor v.b",
+      "Soxibov Isomddin Yuldashevich - dotsent",
+      "Boltayev Nurali Davletovich - dotsent",
+      "Sharipov Daler Kuchkarovich - dotsent",
+      "Uralov Sirojiddin Axmadaliyevich - dotsent v.b.",
+      "Djabbarov Odil Djurayevich - katta o'qituvchi",
+      "Ibragimov Nuxriddin Madazimovich - katta o'qituvchi",
+      "Umarova Nigora Alisherovna - katta o'qituvchi",
+      "Omonova Gulandom Davlatovna - assistent",
+      "Saidov Ulug'bek Xasanovich - dotsent",
+      "Sadiyev Anvar Ayubjonovich - katta o'qituvchi",
+      "Abdullayev Raxmon Gulamovich - o'qituvchi",
+      "Djalalova Shaxnoz Badambayevna - professor v.b",
+      "Fidayev Djurabay Tursunbayevich - dotsent",
+      "Bekmatov Shaxabidin XXX - dotsent v.b.",
+      "Abdurahmonova Iroda Sobir qizi - dotsent v.b.",
+      "Mutalov Shuhrat Axmadjonovich - professor",
+      "Kobayev Jurabek Eshmatovich - Kafedra mudiri / dotsent v.b.",
+      "Yuldasheva Zarofat Igamberdiyevna - dotsent v.b. / katta o'qituvchi",
+      "Ismatilayeva Soxiba Uktamovna - dotsent v.b. / katta o'qituvchi",
+      "Ergasheva Yulduzoy Olimovna - katta o'qituvchi",
+      "Yusupov Murodjon Urinboyevich - katta o'qituvchi",
+      "Aliyeva Maxfuza Abdujabbarovna - katta o'qituvchi",
+      "Ishonkulova Gulxon Tagaymuratovna - o'qituvchi",
+      "Niridinov Azimjon Kamoliddin o'g'li - assistent",
+      "Juginisov Tangirbergen Isayevich - professor",
+      "Alimjanova Xolishon XXX - professor",
+      "Xojimatov Olimjan Kaxxarovich - professor",
+      "Shakarbayev Ulug'bek Abdulakimovich - professor v.b.",
+      "Mutalova Dilnoza Karimberdiyevna - dotsent",
+      "Raxmanova Shaxnoza Abdivaitovna - o'qituvchi",
+      "Madaminov Zaxidjan Vaxidovich - o'qituvchi",
+      "Salimova Rushana Abubakirovna - o'qituvchi",
+      "Madaminova Nargiza Artikovna - o'qituvchi",
+      "Mutaliboyev Baxtiyorjon Qaimovich - o'qituvchi",
+      "Turdibekov Sherzod Mamatqulovich - o'qituvchi",
+      "Gaffarov Nizomjon Abdiqadirovich - o'qituvchi",
+      "Rabbimov Abduvali Mansurovich - o'qituvchi",
+      "Abdumavlonova Nasiba Abduqodirovna - o'qituvchi",
+      "Gaziyeva Mahbuda Jumabayevna - o'qituvchi",
+      "Rustamova Maftuna Rustamovna - o'qituvchi",
+      "Egamberdiyev Xoshimjan Raximberdiyevich - o'qituvchi",
+      "Xolmatova Firuzxon Muxtarjanovna - o'qituvchi",
+      "Sobirov Vahobjon Xusanovich - professor v.b.",
+      "Turdaliyeva Hurmatoy Sultanovna - dotsent",
+      "Xusanova Mamlakat Furkatovna - dotsent",
+      "Djabbarov Muxamadsalim Mamatkarimivich - dotsent v.b.",
+      "Shodmonova Muxlisa Komilovna - dotsent v.b.",
+      "Normurodov Xurshid Tursunmurodovich - o'qituvchi",
+      "Normurodova Shahnoza Shokirjon qizi - o'qituvchi",
+      "Axmadaliyeva Nargiza Jabbarovna - o'qituvchi",
+      "G'anibekova Maxliyo Farxod qizi - o'qituvchi",
+      "Ibragimova Firuza Farxadovna - o'qituvchi",
+      "Ishankulova Mexri Muratovna - o'qituvchi",
+      "Nasirova Durdonaxon Yusupjonovna - o'qituvchi",
+      "Pardayev Sardor Ma'murvay o'g'li - o'qituvchi",
+      "Xodjimuratov Davronjon Ikramaliyevich - o'qituvchi",
+      "Ikramova Sokina Bonu Ravshanzoda - o'qituvchi",
+      "G'ayimova Shoxista Abdivaxabovna - o'qituvchi",
+      "Bayjumanova O'lmasoy Jamoliddin qizi - o'qituvchi",
+      "Axmedova Iroda Komiljon qizi - o'qituvchi",
+      "Zokirova Ziyoda Javdad qizi - assistent",
+      "Xasanova Sayyora Shomurot qizi - assistent",
+      "Xusanov Sharofiddin O'rolboyevich - assistent",
+      "Nasirov Isxak XXX - dotsent",
+      "Xolboyeva Muhabbat Mirjalovna - dotsent",
+      "Maxmadiyarov Avazmed Bakimadovich - dotsent v.b.",
+      "Zokirova Hulkar Izzatillayevna - dotsent v.b.",
+      "Babaxanov Laziz Abdullaxanovich - dotsent v.b. / katta o'qituvchi",
+      "Maxmatkulov Xolmurat Maxmudovich - dotsent v.b. / katta o'qituvchi",
+      "Dexqonova Muattar Ilxomovna - katta o'qituvchi",
+      "Raxmanova Gulnoz Gaybullayevna - katta o'qituvchi",
+      "Axmedova Feruza Jabborali qizi - o'qituvchi",
+      "Nabiyeva Kamilya Azimovna - katta o'qituvchi",
+      "Tadjiboyev Kamoldin Abdusadikovich - katta o'qituvchi",
+      "Xakimova Xosiyat Jurayevna - katta o'qituvchi",
+      "Kurnaliyev Huariddin Niyazovich - o'qituvchi",
+      "Gilyaziyeva Nasiba Mixaylovna - o'qituvchi",
+      "Ismoilova Osuda Fayzullayevna - o'qituvchi",
+      "Buxarova Alima Nogayevna - o'qituvchi",
+      "Matasimova Dilbar Yaxshibayevna - assistent",
+      "Mamataliyev Davronbek Baxromjon o'g'li - assistent",
+      "Xudoyberdiyeva Shirinoy Akmalovna - assistent",
+      "Mamayusupova Nihola Ulug'bek qizi - assistent",
+      "Mirzarayimova Xadicha Abdimalikovna - assistent",
+      "Dodomatov Muhammad Abdullamitovich - assistent",
+      "Doniyarova Maftuna Obidjon qizi - assistent",
+      "Kugunbayeva Sevinch Muzaffar qizi - assistent",
+      "Karimov Abdulhamid abdulboriyevich - assistent",
+      "Tabayeva Mohinaxon Ismailxanovna - kabinet mudiri",
+      "Burxanov Zaydullaxon Bakirovich - PTF dekani, filologiya fanlari nomzodi, dotsent v.b.",
+      "Yarmatov Isamidin Turgunovich - professor v.b.",
+      "Soy Alla Pavlovna - dotsent",
+      "Eshbayeva Feruza Xalmuratovna - Kafedra mudiri / dotsent v.b.",
+      "Bazarov Ixtiyor Raxmatullayevich - dotsent",
+      "Mirzakarimova Zamira Dadamatovna - dotsent",
+      "Jabborov Ilyosjon Abduraim o'g'li - katta o'qituvchi",
+      "Sulaymonova Nafisa Yashin qizi - assistent",
+      "Jalolova Aziza Sultamurat qizi - assistent",
+      "Ismatillayeva Soxiba Uktamovna - DIF dekani, dotsent v.b. katta o'qituvchi",
+      "Soxibov Isomiddin Yuldashevich - IHF dekani, PhD, dotsent",
+      "Abdujabbarova (Akbarova) Laylo Ilhomjon qizi - IHF ish yurituvchisi",
+      "Uralova Mahbuba Muxamadjonovna - DIF ish yurituvchisi",
+      "G'afurova Soliya Sattajonovna - PTF tytori",
+      "Qayumova Gulsanam Umidjon qizi - PTF tytori",
+      "Manazarova Sarvinoz Zokirjon qizi - PTF tytori",
+      "Botirova Feruza Fazilddinovna - DIF Laboratoria mudiri",
+      "Mavlyanova Ra'no Shamsuddinovna - IHF tytori",
+      "Shaymurodova Kamola Anvarovna - IHF tytori",
+      "Boltayev Abdisalom Nurali o'g'li - DIF tytori",
+      "Kuralov Shukurulla Uktamovich - DIF tytori",
+      "Normo'minova Nasiba Dilshod qizi - o'qituvchi",
+      "Jakbarov Rovshan Q'ochqorovich - o'qituvchi",
+      "Saxiyev Nizomiddin Isanbayevich - o'qituvchi",
+      "Axmedov Ergash Kuldashevich - Kafedra mudiri, dotsent v.b.",
+      "Rahmatullayev Alimjan Riskulovich - dotsent",
+      "Zakirov Shakirdjan Mamajanovich - dotsent",
+      "Djo'rayev Avaz Axmedjanovich - dotsent",
+      "Kunisheva Nadira Julanovna - katta o'qituvchi",
+      "Mirzamidinova Shahnoza Abidinovna - katta o'qituvchi",
+      "Kadirov Farxod Absattarovich - katta o'qituvchi",
+      "Sindarov Komil Oydinovich - professor",
+      "Mamatkulov Davlatjon Maxamatjonovich - professor v.b.",
+      "Mutalov Otabek Bahrom o'g'li - dotsent v.b.",
+      "Salamov Xurshid Bariddinovich - assistent",
+      "Yusupova Gulbahor Turdiali qizi - assistent",
+      "Gafurova Shoira Baxodirovna - assistent",
+      "Narbutayev Erkin Xalbayevich - professor",
+      "Yusupov Kurbanbay - dotsent",
+      "To'ychiyev Ulash - dotsent",
+      "Bobomatov Tulkinjan Muxamadjanovich - dotsent v.b.",
+      "Ibragimova Maftuna Abdulazizovna - o'qituvchi",
+      "Tashkenbayeva Fotima Abdurazzakovna - assistent",
+      "Mamataliyeva Mardona Hamza qizi - kabinet mudiri",
+      "Ishankulov Muhamadjan Umurzakovich - professor v.b., dotsent",
+      "Kurbanov Fazliddin Batirovich - Kafedra mudiri, dotsent v.b., katta o'qituvchi",
+      "Hakimov Olimjon Ne'matovich - dotsent v.b., katta o'qituvchi",
+      "Isabekova Dilafruz Shermirzayevna - dotsent v.b., katta o'qituvchi",
+      "Qurbonova Maxtuma Fazliddinovna - dotsent v.b., katta o'qituvchi",
+      "Gazibekova Gulavza Ergashevna - katta o'qituvchi",
+      "Giyasova Mushtariy Abduganiyevna - katta o'qituvchi",
+      "Xolbayeva Dildora Azizovna - katta o'qituvchi",
+      "Gaziyeva Nigora Shamsiddinovna - katta o'qituvchi",
+      "Sadiyeva Shaxnoza Xusanovna - katta o'qituvchi",
+      "Suyunov Mamatkarim Uralovich - o'qituvchi",
+      "Xasanov Ergash Shonazarovich - o'qituvchi",
+      "Bo'ronov Ilxomjon Komilovich - o'qituvchi",
+      "Djumayev Mamanazar Irgashevich - professor",
+      "Sanaqulov Xamrakul Rizakulovich - professor",
+      "Norimbetov Turgun Burxanovich - dotsent",
+      "Kayumov Baxtiyar Ishbayevich - dotsent",
+      "Pardayev Bekmurat O'tapulatovich - dotsent",
+      "Giyasova Nilufar Barotbayevna - assistent",
+      "Mallayeva Gulshada Maxmudjonovna - o'qituvchi",
+      "Shadiyeva Dilfuza Urinbayevna - o'qituvchi",
+      "Xodjimatova Nazira Toshmatovna - o'qituvchi",
+      "Saidov Axmatsultan Abumanabovich - o'qituvchi",
+      "Tashmatov Xudayberdi Kurbanovich - o'qituvchi assistent",
+      "Kuchkarova Xumrinisa Shermatovna - o'qituvchi assistent",
+      "Muminova Munojat Yuldashevna - o'qituvchi assistent",
+      "Xazratkulova Gulyora Tojiboyevna - assistent",
+      "Mo'minova Feruza Farxodovna - assistent",
+      "Daminova Sangina Akmal qizi - assistent",
+      "Usmonaliyeva Yulduz Baxrom qizi - assistent",
+      "Maxmudov Yusup Ganiyevich - professor",
+      "Abduraxmanov Abdulvaxid Abduxamidovich - dotsent",
+      "Nazarova Huriniso Pakirovna - dotsent",
+      "Axmedov Kuldash Mutalevich - dotsent",
+      "Abdiyev Ubaydulla Nasirovich - dotsent",
+      "Muxiddinov Baxriddin - dotsent",
+      "Irbutayev Nurali Xolbayevich - dotsent v.b.",
+      "Kuralova Xaytnisa Razzakovna - dotsent v.b.",
+      "Usmanov Esanbay Shirmatovich - dotsent v.b.",
+      "Izaitullayeva Lazakat Eshimbayevna - katta o'qituvchi",
+      "Rustamova Risolat Shamsiyevna - dotsent v.b.",
+      "Mamedova Maxfuza Erkinovna - katta o'qituvchi",
+      "Mutalov Sultonbek Abduraim o'g'li - o'qituvchi",
+      "Abdullayeva Shoxista Abdukarimovna - assistent",
+      "Safaraliyev Shoakbar Farhod o'g'li - assistent",
+      "Xamzayev Mardon Nishonxo'jayevich - assistent",
+      "Abduqodirov Manuchehr Abduqayumovich - assistent",
+      "Bustonov Mansur Mardanakulovich - professor",
+      "Raximov Baxromjon Ibroximovich - dotsent",
+      "Raximboyev Sardor Qaxramonovich - dotsent v.b.",
+      "Tuxtayev Ulugbek Mamatkulovich - o'qituvchi",
+      "Pardayeva Durdona Muxritdinovna - assistent",
+      "Toxirova Mavjuda Qosimovna - assistent",
+      "Xodjamberdiyeva Dilnoza Baxtiyarovna - assistent",
+      "Rayev Saydulla Jarkinbayevich - assistent",
+      "Davranova Gulnora Nuritdinovna - assistent",
+      "Ibrohimov Behzodbek Baxromjon o'g'li - assistent",
+      "Ganiyeva Akida Abdunamatovna - Kabinet mudiri",
+      "Najimadinov Ravshanbek Dushamboevich - dotsent v.b.",
+      "Madaminov Fatix Kamildjanovich - katta o'qituvchi",
+      "Yusupov Ulugbek Mamayusupovich - Kafedra mudiri, dotsent v.b.",
+      "Djabbarov Anvar Muxammadsaliyevich - dotsent v.b.",
+      "Baymanova Mavlyuda Djurayevna - katta o'qituvchi",
+      "Shoraxmatov Abduraxim Abdulamitovich - katta o'qituvchi",
+      "Begalov Sherzod Maxsutaliyevich - katta o me'yoriy o'qituvchi",
+      "Tulyaganov Erkabay Jumabekovich - Fan nomzodi, dotsent",
+      "Salimov Burxon Abubakirovich - katta o'qituvchi",
+      "Aipova Iroda Ikramovna - o'qituvchi",
+      "Ubaydullayeva Gulchehra Erkabayevna - o'qituvchi",
+      "Axmedova Nigora Djabbaraliyevna - assistent",
+      "Ergasheva Zulxumor Abdaaliyevna - assistent",
+      "Elmurotov G'ulomjon Choriyevich - assistent"
     ];
 
-    let teachersData = {};
-    let wishesData = {};
+    let teacherLikes = JSON.parse(localStorage.getItem('teacherLikes')) || {};
 
-    const teachersGrid = document.getElementById('teachersGrid');
-    const topTeachersGrid = document.getElementById('topTeachersGrid');
-    const searchInput = document.getElementById('searchInput');
-    const wishModal = document.getElementById('wishModal');
-    const wishForm = document.getElementById('wishForm');
-    const approvedWishesList = document.getElementById('approvedWishesList');
-    const adminBtn = document.getElementById('adminBtn');
-    const adminPanel = document.getElementById('adminPanel');
-    const pendingWishesList = document.getElementById('pendingWishesList');
+    let teachers = [];
+    let uniqueNames = new Set();
 
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', () => {
-      const current = document.body.getAttribute('data-theme');
-      if(current === 'dark') {
-        document.body.removeAttribute('data-theme');
-        themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
-      } else {
-        document.body.setAttribute('data-theme', 'dark');
-        themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
-      }
-    });
+    rawTeachers.forEach((item, index) => {
+      let parts = item.split(' - ');
+      let fullName = parts[0].trim();
+      let role = parts[1] ? parts[1].trim() : "O'qituvchi";
 
-    const teachersRef = ref(db, 'teachers');
-    onValue(teachersRef, (snapshot) => {
-      const data = snapshot.val();
-      if (!data) {
-        initialTeachers.forEach(t => {
-          set(ref(db, 'teachers/' + t.id), t);
+      if(!uniqueNames.has(fullName)) {
+        uniqueNames.add(fullName);
+        let teacherId = index + 1;
+        teachers.push({
+          id: teacherId,
+          name: fullName,
+          role: role,
+          likes: teacherLikes[teacherId] || 0
         });
-      } else {
-        teachersData = data;
-        renderTeachers();
       }
     });
 
-    const wishesRef = ref(db, 'wishes');
-    onValue(wishesRef, (snapshot) => {
-      wishesData = snapshot.val() || {};
-      renderTeachers();
-      renderPendingWishes();
-      
-      const currentModalId = document.getElementById('selectedTeacherId').value;
-      if (currentModalId) {
-        renderApprovedWishes(currentModalId);
-      }
-    });
+    let pendingWishes = JSON.parse(localStorage.getItem('pendingWishes')) || [];
+    let approvedWishes = JSON.parse(localStorage.getItem('approvedWishes')) || [];
+    let currentSelectedTeacherId = null;
+
+    function saveLikes() {
+      teachers.forEach(t => {
+        teacherLikes[t.id] = t.likes;
+      });
+      localStorage.setItem('teacherLikes', JSON.stringify(teacherLikes));
+    }
 
     function getInitials(name) {
-      return name.replace(/^(Prof\.|Doc\.|Dr\.)\s*/, '').split(' ').map(n => n[0]).join('');
+      let cleanName = name.replace(/[^a-zA-Zʻ’'`\s]/g, "").trim();
+      let parts = cleanName.split(/\s+/);
+      if (parts.length >= 2) {
+        return (parts[0][0] + parts[1][0]).toUpperCase();
+      }
+      return parts[0] ? parts[0][0].toUpperCase() : "U";
     }
 
-    function renderTeachers() {
-      const searchTerm = searchInput.value.toLowerCase();
-      const teachersArray = Object.values(teachersData);
-
-      const sorted = [...teachersArray].sort((a, b) => (b.likes || 0) - (a.likes || 0));
-      const top3 = sorted.filter(t => (t.likes || 0) > 0).slice(0, 3);
-
-      topTeachersGrid.innerHTML = '';
-      if(top3.length === 0) {
-        document.getElementById('topSection').style.display = 'none';
-      } else {
-        document.getElementById('topSection').style.display = 'block';
-        top3.forEach((t, index) => {
-          topTeachersGrid.innerHTML += `
-            <div class="top-card">
-              <div class="top-badge">#${index + 1} TOP</div>
-              <div class="avatar">${getInitials(t.name)}</div>
-              <div>
-                <div class="teacher-name">${t.name}</div>
-                <div class="teacher-dept">${t.dept}</div>
-                <div style="font-weight:700; color:var(--primary-color);"><i class="fa-solid fa-heart"></i> ${t.likes || 0} Ehtirom</div>
-              </div>
-            </div>
-          `;
-        });
-      }
-
-      teachersGrid.innerHTML = '';
-      teachersArray.filter(t => t.name.toLowerCase().includes(searchTerm) || t.dept.toLowerCase().includes(searchTerm))
-        .forEach(t => {
-          teachersGrid.innerHTML += `
-            <div class="teacher-card">
-              <div class="avatar">${getInitials(t.name)}</div>
-              <div class="teacher-name">${t.name}</div>
-              <div class="teacher-dept">${t.dept}</div>
-              <div class="card-actions">
-                <button class="btn-like" onclick="window.likeTeacher('${t.id}')">
-                  <i class="fa-solid fa-heart"></i> <span>${t.likes || 0}</span>
-                </button>
-                <button class="btn btn-primary" onclick="window.openWishModal('${t.id}')">
-                  <i class="fa-solid fa-pen"></i> Ehtirom
-                </button>
-              </div>
-            </div>
-          `;
-        });
+    function renderApp() {
+      renderTop3();
+      renderGrid(teachers);
     }
 
-    searchInput.addEventListener('input', renderTeachers);
+    function renderTop3() {
+      let sorted = [...teachers].sort((a,b) => b.likes - a.likes).slice(0, 3);
+      let container = document.getElementById('top-teachers-list');
+      container.innerHTML = '';
 
-    window.likeTeacher = function(id) {
-      const currentLikes = (teachersData[id] && teachersData[id].likes) ? teachersData[id].likes : 0;
-      update(ref(db, 'teachers/' + id), { likes: currentLikes + 1 });
-    };
-
-    window.openWishModal = function(id) {
-      const teacher = teachersData[id];
-      document.getElementById('selectedTeacherId').value = id;
-      document.getElementById('modalTeacherName').innerText = teacher.name + " ustozga ehtirom bildirishingiz mumkin";
-      renderApprovedWishes(id);
-      wishModal.style.display = 'flex';
-    };
-
-    document.getElementById('closeWishModal').addEventListener('click', () => {
-      wishModal.style.display = 'none';
-      document.getElementById('selectedTeacherId').value = '';
-    });
-
-    function renderApprovedWishes(teacherId) {
-      approvedWishesList.innerHTML = '';
-      Object.values(wishesData).filter(w => w.teacherId === teacherId && w.status === 'approved')
-        .forEach(w => {
-          let mediaHtml = '';
-          if(w.photo) mediaHtml += `<img src="${w.photo}" class="wish-media">`;
-          if(w.audio) mediaHtml += `<audio controls src="${w.audio}" class="wish-media"></audio>`;
-
-          approvedWishesList.innerHTML += `
-            <div class="wish-item">
-              <div class="wish-author">${w.author || 'Talaba'}</div>
-              <div class="wish-text">${w.text}</div>
-              ${mediaHtml}
-            </div>
-          `;
-        });
-    }
-
-    wishForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const teacherId = document.getElementById('selectedTeacherId').value;
-      const author = document.getElementById('studentName').value || 'Talaba';
-      const text = document.getElementById('wishText').value;
-      const photoFile = document.getElementById('wishPhoto').files[0];
-      const audioFile = document.getElementById('wishAudio').files[0];
-
-      let photoBase64 = null;
-      let audioBase64 = null;
-
-      if(photoFile) photoBase64 = await toBase64(photoFile);
-      if(audioFile) audioBase64 = await toBase64(audioFile);
-
-      const newWishRef = push(ref(db, 'wishes'));
-      await set(newWishRef, {
-        id: newWishRef.key,
-        teacherId,
-        author,
-        text,
-        photo: photoBase64,
-        audio: audioBase64,
-        status: 'pending',
-        createdAt: Date.now()
-      });
-
-      alert('Ehtiromingiz yuborildi! Tasdiqlash panelidan so\'ng saytda ko\'rinadi.');
-      wishForm.reset();
-      wishModal.style.display = 'none';
-    });
-
-    const toBase64 = file => new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-    });
-
-    adminBtn.addEventListener('click', () => {
-      const pass = prompt('Tasdiqlash paneli parolini kiriting:');
-      if(pass === 'Madina200@') {
-        adminPanel.style.display = 'block';
-        window.scrollTo({ top: adminPanel.offsetTop - 80, behavior: 'smooth' });
-      } else if(pass !== null) {
-        alert('Parol noto\'g\'ri!');
-      }
-    });
-
-    function renderPendingWishes() {
-      pendingWishesList.innerHTML = '';
-      const pending = Object.values(wishesData).filter(w => w.status === 'pending');
-      if(pending.length === 0) {
-        pendingWishesList.innerHTML = '<p style="color:var(--text-muted);">Kutilayotgan tabriklar yo\'q.</p>';
-        return;
-      }
-
-      pending.forEach(w => {
-        const teacher = teachersData[w.teacherId] || {};
-        pendingWishesList.innerHTML += `
-          <div class="admin-item">
+      sorted.forEach((t, i) => {
+        container.innerHTML += `
+          <div class="top-item" onclick="openTeacherProfile(${t.id})">
             <div>
-              <strong>Kimga:</strong> ${teacher.name || 'Ustoz'}<br>
-              <strong>Muallif:</strong> ${w.author}<br>
-              <strong>Matn:</strong> ${w.text}
+              <strong>${i+1}. ${t.name}</strong>
+              <span style="color:var(--text-muted); font-size:0.8rem; margin-left:8px;">(${t.role})</span>
             </div>
-            <div style="display:flex; gap:8px;">
-              <button class="btn btn-primary" onclick="window.approveWish('${w.id}')"><i class="fa-solid fa-check"></i> Tasdiqlash</button>
-              <button class="btn btn-outline" style="color:var(--danger-color);" onclick="window.rejectWish('${w.id}')"><i class="fa-solid fa-trash"></i></button>
-            </div>
+            <div class="likes"><i class="fa-solid fa-heart"></i> ${t.likes}</div>
           </div>
         `;
       });
     }
 
-    window.approveWish = function(wishId) {
-      update(ref(db, 'wishes/' + wishId), { status: 'approved' });
-    };
+    function renderGrid(list) {
+      let grid = document.getElementById('teachers-grid');
+      grid.innerHTML = '';
 
-    window.rejectWish = function(wishId) {
-      set(ref(db, 'wishes/' + wishId), null);
-    };
+      list.forEach(t => {
+        let initials = getInitials(t.name);
+        grid.innerHTML += `
+          <div class="teacher-card" onclick="openTeacherProfile(${t.id})">
+            <div class="avatar-circle">${initials}</div>
+            <h4>${t.name}</h4>
+            <p>${t.role}</p>
+          </div>
+        `;
+      });
+    }
+
+    function filterTeachers() {
+      let query = document.getElementById('search-input').value.toLowerCase();
+      let filtered = teachers.filter(t => 
+        t.name.toLowerCase().includes(query) || t.role.toLowerCase().includes(query)
+      );
+      renderGrid(filtered);
+    }
+
+    function showMainView() {
+      document.getElementById('main-view').style.display = 'block';
+      document.getElementById('teacher-view').style.display = 'none';
+      document.getElementById('admin-view').style.display = 'none';
+    }
+
+    function openTeacherProfile(id) {
+      currentSelectedTeacherId = id;
+      let t = teachers.find(item => item.id === id);
+
+      document.getElementById('prof-avatar').innerText = getInitials(t.name);
+      document.getElementById('prof-name').innerText = t.name;
+      document.getElementById('prof-role').innerText = t.role;
+      document.getElementById('prof-likes').innerText = t.likes;
+
+      renderApprovedWishes(id);
+
+      document.getElementById('main-view').style.display = 'none';
+      document.getElementById('teacher-view').style.display = 'block';
+      document.getElementById('admin-view').style.display = 'none';
+      window.scrollTo(0,0);
+    }
+
+    function likeCurrentTeacher() {
+      if(!currentSelectedTeacherId) return;
+      let t = teachers.find(item => item.id === currentSelectedTeacherId);
+      if(t) {
+        t.likes += 1;
+        document.getElementById('prof-likes').innerText = t.likes;
+        saveLikes();
+        renderTop3();
+      }
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        if(!file) resolve(null);
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    async function submitWish(e) {
+      e.preventDefault();
+
+      let studentName = document.getElementById('student-name').value;
+      let wishText = document.getElementById('wish-text').value;
+      let audioInput = document.getElementById('audio-file').files[0];
+      let photoInput = document.getElementById('photo-file').files[0];
+
+      let audioBase64 = audioInput ? await fileToBase64(audioInput) : null;
+      let photoBase64 = photoInput ? await fileToBase64(photoInput) : null;
+
+      let newReq = {
+        id: Date.now(),
+        teacherId: currentSelectedTeacherId,
+        studentName: studentName,
+        wishText: wishText,
+        audio: audioBase64,
+        photo: photoBase64
+      };
+
+      pendingWishes.push(newReq);
+      localStorage.setItem('pendingWishes', JSON.stringify(pendingWishes));
+
+      alert("Rahmat! Tabrigingiz yuborildi va ko'rib chiqilgach, e'lon qilinadi!");
+      document.getElementById('ehtirom-form').reset();
+    }
+
+    function renderApprovedWishes(teacherId) {
+      let container = document.getElementById('approved-wishes-container');
+      container.innerHTML = '';
+
+      let filtered = approvedWishes.filter(w => w.teacherId === teacherId);
+
+      if(filtered.length === 0) {
+        container.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem;">Hozircha ehtiromlar mavjud emas. Birinchi bo'lib siz bildiring!</p>`;
+        return;
+      }
+
+      filtered.forEach(w => {
+        let photoHtml = w.photo ? `<br><img src="${w.photo}" alt="Rasm">` : '';
+        let audioHtml = w.audio ? `<br><audio controls src="${w.audio}"></audio>` : '';
+
+        container.innerHTML += `
+          <div class="wish-card">
+            <h5>${w.studentName}</h5>
+            <p>${w.wishText}</p>
+            ${photoHtml}
+            ${audioHtml}
+          </div>
+        `;
+      });
+    }
+
+    function openAdminPanel() {
+      let password = prompt("Mas'ul shaxs parolini kiriting:");
+      if(password === "Madina200@") {
+        document.getElementById('main-view').style.display = 'none';
+        document.getElementById('teacher-view').style.display = 'none';
+        document.getElementById('admin-view').style.display = 'block';
+
+        renderAdminTable();
+      } else if(password !== null) {
+        alert("Parol noto'g'ri!");
+      }
+    }
+
+    function renderAdminTable() {
+      let tbody = document.getElementById('admin-requests-list');
+      tbody.innerHTML = '';
+
+      if(pendingWishes.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">Kutilayotgan so'rovlar yo'q</td></tr>`;
+        return;
+      }
+
+      pendingWishes.forEach(item => {
+        let teacher = teachers.find(t => t.id === item.teacherId);
+        let photoHtml = item.photo ? `<br><img src="${item.photo}" style="max-width:100px; border-radius:4px; margin-top:4px;">` : '';
+        let audioHtml = item.audio ? `<br><audio controls src="${item.audio}" style="max-width:200px; margin-top:4px;"></audio>` : '';
+
+        tbody.innerHTML += `
+          <tr>
+            <td><strong>${teacher ? teacher.name : 'Noma\'lum'}</strong></td>
+            <td>${item.studentName}</td>
+            <td>
+              ${item.wishText}
+              ${photoHtml}
+              ${audioHtml}
+            </td>
+            <td>
+              <button class="btn-approve" onclick="approveWish(${item.id})">Tasdiqlash</button>
+              <button class="btn-reject" onclick="rejectWish(${item.id})">Rad etish</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function approveWish(id) {
+      let index = pendingWishes.findIndex(w => w.id === id);
+      if(index !== -1) {
+        let approvedItem = pendingWishes[index];
+        approvedWishes.push(approvedItem);
+
+        let teacher = teachers.find(t => t.id === approvedItem.teacherId);
+        if(teacher) {
+          teacher.likes += 1;
+          saveLikes();
+        }
+
+        pendingWishes.splice(index, 1);
+
+        localStorage.setItem('pendingWishes', JSON.stringify(pendingWishes));
+        localStorage.setItem('approvedWishes', JSON.stringify(approvedWishes));
+
+        renderAdminTable();
+        renderTop3();
+        alert("Tabrik tasdiqlandi va saytda e'lon qilindi!");
+      }
+    }
+
+    function rejectWish(id) {
+      let index = pendingWishes.findIndex(w => w.id === id);
+      if(index !== -1) {
+        pendingWishes.splice(index, 1);
+        localStorage.setItem('pendingWishes', JSON.stringify(pendingWishes));
+        renderAdminTable();
+      }
+    }
+
+    function toggleTheme() {
+      let body = document.body;
+      if(body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+      }
+    }
+
+    renderApp();
   </script>
 </body>
 </html>
