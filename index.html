@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -67,7 +66,6 @@
 
     .card-actions { display: flex; gap: 10px; width: 100%; margin-top: auto; }
     .btn-like { flex: 1; border: 1px solid var(--border-color); background: transparent; color: var(--text-main); border-radius: 8px; padding: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
-    .btn-like.liked { color: var(--danger-color); border-color: var(--danger-color); }
 
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; padding: 1rem; }
     .modal-content { background: var(--card-bg); border-radius: 16px; width: 100%; max-width: 500px; padding: 2rem; position: relative; max-height: 90vh; overflow-y: auto; }
@@ -179,7 +177,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Initial Teachers Data
     const initialTeachers = [
       { id: "1", name: "Prof. Alimov Anvar", dept: "Axborot Texnologiyalari", likes: 0 },
       { id: "2", name: "Doc. Karimova Nargiza", dept: "Xorijiy Tillar", likes: 0 },
@@ -191,7 +188,6 @@
     let teachersData = {};
     let wishesData = {};
 
-    // DOM Elements
     const teachersGrid = document.getElementById('teachersGrid');
     const topTeachersGrid = document.getElementById('topTeachersGrid');
     const searchInput = document.getElementById('searchInput');
@@ -202,7 +198,6 @@
     const adminPanel = document.getElementById('adminPanel');
     const pendingWishesList = document.getElementById('pendingWishesList');
 
-    // Theme Toggle
     const themeToggle = document.getElementById('themeToggle');
     themeToggle.addEventListener('click', () => {
       const current = document.body.getAttribute('data-theme');
@@ -215,12 +210,10 @@
       }
     });
 
-    // Sync Teachers with Firebase
     const teachersRef = ref(db, 'teachers');
     onValue(teachersRef, (snapshot) => {
       const data = snapshot.val();
       if (!data) {
-        // Populate initial
         initialTeachers.forEach(t => {
           set(ref(db, 'teachers/' + t.id), t);
         });
@@ -230,7 +223,6 @@
       }
     });
 
-    // Sync Wishes with Firebase
     const wishesRef = ref(db, 'wishes');
     onValue(wishesRef, (snapshot) => {
       wishesData = snapshot.val() || {};
@@ -251,7 +243,6 @@
       const searchTerm = searchInput.value.toLowerCase();
       const teachersArray = Object.values(teachersData);
 
-      // Top 3
       const sorted = [...teachersArray].sort((a, b) => (b.likes || 0) - (a.likes || 0));
       const top3 = sorted.filter(t => (t.likes || 0) > 0).slice(0, 3);
 
@@ -275,7 +266,6 @@
         });
       }
 
-      // Main Grid
       teachersGrid.innerHTML = '';
       teachersArray.filter(t => t.name.toLowerCase().includes(searchTerm) || t.dept.toLowerCase().includes(searchTerm))
         .forEach(t => {
@@ -335,7 +325,6 @@
         });
     }
 
-    // Wish Submit to Firebase
     wishForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const teacherId = document.getElementById('selectedTeacherId').value;
@@ -374,7 +363,6 @@
       reader.onerror = error => reject(error);
     });
 
-    // Admin Access
     adminBtn.addEventListener('click', () => {
       const pass = prompt('Tasdiqlash paneli parolini kiriting:');
       if(pass === 'Madina200@') {
