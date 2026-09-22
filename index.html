@@ -1052,5 +1052,44 @@
 
     renderApp();
   </script>
+<!-- Firebase SDK ulash -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  // 1. Firebase Console'dan olingan o'zingizning kalitlaringizni shu yerga qo'yasiz
+  const firebaseConfig = {
+    apiKey: "SIZNING_API_KEY",
+    authDomain: "SIZNING_PROJECT.firebaseapp.com",
+    databaseURL: "https://SIZNING_PROJECT-default-rtdb.firebaseio.com",
+    projectId: "SIZNING_PROJECT",
+    storageBucket: "SIZNING_PROJECT.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "SIZNING_APP_ID"
+  };
+
+  // 2. Bazani ishga tushirish
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+  const messagesRef = ref(database, 'messages');
+
+  // 3. Ma'lumotlarni bazaga saqlash funksiyasi
+  window.sendToFirebase = function(name, text) {
+    push(messagesRef, {
+      name: name,
+      text: text,
+      timestamp: Date.now()
+    });
+  };
+
+  // 4. Bazaga yangi ma'lumot tushganda barcha foydalanuvchilarda avtomat yangilash
+  onValue(messagesRef, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      console.log("Bazadagi yangi ma'lumotlar:", data);
+      // Shu yerda ma'lumotlarni ekranga chiqarish funksiyangiz ishlaydi
+    }
+  });
+</script>
 </body>
 </html>
