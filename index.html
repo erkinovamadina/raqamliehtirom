@@ -2218,7 +2218,37 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
+<script type="module">
+  // 1. Firebase va Firestore SDK larini yuklaymiz
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+  // Loyiha sozlamalari
+  const firebaseConfig = {
+    apiKey: "AIzaSyCqIBAh69Pu0mFIp6Y8FaC4sB6fprb5Gl4",
+    authDomain: "raqamli-ehtirom.firebaseapp.com",
+    projectId: "raqamli-ehtirom",
+    storageBucket: "raqamli-ehtirom.firebasestorage.app",
+    messagingSenderId: "84914510064",
+    appId: "1:84914510064:web:27a5efbf0e6a1e5bbc0a35",
+    measurementId: "G-1NYBZH9THE"
+  };
+
+  // 2. Firebase-ni ishga tushirish
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // 3. Funksiyalarni umumiy JavaScript kodingizga ulaymiz
+  window.db = db;
+  window.collection = collection;
+  window.addDoc = addDoc;
+  window.onSnapshot = onSnapshot;
+  window.doc = doc;
+  window.updateDoc = updateDoc;
+  window.deleteDoc = deleteDoc;
+</script>
 </body>
+
+
 
 </html>
