@@ -2049,129 +2049,74 @@ document.getElementById('count-approved').innerText = approvedWishes.length;
 
 
 
+<script>
 // Render Pending
-
-if (pendingWishes.length === 0) {
-
-pendingList.innerHTML = `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Kutish jarayonida hech qanday murojaat yo'q.</div>`;
-
-} else {
-
-pendingList.innerHTML = pendingWishes.map(w => {
-
-const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Noma'lum" };
-
-return `
-
-<div class="glass-card p-5 rounded-2xl border flex flex-col md:flex-row justify-between gap-4">
-
-<div class="space-y-2 flex-1">
-
-<div class="flex items-center space-x-2 text-xs">
-
-<span class="font-bold text-blue-600">${w.senderName} (${w.senderGroup})</span>
-
-<span class="text-slate-400">• ${w.date}</span>
-
-</div>
-
-<p class="text-xs text-slate-700 dark:text-slate-300 font-medium">"${w.text}"</p>
-
-<div class="text-[11px] text-slate-500">
-
-Mo'ljallangan ustoz: <strong class="text-slate-800 dark:text-slate-200">${teacher.fullName}</strong>
-
-</div>
-${w.photoUrl ? `<img src="${w.photoUrl}" alt="Yuborilgan rasm" class="mt-3 max-w-xs max-h-56 object-cover rounded-xl border border-slate-200 dark:border-slate-700">` : ''}
-${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="mt-3 w-full max-w-md h-10"></audio>` : ''}
-
-</div>
-
-
-
-<div class="flex items-center space-x-2 flex-shrink-0">
-
-<button onclick="approveWish('${w.id}')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">
-
-<i class="fa-solid fa-check mr-1"></i> Tasdiqlash
-
-</button>
-
-<button onclick="rejectWish('${w.id}')" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition">
-
-<i class="fa-solid fa-xmark mr-1"></i> Rad etish
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}).join('');
-
+if (typeof pendingWishes !== 'undefined' && typeof pendingList !== 'undefined') {
+  if (pendingWishes.length === 0) {
+    pendingList.innerHTML = `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Kutish jarayonida hech qanday murojaat yo'q.</div>`;
+  } else {
+    pendingList.innerHTML = pendingWishes.map(w => {
+      const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Noma'lum" };
+      return `
+        <div class="glass-card p-5 rounded-2xl border flex flex-col md:flex-row justify-between gap-4">
+          <div class="space-y-2 flex-1">
+            <div class="flex items-center space-x-2 text-xs">
+              <span class="font-bold text-blue-600">${w.senderName || w.sender || 'Anonim'} (${w.senderGroup || ''})</span>
+              <span class="text-slate-400">• ${w.date || ''}</span>
+            </div>
+            <p class="text-xs text-slate-700 dark:text-slate-300 font-medium">"${w.text}"</p>
+            <div class="text-[11px] text-slate-500">
+              Mo'ljallangan ustoz: <strong class="text-slate-800 dark:text-slate-200">${teacher.fullName}</strong>
+            </div>
+            ${w.photoUrl ? `<img src="${w.photoUrl}" alt="Yuborilgan rasm" class="mt-3 max-w-xs max-h-56 object-cover rounded-xl border border-slate-200 dark:border-slate-700">` : ''}
+            ${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="mt-3 w-full max-w-md h-10"></audio>` : ''}
+          </div>
+          <div class="flex items-center space-x-2 flex-shrink-0">
+            <button onclick="approveWish('${w.id}')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">
+              <i class="fa-solid fa-check mr-1"></i> Tasdiqlash
+            </button>
+            <button onclick="rejectWish('${w.id}')" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition">
+              <i class="fa-solid fa-xmark mr-1"></i> Rad etish
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
 }
-
-
 
 // Render Approved
-
-if (approvedWishes.length === 0) {
-
-approvedList.innerHTML = `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Tasdiqlangan murojaatlar hozircha yo'q.</div>`;
-
-} else {
-
-approvedList.innerHTML = approvedWishes.map(w => {
-
-const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Noma'lum" };
-
-return `
-
-<div class="glass-card p-5 rounded-2xl border flex flex-col md:flex-row justify-between gap-4">
-
-<div class="space-y-2 flex-1">
-
-<div class="flex items-center space-x-2 text-xs">
-
-<span class="font-bold text-blue-600">${w.senderName} (${w.senderGroup})</span>
-
-<span class="text-slate-400">• ${w.date}</span>
-
-</div>
-
-<p class="text-xs text-slate-700 dark:text-slate-300">"${w.text}"</p>
-
-<div class="text-[11px] text-slate-500">
-
-Mo'ljallangan ustoz: <strong>${teacher.fullName}</strong>
-
-</div>
-${w.photoUrl ? `<img src="${w.photoUrl}" alt="Yuborilgan rasm" class="mt-3 max-w-xs max-h-56 object-cover rounded-xl border border-slate-200 dark:border-slate-700">` : ''}
-${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="mt-3 w-full max-w-md h-10"></audio>` : ''}
-
-</div>
-
-<div class="flex items-center space-x-2">
-
-<button onclick="rejectWish('${w.id}')" class="px-3 py-1.5 bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 rounded-xl text-xs font-semibold hover:bg-rose-200 transition">
-
-O'chirish
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}).join('');
-
+if (typeof approvedWishes !== 'undefined' && typeof approvedList !== 'undefined') {
+  if (approvedWishes.length === 0) {
+    approvedList.innerHTML = `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Tasdiqlangan murojaatlar hozircha yo'q.</div>`;
+  } else {
+    approvedList.innerHTML = approvedWishes.map(w => {
+      const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Noma'lum" };
+      return `
+        <div class="glass-card p-5 rounded-2xl border flex flex-col md:flex-row justify-between gap-4">
+          <div class="space-y-2 flex-1">
+            <div class="flex items-center space-x-2 text-xs">
+              <span class="font-bold text-blue-600">${w.senderName || w.sender || 'Anonim'} (${w.senderGroup || ''})</span>
+              <span class="text-slate-400">• ${w.date || ''}</span>
+            </div>
+            <p class="text-xs text-slate-700 dark:text-slate-300">"${w.text}"</p>
+            <div class="text-[11px] text-slate-500">
+              Mo'ljallangan ustoz: <strong>${teacher.fullName}</strong>
+            </div>
+            ${w.photoUrl ? `<img src="${w.photoUrl}" alt="Yuborilgan rasm" class="mt-3 max-w-xs max-h-56 object-cover rounded-xl border border-slate-200 dark:border-slate-700">` : ''}
+            ${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="mt-3 w-full max-w-md h-10"></audio>` : ''}
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="rejectWish('${w.id}')" class="px-3 py-1.5 bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 rounded-xl text-xs font-semibold hover:bg-rose-200 transition">
+              O'chirish
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
 }
-
-
+</script>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -2190,7 +2135,6 @@ O'chirish
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Global o'zgaruvchilarga ulash
   window.db = db;
   window.collection = collection;
   window.addDoc = addDoc;
@@ -2199,7 +2143,6 @@ O'chirish
   window.updateDoc = updateDoc;
   window.deleteDoc = deleteDoc;
 
-  // Real-vaqt rejimida zayavkalar va tilaklarni yangilab turish
   onSnapshot(collection(db, "wishes"), (snapshot) => {
     window.wishes = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
     if (typeof renderAdminDashboard === "function") renderAdminDashboard();
@@ -2207,7 +2150,6 @@ O'chirish
     if (typeof renderWishes === "function") renderWishes();
   });
 
-  // Real-vaqt rejimida ustozlar (like va rasm)ni yangilab turish
   onSnapshot(collection(db, "teachers"), (snapshot) => {
     window.teachers = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
     if (typeof renderTeachers === "function") renderTeachers();
@@ -2215,7 +2157,6 @@ O'chirish
 </script>
 
 <script>
-  // 1. Zayavka (tilak) yuborish
   async function submitWish(teacherId, text, senderName) {
     if (!text || text.trim() === "") {
       alert("Iltimos, tilak matnini kiriting!");
@@ -2235,7 +2176,6 @@ O'chirish
     }
   }
 
-  // 2. Zayavkani tasdiqlash (Firestore)
   async function approveWish(wishId) {
     try {
       await updateDoc(doc(db, "wishes", wishId), { status: 'approved' });
@@ -2244,7 +2184,6 @@ O'chirish
     }
   }
 
-  // 3. Zayavkani o'chirish (Firestore)
   async function rejectWish(wishId) {
     try {
       await deleteDoc(doc(db, "wishes", wishId));
@@ -2253,7 +2192,6 @@ O'chirish
     }
   }
 
-  // 4. Like bosish
   async function handleLike(teacherId, currentLikes) {
     try {
       await updateDoc(doc(db, "teachers", teacherId), {
@@ -2264,7 +2202,6 @@ O'chirish
     }
   }
 
-  // 5. Ustoz rasmini yangilash
   async function updateTeacherImage(teacherId, newImageUrl) {
     try {
       await updateDoc(doc(db, "teachers", teacherId), {
@@ -2276,7 +2213,6 @@ O'chirish
     }
   }
 
-  // Sahifa yuklanganda ishga tushish
   window.addEventListener('DOMContentLoaded', () => {
     if (typeof initApp === "function") initApp();
     const match = window.location.hash.match(/^#teacher-(.+)$/);
