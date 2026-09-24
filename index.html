@@ -2174,50 +2174,6 @@ O'chirish
 }
 
 
-
-function approveWish(wishId) {
-
-const w = wishes.find(item => item.id === wishId);
-
-if (w) {
-
-w.status = 'approved';
-
-saveWishesToStorage();
-
-renderAdminDashboard();
-
-renderStats();
-
-}
-
-}
-
-
-
-function rejectWish(wishId) {
-
-wishes = wishes.filter(item => item.id !== wishId);
-
-saveWishesToStorage();
-
-renderAdminDashboard();
-
-renderStats();
-
-}
-
-
-
-// Initialize App On DOM Load
-
-window.addEventListener('DOMContentLoaded', () => {
-  initApp();
-  const match = window.location.hash.match(/^#teacher-(.+)$/);
-  if (match && teachers.some(t => t.id === match[1])) navigateTo('profile', match[1]);
-});
-
-</script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -2235,7 +2191,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Global o'zgaruvchilarni ulash
+  // Global o'zgaruvchilarga ulash
   window.db = db;
   window.collection = collection;
   window.addDoc = addDoc;
@@ -2244,7 +2200,7 @@ window.addEventListener('DOMContentLoaded', () => {
   window.updateDoc = updateDoc;
   window.deleteDoc = deleteDoc;
 
-  // Real-vaqt rejimida zayavkalar/tilaklarni yangilash
+  // Real-vaqt rejimida zayavkalar va tilaklarni yangilab turish
   onSnapshot(collection(db, "wishes"), (snapshot) => {
     window.wishes = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
     if (typeof renderAdminDashboard === "function") renderAdminDashboard();
@@ -2252,7 +2208,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (typeof renderWishes === "function") renderWishes();
   });
 
-  // Real-vaqt rejimida ustozlar (like va rasm)ni yangilash
+  // Real-vaqt rejimida ustozlar (like va rasm)ni yangilab turish
   onSnapshot(collection(db, "teachers"), (snapshot) => {
     window.teachers = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
     if (typeof renderTeachers === "function") renderTeachers();
@@ -2263,7 +2219,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // 1. Zayavka (tilak) yuborish
   async function submitWish(teacherId, text, senderName) {
     if (!text || text.trim() === "") {
-alert("Iltimos, tilak matnini kiriting!");
+      alert("Iltimos, tilak matnini kiriting!");
       return;
     }
     try {
@@ -2280,7 +2236,7 @@ alert("Iltimos, tilak matnini kiriting!");
     }
   }
 
-  // 2. Zayavkani tasdiqlash
+  // 2. Zayavkani tasdiqlash (Firestore)
   async function approveWish(wishId) {
     try {
       await updateDoc(doc(db, "wishes", wishId), { status: 'approved' });
@@ -2289,7 +2245,7 @@ alert("Iltimos, tilak matnini kiriting!");
     }
   }
 
-  // 3. Zayavkani o'chirish
+  // 3. Zayavkani o'chirish (Firestore)
   async function rejectWish(wishId) {
     try {
       await deleteDoc(doc(db, "wishes", wishId));
