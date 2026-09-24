@@ -2246,6 +2246,120 @@ window.addEventListener('DOMContentLoaded', () => {
   window.doc = doc;
   window.updateDoc = updateDoc;
   window.deleteDoc = deleteDoc;
+</script><!-- Firebase SDK va Real-Vaqt rejimida xabarlarni eshitish (Listening) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCqIBAh69Pu0mFIp6Y8FaC4sB6fprb5Gl4",
+    authDomain: "raqamli-ehtirom.firebaseapp.com",
+    projectId: "raqamli-ehtirom",
+    storageBucket: "raqamli-ehtirom.firebasestorage.app",
+    messagingSenderId: "84914510064",
+    appId: "1:84914510064:web:27a5efbf0e6a1e5bbc0a35",
+    measurementId: "G-1NYBZH9THE"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Global o'zgaruvchilarga chiqarib olamiz
+  window.db = db;
+  window.collection = collection;
+  window.addDoc = addDoc;
+  window.onSnapshot = onSnapshot;
+  window.doc = doc;
+  window.updateDoc = updateDoc;
+  window.deleteDoc = deleteDoc;
+
+  // 1. Zayavka va tilaklarni REAL-VAQT rejimida barcha qurilmalarga chiqarish
+  onSnapshot(collection(db, "wishes"), (snapshot) => {
+    window.wishes = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (typeof renderAdminDashboard === "function") renderAdminDashboard();
+    if (typeof renderStats === "function") renderStats();
+    if (typeof renderWishes === "function") renderWishes();
+  });
+
+  // 2. Ustozlar, likelar va rasmlarni REAL-VAQT rejimida barcha qurilmalarda yangilash
+  onSnapshot(collection(db, "teachers"), (snapshot) => {
+    window.teachers = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (typeof renderTeachers === "function") renderTeachers();
+  });
+</script>
+
+<!-- Zayavka yuborish va harakatlar funksiyasi -->
+<script>
+  // 1. Yangi Zayavka/Tilak yuborish funksiyasi (Telefon va Noutbukda birdek saqlaydi)
+  async function submitWish(teacherId, text, senderName) {
+    if (!text || text.trim() === "") {
+      alert("Iltimos, tilak matnini kiriting!");
+      return;
+    }
+    try {
+      await addDoc(collection(db, "wishes"), {
+        teacherId: teacherId,
+        text: text,
+        sender: senderName || "Anonim",
+        status: "pending", // admin panelga zayavka bo'lib tushadi
+        createdAt: new Date()
+      });
+      alert("Tilagingiz muvaffaqiyatli yuborildi! Admin tasdiqlagach ko'rinadi.");
+    } catch (err) {
+      console.error("Zayavka yuborishda xatolik:", err);
+      alert("Xatolik yuz berdi. Qayta urinib ko'ring.");
+    }
+  }
+
+  // 2. Zayavkani tasdiqlash (Admin paneldan)
+  async function approveWish(wishId) {
+    try {
+      await updateDoc(doc(db, "wishes", wishId), { status: 'approved' });
+    } catch (err) {
+      console.error("Xato:", err);
+    }
+  }
+
+  // 3. Zayavkani o'chirish/rad etish
+  async function rejectWish(wishId) {
+    try {
+      await deleteDoc(doc(doc(db, "wishes", wishId)));
+    } catch (err) {
+      console.error("Xato:", err);
+    }
+  }
+
+  // 4. Like bosish
+  async function handleLike(teacherId, currentLikes) {
+    try {
+      await updateDoc(doc(db, "teachers", teacherId), {
+        likes: (currentLikes || 0) + 1
+      });
+    } catch (err) {
+      console.error("Like saqlanmadi:", err);
+    }
+  }
+
+  // 5. Ustoz rasmini yangilash
+  async function updateTeacherImage(teacherId, newImageUrl) {
+    try {
+      await updateDoc(doc(db, "teachers", teacherId), {
+        image: newImageUrl
+      });
+      alert("Rasm muvaffaqiyatli yangilandi va barchaga ko'rindi!");
+    } catch (err) {
+      console.error("Rasm yangilanmadi:", err);
+    }
+  }
+
+  // Sahifa yuklanganda ishga tushishi
+  window.addEventListener('DOMContentLoaded', () => {
+    if (typeof initApp === "function") initApp();
+    const match = window.location.hash.match(/^#teacher-(.+)$/);
+    if (match && typeof teachers !== 'undefined' && teachers.some(t => t.id === match[1])) {
+      navigateTo('profile', match[1]);
+    }
+  });
 </script>
 </body>
 
