@@ -1,1095 +1,2224 @@
 <!DOCTYPE html>
-<html lang="uz">
+
+<html lang="uz" class="light">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Raqamli Ehtirom - Angren Universiteti</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <style>
-    :root {
-      --primary-color: #2563eb;
-      --primary-hover: #1d4ed8;
-      --bg-color: #f8fafc;
-      --card-bg: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border-color: #e2e8f0;
-      --danger-color: #ef4444;
-      --success-color: #10b981;
-    }
 
-    [data-theme="dark"] {
-      --primary-color: #3b82f6;
-      --primary-hover: #60a5fa;
-      --bg-color: #0f172a;
-      --card-bg: #1e293b;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --border-color: #334155;
-    }
+<meta charset="UTF-8">
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
-      transition: background-color 0.3s, color 0.3s;
-    }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      padding-bottom: 60px;
-    }
+<title>Raqamli Ehtirom - Angren Universiteti</title>
 
-    header {
-      background: var(--card-bg);
-      border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+<!-- Tailwind CSS CDN -->
 
-    .nav-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+<script src="https://cdn.tailwindcss.com"></script>
 
-    .logo {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--text-main);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+<script>
 
-    .logo span {
-      color: var(--primary-color);
-    }
+tailwind.config = {
 
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+darkMode: 'class',
 
-    .btn-toggle, .btn-univ, .btn-admin {
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
+theme: {
 
-    .btn-toggle {
-      background: var(--border-color);
-      color: var(--text-main);
-    }
+extend: {
 
-    .btn-univ {
-      background: #e0e7ff;
-      color: #3730a3;
-      text-decoration: none;
-    }
+colors: {
 
-    .btn-admin {
-      background: #f3f4f6;
-      color: #374151;
-    }
+brand: {
 
-    .container {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 0 20px;
-    }
+50: '#f0fdf4',
 
-    .hero {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+100: '#dcfce7',
 
-    .hero h1 {
-      font-size: 2.2rem;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
+500: '#2563eb',
 
-    .hero p {
-      color: var(--text-muted);
-      font-size: 1rem;
-    }
+600: '#1d4ed8',
 
-    .search-box {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-      margin-bottom: 30px;
-    }
+700: '#1d4ed8',
 
-    .search-box input {
-      border: none;
-      outline: none;
-      width: 100%;
-      background: transparent;
-      color: var(--text-main);
-      font-size: 0.95rem;
-    }
+800: '#1e40af',
 
-    .top-rating {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 20px;
-      border: 1px solid var(--border-color);
-      margin-bottom: 40px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-    }
+900: '#14532d',
 
-    .top-rating h3 {
-      font-size: 1.1rem;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+navy: '#0f172a',
 
-    .top-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+gold: '#d97706'
 
-    .top-item {
-      background: var(--bg-color);
-      padding: 12px 20px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-    }
+}
 
-    .top-item .likes {
-      color: var(--danger-color);
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
+},
 
-    .teachers-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 20px;
-    }
+fontFamily: {
 
-    .teacher-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 24px 16px;
-      text-align: center;
-      cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
+sans: ['Inter', 'sans-serif'],
 
-    .teacher-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-    }
+}
 
-    .avatar-circle {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: #2563eb;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin: 0 auto 15px auto;
-      border: 3px solid #dbeafe;
-    }
+}
 
-    .teacher-card h4 {
-      font-size: 1rem;
-      margin-bottom: 6px;
-    }
+}
 
-    .teacher-card p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
+}
 
-    .view-section {
-      display: none;
-      background: var(--card-bg);
-      border-radius: 20px;
-      border: 1px solid var(--border-color);
-      padding: 30px;
-      max-width: 700px;
-      margin: 0 auto;
-      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-    }
-
-    .btn-back {
-      background: none;
-      border: none;
-      color: var(--primary-color);
-      font-weight: 600;
-      cursor: pointer;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .profile-header {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .ehtirom-badge-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #fef2f2;
-      color: #dc2626;
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-weight: 600;
-      margin-top: 12px;
-      border: 1px solid #fca5a5;
-      cursor: pointer;
-      transition: transform 0.1s, background-color 0.2s;
-    }
-
-    .ehtirom-badge-btn:active {
-      transform: scale(0.95);
-      background-color: #fee2e2;
-    }
-
-    .form-card {
-      background: var(--bg-color);
-      padding: 24px;
-      border-radius: 16px;
-      margin-top: 25px;
-      border: 1px solid var(--border-color);
-    }
-
-    .form-card h3 {
-      font-size: 1rem;
-      margin-bottom: 18px;
-      color: var(--primary-color);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-      font-weight: 500;
-    }
-
-    .form-group input[type="text"], .form-group textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--border-color);
-      background: var(--card-bg);
-      color: var(--text-main);
-      outline: none;
-      font-size: 0.9rem;
-    }
-
-    .form-group input[type="file"] {
-      width: 100%;
-      padding: 8px;
-      border-radius: 8px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      font-size: 0.85rem;
-    }
-
-    .btn-submit {
-      width: 100%;
-      background: var(--primary-color);
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .wishes-list {
-      margin-top: 30px;
-    }
-
-    .wish-card {
-      background: var(--bg-color);
-      padding: 16px;
-      border-radius: 12px;
-      margin-bottom: 15px;
-      border-left: 4px solid var(--primary-color);
-    }
-
-    .wish-card h5 {
-      font-size: 0.95rem;
-      margin-bottom: 6px;
-    }
-
-    .wish-card p {
-      font-size: 0.9rem;
-      margin-bottom: 10px;
-    }
-
-    .wish-card img {
-      max-width: 100%;
-      max-height: 250px;
-      border-radius: 8px;
-      margin-top: 10px;
-      object-fit: cover;
-    }
-
-    .wish-card audio {
-      width: 100%;
-      margin-top: 10px;
-    }
-
-    .admin-panel {
-      display: none;
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: 16px;
-      border: 1px solid var(--border-color);
-    }
-
-    .admin-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-
-    .admin-table th, .admin-table td {
-      border: 1px solid var(--border-color);
-      padding: 10px;
-      text-align: left;
-      font-size: 0.85rem;
-    }
-
-    .btn-approve {
-      background: var(--success-color);
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-right: 4px;
-    }
-
-    .btn-reject {
-      background: var(--danger-color);
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    <div class="nav-container">
-      <a href="javascript:void(0)" class="logo" onclick="showMainView()">RAQAMLI <span>EHTIROM</span></a>
-      <div class="nav-actions">
-        <button class="btn-toggle" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i> To'q rejim</button>
-        <a href="javascript:void(0)" class="btn-univ">ANGREN UNIVERSITETI</a>
-        <button class="btn-admin" onclick="openAdminPanel()"><i class="fa-solid fa-user-check"></i> Tasdiqlash Paneli</button>
-      </div>
-    </div>
-  </header>
-
-  <div class="container">
-    
-    <!-- MAIN VIEW -->
-    <div id="main-view">
-      <div class="hero">
-        <h1>RAQAMLI EHTIROM</h1>
-        <p>Ustozlarimizga talabalarning dildan bildirilgan ehtiromi!</p>
-      </div>
-
-      <div class="search-box">
-        <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted)"></i>
-        <input type="text" id="search-input" placeholder="Ustoz ismini yoki lavozimini izlang..." oninput="filterTeachers()">
-      </div>
-
-      <div class="top-rating">
-        <h3><i class="fa-solid fa-trophy" style="color: #eab308"></i> Eng Ko'p Ehtirom Bildirilgan Ustozlar</h3>
-        <div class="top-list" id="top-teachers-list"></div>
-      </div>
-
-      <div class="teachers-grid" id="teachers-grid"></div>
-    </div>
-
-    <!-- TEACHER PROFILE -->
-    <div id="teacher-view" class="view-section">
-      <button class="btn-back" onclick="showMainView()"><i class="fa-solid fa-arrow-left"></i> Bosh sahifaga qaytish</button>
-      
-      <div class="profile-header">
-        <div id="prof-avatar" class="avatar-circle">AA</div>
-        <h2 id="prof-name">Ustoz Ismi</h2>
-        <p id="prof-role" style="color: var(--text-muted)">Lavozim</p>
-        <button class="ehtirom-badge-btn" onclick="likeCurrentTeacher()">
-          <i class="fa-solid fa-heart"></i> Ehtirom bildirildi (<span id="prof-likes">0</span>)
-        </button>
-      </div>
-
-      <div class="form-card">
-        <h3>✍️ Ustozga tabrik / audio / foto yuborish</h3>
-        <form id="ehtirom-form" onsubmit="submitWish(event)">
-          <div class="form-group">
-            <input type="text" id="student-name" placeholder="Ismingiz va guruh/bosqichingiz" required>
-          </div>
-          <div class="form-group">
-            <textarea id="wish-text" rows="3" placeholder="Tabrik matnini yozing..." required></textarea>
-          </div>
-
-          <div class="form-group">
-            <label>🎙️ Ovozli tabrik (ixtiyoriy):</label>
-            <input type="file" id="audio-file" accept="audio/*">
-          </div>
-
-          <div class="form-group">
-            <label>📷 Birgalikdagi rasm (ixtiyoriy):</label>
-            <input type="file" id="photo-file" accept="image/*">
-          </div>
-
-          <button type="submit" class="btn-submit">Yuborish 🚀</button>
-        </form>
-      </div>
-
-      <div class="wishes-list">
-        <h4 style="margin-bottom: 15px;">Bildirilgan ehtiromlar:</h4>
-        <div id="approved-wishes-container"></div>
-      </div>
-    </div>
-
-    <!-- ADMIN PANEL -->
-    <div id="admin-view" class="admin-panel">
-      <button class="btn-back" onclick="showMainView()"><i class="fa-solid fa-arrow-left"></i> Bosh sahifaga qaytish</button>
-      <h2>Tasdiqlash Paneli</h2>
-      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px;">Kelib tushgan tabriklarni ko'rib chiqish va tasdiqlash</p>
-
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Ustoz</th>
-            <th>Talaba</th>
-            <th>Matn / Fayllar</th>
-            <th>Amallar</th>
-          </tr>
-        </thead>
-        <tbody id="admin-requests-list"></tbody>
-      </table>
-    </div>
-
-  </div>
-
-  <script>
-    const rawTeachers = [
-      "Raubjonov Xusanboy Mamatolibovich - katta o'qituvchi",
-      "Mamataliyev Axror Baxromjon o'g'li - o'qituvchi",
-      "Adilova Muxabbatxon Salaxitdinovna - dotsent",
-      "Turonov Bobur Sobir o'g'li - dotsent",
-      "Umarov Amiriddin Suvonovich - dotsent",
-      "Babaxanov Oybek Abdiraimovich - dotsent v.b.",
-      "Imanov Furkat Yeraliyevich - dotsent v.b.",
-      "Xakimov Sarvar Abduazimovich - dotsent v.b.",
-      "Fazilov Abduqaxxar Vaxidovich - professor",
-      "Abdiyev Farxodjon Abdumalikovich - o'qituvchi",
-      "Numonov Xikmatulla Negmatullayevich - o'qituvchi",
-      "G'oyibov Nodir Hasanovich - o'qituvchi",
-      "Qodirov Mo'minjon Tolifjon o'g'li - assistent",
-      "Xolisov Farxod Kamoliddinovich - o'qituvchi",
-      "Djabbarov Baxodir Mamatkarimovich - o'qituvchi",
-      "Xabibullayev Nodirbek Mirzamaxmud o'g'li - o'qituvchi",
-      "Rejavaliyev Quvonchbek Ravshanbek o'g'li - o'qituvchi",
-      "Axmedov Mansur Xusniddinovich - o'qituvchi",
-      "Abdullayev Ziyodulla Norzullayevich - o'qituvchi",
-      "Xodjinazarov Laziz Tadjibayevich - o'qituvchi",
-      "Noraliyeva Sabohat Zaynilabidinovna - o'qituvchi",
-      "Raxmanova Nargiza Jorayevna - o'qituvchi",
-      "Turgunova Munavvar Zikirillayevna - assistent",
-      "Butayev Sharifjon Abdug'apparovich - assistent",
-      "Sirojeva Ma'mura Abduraupovna - assistent",
-      "Temirov Nodir To'lqinovich - assistent",
-      "Abdullayeva Tojinur Amirovna - assistent",
-      "Otaboyeva Minavvarxon Xasanovna - assistent",
-      "Shirinova Maxliyo Xayrullayevna - assistent",
-      "Davletova Svetlana Askarovna - assistent",
-      "Abdug'affarova Sayyora Nodirjon qizi - assistent",
-      "Burxanova Marhabo Abdurahmanovna - assistent",
-      "Xolisov Alisher Farxod o'g'li - o'qituvchi",
-      "Solixov Javlonbek Tohir o'g'li - assistent",
-      "Ergasheva Muborak Qozoqboyevna - assistent",
-      "Xasanova Nodira G'ayratovna - assistent",
-      "Sharipov Yashnarbek Ilhom o'g'li - assistent",
-      "Mamajonova Zahro Rahmonjon qizi - Kabinet mudiri",
-      "Irkabayev Djumanali Usmanovich - Kafedra mudiri / dotsent v.b.",
-      "Sheraliyev Sa'dullo Suyunboyevich - professor v.b",
-      "Soxibov Isomddin Yuldashevich - dotsent",
-      "Boltayev Nurali Davletovich - dotsent",
-      "Sharipov Daler Kuchkarovich - dotsent",
-      "Uralov Sirojiddin Axmadaliyevich - dotsent v.b.",
-      "Djabbarov Odil Djurayevich - katta o'qituvchi",
-      "Ibragimov Nuxriddin Madazimovich - katta o'qituvchi",
-      "Umarova Nigora Alisherovna - katta o'qituvchi",
-      "Omonova Gulandom Davlatovna - assistent",
-      "Saidov Ulug'bek Xasanovich - dotsent",
-      "Sadiyev Anvar Ayubjonovich - katta o'qituvchi",
-      "Abdullayev Raxmon Gulamovich - o'qituvchi",
-      "Djalalova Shaxnoz Badambayevna - professor v.b",
-      "Fidayev Djurabay Tursunbayevich - dotsent",
-      "Bekmatov Shaxabidin XXX - dotsent v.b.",
-      "Abdurahmonova Iroda Sobir qizi - dotsent v.b.",
-      "Mutalov Shuhrat Axmadjonovich - professor",
-      "Kobayev Jurabek Eshmatovich - Kafedra mudiri / dotsent v.b.",
-      "Yuldasheva Zarofat Igamberdiyevna - dotsent v.b. / katta o'qituvchi",
-      "Ismatilayeva Soxiba Uktamovna - dotsent v.b. / katta o'qituvchi",
-      "Ergasheva Yulduzoy Olimovna - katta o'qituvchi",
-      "Yusupov Murodjon Urinboyevich - katta o'qituvchi",
-      "Aliyeva Maxfuza Abdujabbarovna - katta o'qituvchi",
-      "Ishonkulova Gulxon Tagaymuratovna - o'qituvchi",
-      "Niridinov Azimjon Kamoliddin o'g'li - assistent",
-      "Juginisov Tangirbergen Isayevich - professor",
-      "Alimjanova Xolishon XXX - professor",
-      "Xojimatov Olimjan Kaxxarovich - professor",
-      "Shakarbayev Ulug'bek Abdulakimovich - professor v.b.",
-      "Mutalova Dilnoza Karimberdiyevna - dotsent",
-      "Raxmanova Shaxnoza Abdivaitovna - o'qituvchi",
-      "Madaminov Zaxidjan Vaxidovich - o'qituvchi",
-      "Salimova Rushana Abubakirovna - o'qituvchi",
-      "Madaminova Nargiza Artikovna - o'qituvchi",
-      "Mutaliboyev Baxtiyorjon Qaimovich - o'qituvchi",
-      "Turdibekov Sherzod Mamatqulovich - o'qituvchi",
-      "Gaffarov Nizomjon Abdiqadirovich - o'qituvchi",
-      "Rabbimov Abduvali Mansurovich - o'qituvchi",
-      "Abdumavlonova Nasiba Abduqodirovna - o'qituvchi",
-      "Gaziyeva Mahbuda Jumabayevna - o'qituvchi",
-      "Rustamova Maftuna Rustamovna - o'qituvchi",
-      "Egamberdiyev Xoshimjan Raximberdiyevich - o'qituvchi",
-      "Xolmatova Firuzxon Muxtarjanovna - o'qituvchi",
-      "Sobirov Vahobjon Xusanovich - professor v.b.",
-      "Turdaliyeva Hurmatoy Sultanovna - dotsent",
-      "Xusanova Mamlakat Furkatovna - dotsent",
-      "Djabbarov Muxamadsalim Mamatkarimivich - dotsent v.b.",
-      "Shodmonova Muxlisa Komilovna - dotsent v.b.",
-      "Normurodov Xurshid Tursunmurodovich - o'qituvchi",
-      "Normurodova Shahnoza Shokirjon qizi - o'qituvchi",
-      "Axmadaliyeva Nargiza Jabbarovna - o'qituvchi",
-      "G'anibekova Maxliyo Farxod qizi - o'qituvchi",
-      "Ibragimova Firuza Farxadovna - o'qituvchi",
-      "Ishankulova Mexri Muratovna - o'qituvchi",
-      "Nasirova Durdonaxon Yusupjonovna - o'qituvchi",
-      "Pardayev Sardor Ma'murvay o'g'li - o'qituvchi",
-      "Xodjimuratov Davronjon Ikramaliyevich - o'qituvchi",
-      "Ikramova Sokina Bonu Ravshanzoda - o'qituvchi",
-      "G'ayimova Shoxista Abdivaxabovna - o'qituvchi",
-      "Bayjumanova O'lmasoy Jamoliddin qizi - o'qituvchi",
-      "Axmedova Iroda Komiljon qizi - o'qituvchi",
-      "Zokirova Ziyoda Javdad qizi - assistent",
-      "Xasanova Sayyora Shomurot qizi - assistent",
-      "Xusanov Sharofiddin O'rolboyevich - assistent",
-      "Nasirov Isxak XXX - dotsent",
-      "Xolboyeva Muhabbat Mirjalovna - dotsent",
-      "Maxmadiyarov Avazmed Bakimadovich - dotsent v.b.",
-      "Zokirova Hulkar Izzatillayevna - dotsent v.b.",
-      "Babaxanov Laziz Abdullaxanovich - dotsent v.b. / katta o'qituvchi",
-      "Maxmatkulov Xolmurat Maxmudovich - dotsent v.b. / katta o'qituvchi",
-      "Dexqonova Muattar Ilxomovna - katta o'qituvchi",
-      "Raxmanova Gulnoz Gaybullayevna - katta o'qituvchi",
-      "Axmedova Feruza Jabborali qizi - o'qituvchi",
-      "Nabiyeva Kamilya Azimovna - katta o'qituvchi",
-      "Tadjiboyev Kamoldin Abdusadikovich - katta o'qituvchi",
-      "Xakimova Xosiyat Jurayevna - katta o'qituvchi",
-      "Kurnaliyev Huariddin Niyazovich - o'qituvchi",
-      "Gilyaziyeva Nasiba Mixaylovna - o'qituvchi",
-      "Ismoilova Osuda Fayzullayevna - o'qituvchi",
-      "Buxarova Alima Nogayevna - o'qituvchi",
-      "Matasimova Dilbar Yaxshibayevna - assistent",
-      "Mamataliyev Davronbek Baxromjon o'g'li - assistent",
-      "Xudoyberdiyeva Shirinoy Akmalovna - assistent",
-      "Mamayusupova Nihola Ulug'bek qizi - assistent",
-      "Mirzarayimova Xadicha Abdimalikovna - assistent",
-      "Dodomatov Muhammad Abdullamitovich - assistent",
-      "Doniyarova Maftuna Obidjon qizi - assistent",
-      "Kugunbayeva Sevinch Muzaffar qizi - assistent",
-      "Karimov Abdulhamid abdulboriyevich - assistent",
-      "Tabayeva Mohinaxon Ismailxanovna - kabinet mudiri",
-      "Burxanov Zaydullaxon Bakirovich - PTF dekani, filologiya fanlari nomzodi, dotsent v.b.",
-      "Yarmatov Isamidin Turgunovich - professor v.b.",
-      "Soy Alla Pavlovna - dotsent",
-      "Eshbayeva Feruza Xalmuratovna - Kafedra mudiri / dotsent v.b.",
-      "Bazarov Ixtiyor Raxmatullayevich - dotsent",
-      "Mirzakarimova Zamira Dadamatovna - dotsent",
-      "Jabborov Ilyosjon Abduraim o'g'li - katta o'qituvchi",
-      "Sulaymonova Nafisa Yashin qizi - assistent",
-      "Jalolova Aziza Sultamurat qizi - assistent",
-      "Ismatillayeva Soxiba Uktamovna - DIF dekani, dotsent v.b. katta o'qituvchi",
-      "Soxibov Isomiddin Yuldashevich - IHF dekani, PhD, dotsent",
-      "Abdujabbarova (Akbarova) Laylo Ilhomjon qizi - IHF ish yurituvchisi",
-      "Uralova Mahbuba Muxamadjonovna - DIF ish yurituvchisi",
-      "G'afurova Soliya Sattajonovna - PTF tytori",
-      "Qayumova Gulsanam Umidjon qizi - PTF tytori",
-      "Manazarova Sarvinoz Zokirjon qizi - PTF tytori",
-      "Botirova Feruza Fazilddinovna - DIF Laboratoria mudiri",
-      "Mavlyanova Ra'no Shamsuddinovna - IHF tytori",
-      "Shaymurodova Kamola Anvarovna - IHF tytori",
-      "Boltayev Abdisalom Nurali o'g'li - DIF tytori",
-      "Kuralov Shukurulla Uktamovich - DIF tytori",
-      "Normo'minova Nasiba Dilshod qizi - o'qituvchi",
-      "Jakbarov Rovshan Q'ochqorovich - o'qituvchi",
-      "Saxiyev Nizomiddin Isanbayevich - o'qituvchi",
-      "Axmedov Ergash Kuldashevich - Kafedra mudiri, dotsent v.b.",
-      "Rahmatullayev Alimjan Riskulovich - dotsent",
-      "Zakirov Shakirdjan Mamajanovich - dotsent",
-      "Djo'rayev Avaz Axmedjanovich - dotsent",
-      "Kunisheva Nadira Julanovna - katta o'qituvchi",
-      "Mirzamidinova Shahnoza Abidinovna - katta o'qituvchi",
-      "Kadirov Farxod Absattarovich - katta o'qituvchi",
-      "Sindarov Komil Oydinovich - professor",
-      "Mamatkulov Davlatjon Maxamatjonovich - professor v.b.",
-      "Mutalov Otabek Bahrom o'g'li - dotsent v.b.",
-      "Salamov Xurshid Bariddinovich - assistent",
-      "Yusupova Gulbahor Turdiali qizi - assistent",
-      "Gafurova Shoira Baxodirovna - assistent",
-      "Narbutayev Erkin Xalbayevich - professor",
-      "Yusupov Kurbanbay - dotsent",
-      "To'ychiyev Ulash - dotsent",
-      "Bobomatov Tulkinjan Muxamadjanovich - dotsent v.b.",
-      "Ibragimova Maftuna Abdulazizovna - o'qituvchi",
-      "Tashkenbayeva Fotima Abdurazzakovna - assistent",
-      "Mamataliyeva Mardona Hamza qizi - kabinet mudiri",
-      "Ishankulov Muhamadjan Umurzakovich - professor v.b., dotsent",
-      "Kurbanov Fazliddin Batirovich - Kafedra mudiri, dotsent v.b., katta o'qituvchi",
-      "Hakimov Olimjon Ne'matovich - dotsent v.b., katta o'qituvchi",
-      "Isabekova Dilafruz Shermirzayevna - dotsent v.b., katta o'qituvchi",
-      "Qurbonova Maxtuma Fazliddinovna - dotsent v.b., katta o'qituvchi",
-      "Gazibekova Gulavza Ergashevna - katta o'qituvchi",
-      "Giyasova Mushtariy Abduganiyevna - katta o'qituvchi",
-      "Xolbayeva Dildora Azizovna - katta o'qituvchi",
-      "Gaziyeva Nigora Shamsiddinovna - katta o'qituvchi",
-      "Sadiyeva Shaxnoza Xusanovna - katta o'qituvchi",
-      "Suyunov Mamatkarim Uralovich - o'qituvchi",
-      "Xasanov Ergash Shonazarovich - o'qituvchi",
-      "Bo'ronov Ilxomjon Komilovich - o'qituvchi",
-      "Djumayev Mamanazar Irgashevich - professor",
-      "Sanaqulov Xamrakul Rizakulovich - professor",
-      "Norimbetov Turgun Burxanovich - dotsent",
-      "Kayumov Baxtiyar Ishbayevich - dotsent",
-      "Pardayev Bekmurat O'tapulatovich - dotsent",
-      "Giyasova Nilufar Barotbayevna - assistent",
-      "Mallayeva Gulshada Maxmudjonovna - o'qituvchi",
-      "Shadiyeva Dilfuza Urinbayevna - o'qituvchi",
-      "Xodjimatova Nazira Toshmatovna - o'qituvchi",
-      "Saidov Axmatsultan Abumanabovich - o'qituvchi",
-      "Tashmatov Xudayberdi Kurbanovich - o'qituvchi assistent",
-      "Kuchkarova Xumrinisa Shermatovna - o'qituvchi assistent",
-      "Muminova Munojat Yuldashevna - o'qituvchi assistent",
-      "Xazratkulova Gulyora Tojiboyevna - assistent",
-      "Mo'minova Feruza Farxodovna - assistent",
-      "Daminova Sangina Akmal qizi - assistent",
-      "Usmonaliyeva Yulduz Baxrom qizi - assistent",
-      "Maxmudov Yusup Ganiyevich - professor",
-      "Abduraxmanov Abdulvaxid Abduxamidovich - dotsent",
-      "Nazarova Huriniso Pakirovna - dotsent",
-      "Axmedov Kuldash Mutalevich - dotsent",
-      "Abdiyev Ubaydulla Nasirovich - dotsent",
-      "Muxiddinov Baxriddin - dotsent",
-      "Irbutayev Nurali Xolbayevich - dotsent v.b.",
-      "Kuralova Xaytnisa Razzakovna - dotsent v.b.",
-      "Usmanov Esanbay Shirmatovich - dotsent v.b.",
-      "Izaitullayeva Lazakat Eshimbayevna - katta o'qituvchi",
-      "Rustamova Risolat Shamsiyevna - dotsent v.b.",
-      "Mamedova Maxfuza Erkinovna - katta o'qituvchi",
-      "Mutalov Sultonbek Abduraim o'g'li - o'qituvchi",
-      "Abdullayeva Shoxista Abdukarimovna - assistent",
-      "Safaraliyev Shoakbar Farhod o'g'li - assistent",
-      "Xamzayev Mardon Nishonxo'jayevich - assistent",
-      "Abduqodirov Manuchehr Abduqayumovich - assistent",
-      "Bustonov Mansur Mardanakulovich - professor",
-      "Raximov Baxromjon Ibroximovich - dotsent",
-      "Raximboyev Sardor Qaxramonovich - dotsent v.b.",
-      "Tuxtayev Ulugbek Mamatkulovich - o'qituvchi",
-      "Pardayeva Durdona Muxritdinovna - assistent",
-      "Toxirova Mavjuda Qosimovna - assistent",
-      "Xodjamberdiyeva Dilnoza Baxtiyarovna - assistent",
-      "Rayev Saydulla Jarkinbayevich - assistent",
-      "Davranova Gulnora Nuritdinovna - assistent",
-      "Ibrohimov Behzodbek Baxromjon o'g'li - assistent",
-      "Ganiyeva Akida Abdunamatovna - Kabinet mudiri",
-      "Najimadinov Ravshanbek Dushamboevich - dotsent v.b.",
-      "Madaminov Fatix Kamildjanovich - katta o'qituvchi",
-      "Yusupov Ulugbek Mamayusupovich - Kafedra mudiri, dotsent v.b.",
-      "Djabbarov Anvar Muxammadsaliyevich - dotsent v.b.",
-      "Baymanova Mavlyuda Djurayevna - katta o'qituvchi",
-      "Shoraxmatov Abduraxim Abdulamitovich - katta o'qituvchi",
-      "Begalov Sherzod Maxsutaliyevich - katta o me'yoriy o'qituvchi",
-      "Tulyaganov Erkabay Jumabekovich - Fan nomzodi, dotsent",
-      "Salimov Burxon Abubakirovich - katta o'qituvchi",
-      "Aipova Iroda Ikramovna - o'qituvchi",
-      "Ubaydullayeva Gulchehra Erkabayevna - o'qituvchi",
-      "Axmedova Nigora Djabbaraliyevna - assistent",
-      "Ergasheva Zulxumor Abdaaliyevna - assistent",
-      "Elmurotov G'ulomjon Choriyevich - assistent"
-    ];
-
-    let teacherLikes = JSON.parse(localStorage.getItem('teacherLikes')) || {};
-
-    let teachers = [];
-    let uniqueNames = new Set();
-
-    rawTeachers.forEach((item, index) => {
-      let parts = item.split(' - ');
-      let fullName = parts[0].trim();
-      let role = parts[1] ? parts[1].trim() : "O'qituvchi";
-
-      if(!uniqueNames.has(fullName)) {
-        uniqueNames.add(fullName);
-        let teacherId = index + 1;
-        teachers.push({
-          id: teacherId,
-          name: fullName,
-          role: role,
-          likes: teacherLikes[teacherId] || 0
-        });
-      }
-    });
-
-    let pendingWishes = JSON.parse(localStorage.getItem('pendingWishes')) || [];
-    let approvedWishes = JSON.parse(localStorage.getItem('approvedWishes')) || [];
-    let currentSelectedTeacherId = null;
-
-    function saveLikes() {
-      teachers.forEach(t => {
-        teacherLikes[t.id] = t.likes;
-      });
-      localStorage.setItem('teacherLikes', JSON.stringify(teacherLikes));
-    }
-
-    function getInitials(name) {
-      let cleanName = name.replace(/[^a-zA-Zʻ’'`\s]/g, "").trim();
-      let parts = cleanName.split(/\s+/);
-      if (parts.length >= 2) {
-        return (parts[0][0] + parts[1][0]).toUpperCase();
-      }
-      return parts[0] ? parts[0][0].toUpperCase() : "U";
-    }
-
-    function renderApp() {
-      renderTop3();
-      renderGrid(teachers);
-    }
-
-    function renderTop3() {
-      let sorted = [...teachers].sort((a,b) => b.likes - a.likes).slice(0, 3);
-      let container = document.getElementById('top-teachers-list');
-      container.innerHTML = '';
-
-      sorted.forEach((t, i) => {
-        container.innerHTML += `
-          <div class="top-item" onclick="openTeacherProfile(${t.id})">
-            <div>
-              <strong>${i+1}. ${t.name}</strong>
-              <span style="color:var(--text-muted); font-size:0.8rem; margin-left:8px;">(${t.role})</span>
-            </div>
-            <div class="likes"><i class="fa-solid fa-heart"></i> ${t.likes}</div>
-          </div>
-        `;
-      });
-    }
-
-    function renderGrid(list) {
-      let grid = document.getElementById('teachers-grid');
-      grid.innerHTML = '';
-
-      list.forEach(t => {
-        let initials = getInitials(t.name);
-        grid.innerHTML += `
-          <div class="teacher-card" onclick="openTeacherProfile(${t.id})">
-            <div class="avatar-circle">${initials}</div>
-            <h4>${t.name}</h4>
-            <p>${t.role}</p>
-          </div>
-        `;
-      });
-    }
-
-    function filterTeachers() {
-      let query = document.getElementById('search-input').value.toLowerCase();
-      let filtered = teachers.filter(t => 
-        t.name.toLowerCase().includes(query) || t.role.toLowerCase().includes(query)
-      );
-      renderGrid(filtered);
-    }
-
-    function showMainView() {
-      document.getElementById('main-view').style.display = 'block';
-      document.getElementById('teacher-view').style.display = 'none';
-      document.getElementById('admin-view').style.display = 'none';
-    }
-
-    function openTeacherProfile(id) {
-      currentSelectedTeacherId = id;
-      let t = teachers.find(item => item.id === id);
-
-      document.getElementById('prof-avatar').innerText = getInitials(t.name);
-      document.getElementById('prof-name').innerText = t.name;
-      document.getElementById('prof-role').innerText = t.role;
-      document.getElementById('prof-likes').innerText = t.likes;
-
-      renderApprovedWishes(id);
-
-      document.getElementById('main-view').style.display = 'none';
-      document.getElementById('teacher-view').style.display = 'block';
-      document.getElementById('admin-view').style.display = 'none';
-      window.scrollTo(0,0);
-    }
-
-    function likeCurrentTeacher() {
-      if(!currentSelectedTeacherId) return;
-      let t = teachers.find(item => item.id === currentSelectedTeacherId);
-      if(t) {
-        t.likes += 1;
-        document.getElementById('prof-likes').innerText = t.likes;
-        saveLikes();
-        renderTop3();
-      }
-    }
-
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        if(!file) resolve(null);
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-      });
-    }
-
-    async function submitWish(e) {
-      e.preventDefault();
-
-      let studentName = document.getElementById('student-name').value;
-      let wishText = document.getElementById('wish-text').value;
-      let audioInput = document.getElementById('audio-file').files[0];
-      let photoInput = document.getElementById('photo-file').files[0];
-
-      let audioBase64 = audioInput ? await fileToBase64(audioInput) : null;
-      let photoBase64 = photoInput ? await fileToBase64(photoInput) : null;
-
-      let newReq = {
-        id: Date.now(),
-        teacherId: currentSelectedTeacherId,
-        studentName: studentName,
-        wishText: wishText,
-        audio: audioBase64,
-        photo: photoBase64
-      };
-
-      pendingWishes.push(newReq);
-      localStorage.setItem('pendingWishes', JSON.stringify(pendingWishes));
-
-      alert("Rahmat! Tabrigingiz yuborildi va ko'rib chiqilgach, e'lon qilinadi!");
-      document.getElementById('ehtirom-form').reset();
-    }
-
-    function renderApprovedWishes(teacherId) {
-      let container = document.getElementById('approved-wishes-container');
-      container.innerHTML = '';
-
-      let filtered = approvedWishes.filter(w => w.teacherId === teacherId);
-
-      if(filtered.length === 0) {
-        container.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem;">Hozircha ehtiromlar mavjud emas. Birinchi bo'lib siz bildiring!</p>`;
-        return;
-      }
-
-      filtered.forEach(w => {
-        let photoHtml = w.photo ? `<br><img src="${w.photo}" alt="Rasm">` : '';
-        let audioHtml = w.audio ? `<br><audio controls src="${w.audio}"></audio>` : '';
-
-        container.innerHTML += `
-          <div class="wish-card">
-            <h5>${w.studentName}</h5>
-            <p>${w.wishText}</p>
-            ${photoHtml}
-            ${audioHtml}
-          </div>
-        `;
-      });
-    }
-
-    function openAdminPanel() {
-      let password = prompt("Mas'ul shaxs parolini kiriting:");
-      if(password === "Madina200@") {
-        document.getElementById('main-view').style.display = 'none';
-        document.getElementById('teacher-view').style.display = 'none';
-        document.getElementById('admin-view').style.display = 'block';
-
-        renderAdminTable();
-      } else if(password !== null) {
-        alert("Parol noto'g'ri!");
-      }
-    }
-
-    function renderAdminTable() {
-      let tbody = document.getElementById('admin-requests-list');
-      tbody.innerHTML = '';
-
-      if(pendingWishes.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">Kutilayotgan so'rovlar yo'q</td></tr>`;
-        return;
-      }
-
-      pendingWishes.forEach(item => {
-        let teacher = teachers.find(t => t.id === item.teacherId);
-        let photoHtml = item.photo ? `<br><img src="${item.photo}" style="max-width:100px; border-radius:4px; margin-top:4px;">` : '';
-        let audioHtml = item.audio ? `<br><audio controls src="${item.audio}" style="max-width:200px; margin-top:4px;"></audio>` : '';
-
-        tbody.innerHTML += `
-          <tr>
-            <td><strong>${teacher ? teacher.name : 'Noma\'lum'}</strong></td>
-            <td>${item.studentName}</td>
-            <td>
-              ${item.wishText}
-              ${photoHtml}
-              ${audioHtml}
-            </td>
-            <td>
-              <button class="btn-approve" onclick="approveWish(${item.id})">Tasdiqlash</button>
-              <button class="btn-reject" onclick="rejectWish(${item.id})">Rad etish</button>
-            </td>
-          </tr>
-        `;
-      });
-    }
-
-    function approveWish(id) {
-      let index = pendingWishes.findIndex(w => w.id === id);
-      if(index !== -1) {
-        let approvedItem = pendingWishes[index];
-        approvedWishes.push(approvedItem);
-
-        let teacher = teachers.find(t => t.id === approvedItem.teacherId);
-        if(teacher) {
-          teacher.likes += 1;
-          saveLikes();
-        }
-
-        pendingWishes.splice(index, 1);
-
-        localStorage.setItem('pendingWishes', JSON.stringify(pendingWishes));
-        localStorage.setItem('approvedWishes', JSON.stringify(approvedWishes));
-
-        renderAdminTable();
-        renderTop3();
-        alert("Tabrik tasdiqlandi va saytda e'lon qilindi!");
-      }
-    }
-
-    function rejectWish(id) {
-      let index = pendingWishes.findIndex(w => w.id === id);
-      if(index !== -1) {
-        pendingWishes.splice(index, 1);
-        localStorage.setItem('pendingWishes', JSON.stringify(pendingWishes));
-        renderAdminTable();
-      }
-    }
-
-    function toggleTheme() {
-      let body = document.body;
-      if(body.getAttribute('data-theme') === 'dark') {
-        body.removeAttribute('data-theme');
-      } else {
-        body.setAttribute('data-theme', 'dark');
-      }
-    }
-
-    renderApp();
-  </script>
-<!-- Firebase SDK ulash -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-  // 1. Firebase Console'dan olingan o'zingizning kalitlaringizni shu yerga qo'yasiz
-  const firebaseConfig = {
-    apiKey: "SIZNING_API_KEY",
-    authDomain: "SIZNING_PROJECT.firebaseapp.com",
-    databaseURL: "https://SIZNING_PROJECT-default-rtdb.firebaseio.com",
-    projectId: "SIZNING_PROJECT",
-    storageBucket: "SIZNING_PROJECT.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "SIZNING_APP_ID"
-  };
-
-  // 2. Bazani ishga tushirish
-  const app = initializeApp(firebaseConfig);
-  const database = getDatabase(app);
-  const messagesRef = ref(database, 'messages');
-
-  // 3. Ma'lumotlarni bazaga saqlash funksiyasi
-  window.sendToFirebase = function(name, text) {
-    push(messagesRef, {
-      name: name,
-      text: text,
-      timestamp: Date.now()
-    });
-  };
-
-  // 4. Bazaga yangi ma'lumot tushganda barcha foydalanuvchilarda avtomat yangilash
-  onValue(messagesRef, (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-      console.log("Bazadagi yangi ma'lumotlar:", data);
-      // Shu yerda ma'lumotlarni ekranga chiqarish funksiyangiz ishlaydi
-    }
-  });
 </script>
+
+<!-- Google Fonts -->
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- FontAwesome Icons -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- QRCode.js for generating QR code for teachers -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+
+body { font-family: 'Inter', sans-serif; }
+
+.glass-card {
+
+background: rgba(255, 255, 255, 0.85);
+
+backdrop-filter: blur(12px);
+
+border: 1px solid rgba(229, 231, 235, 0.5);
+
+}
+
+.dark .glass-card {
+
+background: rgba(30, 41, 59, 0.85);
+
+border: 1px solid rgba(51, 65, 85, 0.5);
+
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+
+width: 6px;
+
+height: 6px;
+
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+
+background: transparent;
+
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+
+background: rgba(156, 163, 175, 0.5);
+
+border-radius: 9999px;
+
+}
+
+</style>
+
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-300 flex flex-col">
+
+
+
+<!-- Navigation Bar -->
+
+<header class="sticky top-0 z-40 w-full glass-card border-b border-slate-200 dark:border-slate-800 shadow-sm">
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+<div class="flex justify-between items-center h-20">
+
+<!-- Logo & Title -->
+
+<div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
+
+<div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+
+<i class="fa-solid fa-graduation-cap text-2xl"></i>
+
+</div>
+
+<div>
+
+<h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-700 dark:from-blue-400 dark:to-cyan-300 bg-clip-text text-transparent">
+
+RAQAMLI EHTIROM
+
+</h1>
+
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">Angren Universiteti Portal</p>
+
+</div>
+
+</div>
+
+
+
+<!-- Desktop Navigation Links -->
+
+<nav class="hidden md:flex items-center space-x-6 font-medium text-sm">
+
+<button onclick="navigateTo('home')" class="hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center gap-2">
+
+<i class="fa-solid fa-house"></i> Bosh sahifa
+
+</button>
+
+<button onclick="navigateTo('teachers')" class="hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center gap-2">
+
+<i class="fa-solid fa-chalkboard-user"></i> O'qituvchilar
+
+</button>
+
+<button onclick="navigateTo('top')" class="hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center gap-2">
+
+<i class="fa-solid fa-award"></i> Top Reyting
+
+</button>
+
+<button onclick="navigateTo('admin')" class="hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center gap-2">
+
+<i class="fa-solid fa-user-shield"></i> Admin Panel
+
+</button>
+
+</nav>
+
+
+
+<!-- Action Controls -->
+
+<div class="flex items-center space-x-3">
+
+<!-- Theme Switcher -->
+
+<button id="themeToggle" onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+
+<i id="themeIcon" class="fa-solid fa-moon"></i>
+
+</button>
+
+<!-- Wish Button -->
+
+<button onclick="openWishModal()" class="hidden sm:flex items-center space-x-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-lg shadow-blue-600/30 transition hover:scale-[1.02] active:scale-[0.98]">
+
+<i class="fa-solid fa-heart"></i>
+
+<span>Ehtirom Bildirish</span>
+
+</button>
+
+<!-- Mobile Menu Button -->
+
+<button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+
+<i class="fa-solid fa-bars text-xl"></i>
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Mobile Navigation Menu -->
+
+<div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-2 pb-4 space-y-2">
+
+<button onclick="navigateTo('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800">
+
+<i class="fa-solid fa-house mr-2"></i> Bosh sahifa
+
+</button>
+
+<button onclick="navigateTo('teachers'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800">
+
+<i class="fa-solid fa-chalkboard-user mr-2"></i> O'qituvchilar
+
+</button>
+
+<button onclick="navigateTo('top'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800">
+
+<i class="fa-solid fa-award mr-2"></i> Top Reyting
+
+</button>
+
+<button onclick="navigateTo('admin'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800">
+
+<i class="fa-solid fa-user-shield mr-2"></i> Admin Panel
+
+</button>
+
+<button onclick="openWishModal(); toggleMobileMenu()" class="w-full text-center px-4 py-2.5 bg-blue-600 text-white rounded-xl font-semibold shadow">
+
+<i class="fa-solid fa-heart mr-2"></i> Ehtirom Bildirish
+
+</button>
+
+</div>
+
+</header>
+
+
+
+<!-- Main Content Container -->
+
+<main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+
+<!-- SECTION: Home / Dashboard View -->
+
+<section id="view-home" class="space-y-10">
+
+<!-- Hero Banner -->
+
+<div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-800 via-cyan-800 to-slate-900 text-white p-8 md:p-12 shadow-2xl">
+
+<div class="absolute -right-10 -bottom-10 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+<div class="relative z-10 max-w-3xl space-y-6">
+
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+
+<i class="fa-solid fa-star mr-1.5 text-amber-400"></i> Angren Universiteti Rasmiy Platformasi
+
+</span>
+
+<h2 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+
+Ustozlaringizga Cheksiz Ehtirom Va Minnatdorchilik Bildiring!
+
+</h2>
+
+<p class="text-slate-300 text-base md:text-lg leading-relaxed">
+
+Ushbu raqamli platforma orqali Angren Universiteti talabalari o'z professor-o'qituvchilariga samimiy tilaklarini yo'llashlari, ularning mehnatini munosib e'tirof etishlari mumkin.
+
+</p>
+
+<div class="flex flex-wrap gap-4 pt-2">
+
+<button onclick="navigateTo('teachers')" class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-slate-950 font-bold rounded-xl shadow-lg transition hover:scale-105">
+
+O'qituvchilarni Ko'rish <i class="fa-solid fa-arrow-right ml-2"></i>
+
+</button>
+
+<button onclick="openWishModal()" class="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20 transition">
+
+<i class="fa-solid fa-paper-plane mr-2"></i> Tilak Yo'llash
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Stats Overview -->
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+<div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border shadow-sm">
+
+<div class="p-3 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-xl">
+
+<i class="fa-solid fa-user-graduate text-2xl"></i>
+
+</div>
+
+<div>
+
+<div id="stat-teachers-count" class="text-2xl font-bold">0</div>
+
+<div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Professor-o'qituvchilar</div>
+
+</div>
+
+</div>
+
+<div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border shadow-sm">
+
+<div class="p-3 bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 rounded-xl">
+
+<i class="fa-solid fa-heart text-2xl"></i>
+
+</div>
+
+<div>
+
+<div id="stat-likes-count" class="text-2xl font-bold">0</div>
+
+<div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Jami Minnatdorchiliklar</div>
+
+</div>
+
+</div>
+
+<div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border shadow-sm">
+
+<div class="p-3 bg-sky-100 dark:bg-sky-900/40 text-sky-600 dark:text-sky-400 rounded-xl">
+
+<i class="fa-solid fa-comment-dots text-2xl"></i>
+
+</div>
+
+<div>
+
+<div id="stat-wishes-count" class="text-2xl font-bold">0</div>
+
+<div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Tasdiqlangan Tilaklar</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- Featured Top Teachers Preview -->
+
+<div class="space-y-4">
+
+<div class="flex justify-between items-end">
+
+<div>
+
+<h3 class="text-2xl font-bold">Eng Ko'p E'tirof Etilgan Ustozlar</h3>
+
+<p class="text-slate-500 dark:text-slate-400 text-sm">Eng yuqori reyting va mehr qozongan ustozlarimiz</p>
+
+</div>
+
+<button onclick="navigateTo('top')" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline text-sm flex items-center gap-1">
+
+Barchasini ko'rish <i class="fa-solid fa-chevron-right text-xs"></i>
+
+</button>
+
+</div>
+
+<div id="home-top-teachers" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+<!-- Dynamic rendering -->
+
+</div>
+
+</div>
+
+
+
+<!-- Recent Wishes Feed -->
+
+<div class="space-y-4">
+
+<h3 class="text-2xl font-bold">Samimiy Tilaklar</h3>
+
+<div id="home-wishes-feed" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+<!-- Dynamic rendering -->
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- SECTION: Teachers Directory -->
+
+<section id="view-teachers" class="space-y-6 hidden">
+
+<div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
+
+<div>
+
+<h2 class="text-3xl font-bold">Xodimlar</h2>
+
+<p class="text-slate-500 dark:text-slate-400 text-sm">Angren Universiteti xodimlari katalogi</p>
+
+</div>
+
+</div>
+
+
+
+<!-- Filter Controls -->
+
+<div class="glass-card p-4 rounded-2xl border shadow-sm space-y-4">
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+<!-- Search Input -->
+
+<div class="relative">
+
+<i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400"></i>
+
+<input type="text" id="search-input" oninput="applyFilters()" placeholder="F.I.SH yoki lavozim bo'yicha qidirish..."
+
+class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
+
+</div>
+
+<!-- Degree Filter -->
+
+<select id="filter-degree" onchange="applyFilters()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
+
+<option value="">Barcha ilmiy darajalar</option>
+
+<option value="Professor">Professor</option>
+
+<option value="Dotsent">Dotsent</option>
+
+<option value="Katta o'qituvchi">Katta o'qituvchi</option>
+
+<option value="O'qituvchi">O'qituvchi</option>
+
+<option value="PhD">PhD</option>
+
+</select>
+
+<!-- Sorting -->
+
+<select id="filter-sort" onchange="applyFilters()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
+
+<option value="likes-desc">E'tirof bo'yicha (Yuqori)</option>
+
+<option value="name-asc">Ism bo'yicha (A-Z)</option>
+
+
+</select>
+
+</div>
+
+</div>
+
+
+
+<!-- Teachers Cards Grid -->
+
+<div id="teachers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+<!-- Dynamic Content -->
+
+</div>
+
+</section>
+
+
+
+<!-- SECTION: Top Liked Teachers Ranking -->
+
+<section id="view-top" class="space-y-6 hidden">
+
+<div class="text-center max-w-2xl mx-auto space-y-2">
+
+<span class="px-3 py-1 bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 text-xs font-bold rounded-full">
+
+<i class="fa-solid fa-trophy mr-1"></i> Reyting Ro'yxati
+
+</span>
+
+<h2 class="text-3xl font-extrabold">Eng Saviyali Va Hurmatli Ustozlar</h2>
+
+<p class="text-slate-500 dark:text-slate-400 text-sm">Talabalar tomonidan eng ko'p ehtirom va minnatdorchilik toptirilgan professor-o'qituvchilar ro'yxati</p>
+
+</div>
+
+
+
+<div class="max-w-4xl mx-auto glass-card rounded-2xl border shadow-lg overflow-hidden">
+
+<div id="top-teachers-list" class="divide-y divide-slate-200 dark:divide-slate-800">
+
+<!-- Dynamic rendering -->
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- SECTION: Teacher Profile Detail -->
+
+<section id="view-profile" class="space-y-8 hidden">
+
+<button onclick="navigateTo('teachers')" class="flex items-center gap-2 text-slate-500 hover:text-blue-600 font-semibold text-sm transition">
+
+<i class="fa-solid fa-arrow-left"></i> O'qituvchilar ro'yxatiga qaytish
+
+</button>
+
+
+
+<div id="teacher-profile-container">
+
+<!-- Dynamically populated profile content -->
+
+</div>
+
+</section>
+
+
+
+<!-- SECTION: Admin Panel -->
+
+<section id="view-admin" class="space-y-6 hidden">
+
+<!-- Admin Login Box -->
+
+<div id="admin-login-box" class="max-w-md mx-auto glass-card p-8 rounded-3xl border shadow-xl text-center space-y-6">
+
+<div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center mx-auto text-2xl">
+
+<i class="fa-solid fa-lock"></i>
+
+</div>
+
+<div>
+
+<h3 class="text-2xl font-bold">Admin Tizimiga Kirish</h3>
+
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Admin paroli bilan himoyalangan</p>
+
+</div>
+
+<form onsubmit="handleAdminLogin(event)" class="space-y-4">
+
+<div>
+
+<input type="password" id="admin-password" placeholder="Parolni kiriting..." required
+
+class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
+
+</div>
+
+<button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow transition">
+
+Kirish
+
+</button>
+
+</form>
+
+</div>
+
+
+
+<!-- Admin Dashboard -->
+
+<div id="admin-dashboard" class="hidden space-y-6">
+
+<div class="flex justify-between items-center bg-blue-900 text-white p-6 rounded-2xl shadow-lg">
+
+<div>
+
+<h3 class="text-2xl font-bold">Moderatsiya Paneli</h3>
+
+<p class="text-xs text-blue-200">Kelib tushgan tilaklar va murojaatlarni ko'rib chiqish hamda moderatsiya qilish</p>
+
+</div>
+
+<button onclick="adminLogout()" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-semibold transition">
+
+<i class="fa-solid fa-right-from-bracket mr-1"></i> Chiqish
+
+</button>
+
+</div>
+
+
+
+<!-- Tabs -->
+
+<div class="flex border-b border-slate-200 dark:border-slate-800 space-x-4">
+
+<button id="tab-pending-btn" onclick="switchAdminTab('pending')" class="pb-3 border-b-2 border-blue-600 font-bold text-blue-600 text-sm">
+
+Kutish jarayonidagilar (<span id="count-pending">0</span>)
+
+</button>
+
+<button id="tab-approved-btn" onclick="switchAdminTab('approved')" class="pb-3 border-b-2 border-transparent font-medium text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 text-sm">
+
+Tasdiqlanganlar (<span id="count-approved">0</span>)
+
+</button>
+
+</div>
+
+
+
+<!-- Teacher Management -->
+<div class="glass-card p-5 rounded-2xl border shadow-sm space-y-4">
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+    <div><h4 class="text-lg font-bold">Xodimlar boshqaruvi</h4><p class="text-xs text-slate-500">F.I.SH, lavozim va avatarni boshqarish</p></div>
+    <button onclick="openTeacherEditor()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-bold"><i class="fa-solid fa-plus mr-1"></i> Xodim qo'shish</button>
+  </div>
+  <input id="admin-teacher-search" oninput="renderAdminTeachers()" placeholder="F.I.SH bo'yicha qidirish..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+  <div id="admin-teachers-list" class="space-y-2 max-h-[520px] overflow-y-auto custom-scrollbar"></div>
+</div>
+
+<div id="teacherEditorModal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
+  <div class="glass-card max-w-lg w-full rounded-3xl p-6 border shadow-2xl my-8">
+    <div class="flex justify-between items-center mb-5"><h3 id="teacher-editor-title" class="text-xl font-bold">Xodim qo'shish</h3><button onclick="closeTeacherEditor()" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-xl"></i></button></div>
+    <form onsubmit="saveTeacherFromAdmin(event)" class="space-y-3">
+      <input type="hidden" id="edit-teacher-id">
+      <input id="edit-teacher-name" required placeholder="F.I.SH" class="w-full px-4 py-2.5 rounded-xl border bg-white dark:bg-slate-800 text-sm">
+      <input id="edit-teacher-role" required placeholder="Lavozimi" class="w-full px-4 py-2.5 rounded-xl border bg-white dark:bg-slate-800 text-sm">
+      <input id="edit-teacher-avatar" type="file" accept="image/*" onchange="previewAdminAvatar(event)" class="w-full text-xs">
+      <img id="edit-teacher-avatar-preview" class="hidden w-20 h-20 rounded-full object-cover border-2 border-blue-500/30">
+      <button class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold">Saqlash</button>
+    </form>
+  </div>
+</div>
+
+<!-- Pending Wishes Table / List -->
+
+<div id="admin-pending-list" class="space-y-4">
+
+<!-- Dynamic rendering -->
+
+</div>
+
+
+
+<!-- Approved Wishes List -->
+
+<div id="admin-approved-list" class="space-y-4 hidden">
+
+<!-- Dynamic rendering -->
+
+</div>
+
+</div>
+
+</section>
+
+
+
+</main>
+
+
+
+<!-- Footer -->
+
+<footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-8">
+
+<div class="max-w-7xl mx-auto px-4 text-center space-y-3">
+
+<div class="flex justify-center items-center space-x-2 text-blue-600 font-bold">
+
+<i class="fa-solid fa-graduation-cap text-xl"></i>
+
+<span>Angren Universiteti - Raqamli Ehtirom Platformasi</span>
+
+</div>
+
+<p class="text-xs text-slate-500 dark:text-slate-400">
+
+&copy; 2026 Angren Universiteti Axborot Texnologiyalari Markazi. Barcha huquqlar himoyalangan.
+
+</p>
+
+</div>
+
+</footer>
+
+
+
+<!-- WISH SUBMISSION MODAL -->
+
+<div id="wishModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden overflow-y-auto">
+
+<div class="glass-card max-w-lg w-full rounded-3xl p-6 sm:p-8 border shadow-2xl relative my-8">
+
+<button onclick="closeWishModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+
+<i class="fa-solid fa-xmark text-2xl"></i>
+
+</button>
+
+
+
+<div class="text-center space-y-2 mb-6">
+
+<div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/40 text-blue-600 rounded-2xl flex items-center justify-center mx-auto text-xl">
+
+<i class="fa-solid fa-paper-plane"></i>
+
+</div>
+
+<h3 class="text-2xl font-bold">Ehtirom Va Tilak Bildirish</h3>
+
+<p class="text-xs text-slate-500 dark:text-slate-400">O'qituvchingizga o'z minnatdorchiligingizni matn, rasm yoki ovozli xabar ko'rinishida yuboring</p>
+
+</div>
+
+
+
+<form onsubmit="submitWishForm(event)" class="space-y-4">
+
+<!-- Select Teacher -->
+
+<div>
+
+<label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">O'qituvchini Tanlang *</label>
+
+<select id="wish-teacher-id" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
+
+<option value="">-- O'qituvchini tanlang --</option>
+
+</select>
+
+</div>
+
+
+
+<!-- Student Name & Anonymous Check -->
+
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+<div>
+
+<label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Ismingiz (ixtiyoriy)</label>
+
+<input type="text" id="wish-sender-name" placeholder="Masalan: Ali Valiyev" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
+
+</div>
+
+<div>
+
+<label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Guruhingiz / Yil</label>
+
+<input type="text" id="wish-sender-group" placeholder="Masalan: 21-02-guruh" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
+
+</div>
+
+</div>
+
+
+
+<div class="flex items-center space-x-2 pt-1">
+
+<input type="checkbox" id="wish-is-anonymous" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4">
+
+<label for="wish-is-anonymous" class="text-xs font-medium text-slate-600 dark:text-slate-300">Anonim tarzda yuborish</label>
+
+</div>
+
+
+
+<!-- Wish Text -->
+
+<div>
+
+<label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Tilak yoki Samimiy So'zlaringiz *</label>
+
+<textarea id="wish-text" rows="4" required placeholder="Ustozingizga bo'lgan samimiy tilar va minnatdorchilik so'zlaringizni yozing..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm custom-scrollbar"></textarea>
+
+</div>
+
+
+
+<!-- Photo Attachment -->
+
+<div>
+
+<label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Rasm ilova qilish (Ixtiyoriy)</label>
+
+<input type="file" id="wish-photo-input" accept="image/*" onchange="handlePhotoUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 dark:file:bg-blue-950 dark:file:text-blue-300 hover:file:bg-blue-100">
+
+<div id="photo-preview-container" class="hidden mt-2 relative">
+
+<img id="photo-preview" class="w-full h-32 object-cover rounded-xl border">
+
+<button type="button" onclick="removeUploadedPhoto()" class="absolute top-2 right-2 bg-rose-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+
+<i class="fa-solid fa-xmark"></i>
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- Audio Recording Capability -->
+
+<div>
+
+<label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Ovozli Xabar (Ixtiyoriy)</label>
+
+<div class="flex items-center space-x-3 bg-slate-100 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
+
+<button type="button" id="record-btn" onclick="toggleAudioRecording()" class="px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-lg transition flex items-center space-x-1">
+
+<i id="record-icon" class="fa-solid fa-microphone"></i>
+
+<span id="record-text">Yozishni Boshlash</span>
+
+</button>
+
+<div id="recording-status" class="text-xs text-slate-500 dark:text-slate-400 font-medium flex-1">
+
+Ovozli xabar yo'q
+
+</div>
+
+</div>
+
+<audio id="audio-preview" controls class="hidden w-full mt-2 h-10"></audio>
+
+</div>
+
+
+
+<!-- Submit Button -->
+
+<button type="submit" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition hover:scale-[1.01] active:scale-[0.99]">
+
+<i class="fa-solid fa-paper-plane mr-2"></i> Tilakni Yuborish (Moderatsiyaga)
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+
+<!-- JAVASCRIPT LOGIC -->
+
+<script>
+
+/**
+
+* Expanded Extensible Database of Faculty Members (Angren University)
+
+*/
+
+const initialTeachersData = [
+{id:"au-001",fullName:"Mutalov Shuhrat Axmadjonovich",degree:"Rektor",academicTitle:"Rektor",avatar:"https://ui-avatars.com/api/?name=Mutalov+Shuhrat+Axmadjonovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-002",fullName:"Najimadinov Ravshanbek Dushamboevich",degree:"Yoshlar masalalari, ma'naviy-ma'rifiy ishlar bo'yicha birinchi prorektor, dotsent v.b.",academicTitle:"Yoshlar masalalari, ma'naviy-ma'rifiy ishlar bo'yicha birinchi prorektor, dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Najimadinov+Ravshanbek+Dushamboevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-003",fullName:"Boltayev Nurali Davletovich",degree:"Fan nomzodi, dotsent, o'quv masalalari bo'yicha prorektor v.b.",academicTitle:"Fan nomzodi, dotsent, o'quv masalalari bo'yicha prorektor v.b.",avatar:"https://ui-avatars.com/api/?name=Boltayev+Nurali+Davletovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-004",fullName:"Isakulov Alisher Abdurasulovich",degree:"Rektor maslahatchisi",academicTitle:"Rektor maslahatchisi",avatar:"https://ui-avatars.com/api/?name=Isakulov+Alisher+Abdurasulovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-005",fullName:"Mamadiyeva Malikahon Maxmudjonovna",degree:"Ish yurituvchi",academicTitle:"Ish yurituvchi",avatar:"https://ui-avatars.com/api/?name=Mamadiyeva+Malikahon+Maxmudjonovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-006",fullName:"Abduxalilov Shohboz Abdujalil o'g'li",degree:"Matbuot kotibi",academicTitle:"Matbuot kotibi",avatar:"https://ui-avatars.com/api/?name=Abduxalilov+Shohboz+Abdujalil+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-007",fullName:"Mutalov Otabek Bahrom o'g'li",degree:"Yuriskonsult",academicTitle:"Yuriskonsult",avatar:"https://ui-avatars.com/api/?name=Mutalov+Otabek+Bahrom+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-008",fullName:"Madaminov Fatix Kamildjanovich",degree:"Kadrlar bo'limi boshlig'i",academicTitle:"Kadrlar bo'limi boshlig'i",avatar:"https://ui-avatars.com/api/?name=Madaminov+Fatix+Kamildjanovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-009",fullName:"Imamova Xafiza Kuchkarbayevna",degree:"Kadrlar bo'limi mutaxassisi",academicTitle:"Kadrlar bo'limi mutaxassisi",avatar:"https://ui-avatars.com/api/?name=Imamova+Xafiza+Kuchkarbayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-010",fullName:"Tadjiyeva Feruza Mahamatodilovna",degree:"Devonxona bo'limi mudiri",academicTitle:"Devonxona bo'limi mudiri",avatar:"https://ui-avatars.com/api/?name=Tadjiyeva+Feruza+Mahamatodilovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-011",fullName:"Kayumova Sarvinoz Abdumutal qizi",degree:"Devonxona bo'limi arxiv ishlari bo'yicha mutaxassis",academicTitle:"Devonxona bo'limi arxiv ishlari bo'yicha mutaxassis",avatar:"https://ui-avatars.com/api/?name=Kayumova+Sarvinoz+Abdumutal+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-012",fullName:"Butayeva (Kenjayeva) Maftuna Uktamjon qizi",degree:"Devonxona bo'limi arxiv ishlari bo'yicha mutaxassis",academicTitle:"Devonxona bo'limi arxiv ishlari bo'yicha mutaxassis",avatar:"https://ui-avatars.com/api/?name=Butayeva+(Kenjayeva)+Maftuna+Uktamjon+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-013",fullName:"Sheraliyev Sa'dullo Suyunboyevich",degree:"Ta'lim sifatini nazorat qilish bo'limi boshlig'i",academicTitle:"Ta'lim sifatini nazorat qilish bo'limi boshlig'i",avatar:"https://ui-avatars.com/api/?name=Sheraliyev+Sa'dullo+Suyunboyevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-014",fullName:"Sadiyeva Shaxnoza Xusanovna",degree:"Direktor / Ta'lim sifatini nazorat qilish bo'limi",academicTitle:"Direktor / Ta'lim sifatini nazorat qilish bo'limi",avatar:"https://ui-avatars.com/api/?name=Sadiyeva+Shaxnoza+Xusanovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-015",fullName:"Ismailov A'zam Kuldashevich",degree:"Yoshlar bilan ishlash, ma'naviyat va ma'rifat bo'limi boshlig'i",academicTitle:"Yoshlar bilan ishlash, ma'naviyat va ma'rifat bo'limi boshlig'i",avatar:"https://ui-avatars.com/api/?name=Ismailov+A'zam+Kuldashevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-016",fullName:"Abdalimova Aziza Mamatallyevna",degree:"Yoshlar bilan ishlash, ma'naviyat va ma'rifat bo'limi mutaxassisi",academicTitle:"Yoshlar bilan ishlash, ma'naviyat va ma'rifat bo'limi mutaxassisi",avatar:"https://ui-avatars.com/api/?name=Abdalimova+Aziza+Mamatallyevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-017",fullName:"Suleymanova Zulxumor Baykurazovna",degree:"TTJ tarbiyachi-pedagogi",academicTitle:"TTJ tarbiyachi-pedagogi",avatar:"https://ui-avatars.com/api/?name=Suleymanova+Zulxumor+Baykurazovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-018",fullName:"Turayeva Xakimaxon Salaxiddinovna",degree:"Axborot resurs markazi mutaxassisi",academicTitle:"Axborot resurs markazi mutaxassisi",avatar:"https://ui-avatars.com/api/?name=Turayeva+Xakimaxon+Salaxiddinovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-019",fullName:"Qodirova Nargizaxon Jo'raboyevna",degree:"Axborot resurs markazi mutaxassisi",academicTitle:"Axborot resurs markazi mutaxassisi",avatar:"https://ui-avatars.com/api/?name=Qodirova+Nargizaxon+Jo'raboyevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-020",fullName:"Uralova Mahbuba Muxamadjonovna",degree:"Axborot resurs markazi kutubxonachisi",academicTitle:"Axborot resurs markazi kutubxonachisi",avatar:"https://ui-avatars.com/api/?name=Uralova+Mahbuba+Muxamadjonovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-021",fullName:"Bo'ronov Ilxomjon Komilovich",degree:"Sport klub mudiri",academicTitle:"Sport klub mudiri",avatar:"https://ui-avatars.com/api/?name=Bo'ronov+Ilxomjon+Komilovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-022",fullName:"Abdurasulova Dilorom Egamberdiyevna",degree:"Hamshira",academicTitle:"Hamshira",avatar:"https://ui-avatars.com/api/?name=Abdurasulova+Dilorom+Egamberdiyevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-023",fullName:"Abduqodirov Manuchehr Abduqayumovich",degree:"Xalqaro hamkorlik va xorijiy talabalar bilan ishlash bo'limi yetakchi mutaxassisi",academicTitle:"Xalqaro hamkorlik va xorijiy talabalar bilan ishlash bo'limi yetakchi mutaxassisi",avatar:"https://ui-avatars.com/api/?name=Abduqodirov+Manuchehr+Abduqayumovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-024",fullName:"Askarov Doniyor Xayitbayevich",degree:"Raqamli ta'lim texnologiyalari markazi boshlig'i",academicTitle:"Raqamli ta'lim texnologiyalari markazi boshlig'i",avatar:"https://ui-avatars.com/api/?name=Askarov+Doniyor+Xayitbayevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-025",fullName:"Mahmudov Mirshod Bahodir o'g'li",degree:"Raqamli ta'lim texnologiyalarini joriy etish bo'limi boshlig'i",academicTitle:"Raqamli ta'lim texnologiyalarini joriy etish bo'limi boshlig'i",avatar:"https://ui-avatars.com/api/?name=Mahmudov+Mirshod+Bahodir+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-026",fullName:"Mayusupov Muxammadshakir Maxamatovich",degree:"Texnik qo'llab-quvvatlash bo'limi muhandisi",academicTitle:"Texnik qo'llab-quvvatlash bo'limi muhandisi",avatar:"https://ui-avatars.com/api/?name=Mayusupov+Muxammadshakir+Maxamatovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-027",fullName:"Yuldasheva Dilsaz Sobirjanovna",degree:"Raqamli ta'lim texnologiyalarini joriy etish va imtihon bo'limi mutaxassisi",academicTitle:"Raqamli ta'lim texnologiyalarini joriy etish va imtihon bo'limi mutaxassisi",avatar:"https://ui-avatars.com/api/?name=Yuldasheva+Dilsaz+Sobirjanovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-028",fullName:"Haqqulov Abdulaziz Muxammadali o'g'li",degree:"Bosh hisobchi",academicTitle:"Bosh hisobchi",avatar:"https://ui-avatars.com/api/?name=Haqqulov+Abdulaziz+Muxammadali+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-029",fullName:"Abdumannafov Mironshox Baxodir o'g'li",degree:"Buxgalteriya bo'limi yetakchi mutaxassisi",academicTitle:"Buxgalteriya bo'limi yetakchi mutaxassisi",avatar:"https://ui-avatars.com/api/?name=Abdumannafov+Mironshox+Baxodir+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-030",fullName:"Abdukadirov Ardasher Abdukayumovich",degree:"Marketing bo'limi boshlig'i",academicTitle:"Marketing bo'limi boshlig'i",avatar:"https://ui-avatars.com/api/?name=Abdukadirov+Ardasher+Abdukayumovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-031",fullName:"Adilova Muxabbatxon Salaxitdinovna",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Adilova+Muxabbatxon+Salaxitdinovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-032",fullName:"Turonov Bobur Sobir o'g'li",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Turonov+Bobur+Sobir+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-033",fullName:"Umarov Amiriddin Suvonovich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Umarov+Amiriddin+Suvonovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-034",fullName:"Babaxanov Oybek Abdiraimovich",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Babaxanov+Oybek+Abdiraimovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-035",fullName:"Imanov Furkat Yeraliyevich",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Imanov+Furkat+Yeraliyevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-036",fullName:"Xakimov Sarvar Abduazimovich",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Xakimov+Sarvar+Abduazimovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-037",fullName:"Fazilov Abduqaxxar Vaxidovich",degree:"Professor",academicTitle:"Professor",avatar:"https://ui-avatars.com/api/?name=Fazilov+Abduqaxxar+Vaxidovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-038",fullName:"Abdiyev Farxodjon Abdumalikovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Abdiyev+Farxodjon+Abdumalikovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-039",fullName:"Numonov Xikmatulla Negmatullayevich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Numonov+Xikmatulla+Negmatullayevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-040",fullName:"G'oyibov Nodir Hasanovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=G'oyibov+Nodir+Hasanovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-041",fullName:"Qodirov Mo'minjon Tolifjon o'g'li",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Qodirov+Mo'minjon+Tolifjon+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-042",fullName:"Xolisov Farxod Kamoliddinovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Xolisov+Farxod+Kamoliddinovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-043",fullName:"Djabbarov Baxodir Mamatkarimovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Djabbarov+Baxodir+Mamatkarimovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-044",fullName:"Xabibullayev Nodirbek Mirzamaxmud o'g'li",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Xabibullayev+Nodirbek+Mirzamaxmud+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-045",fullName:"Rejavaliyev Quvonchbek Ravshanbek o'g'li",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Rejavaliyev+Quvonchbek+Ravshanbek+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-046",fullName:"Axmedov Mansur Xusniddinovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Axmedov+Mansur+Xusniddinovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-047",fullName:"Abdullayev Ziyodulla Norzullayevich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Abdullayev+Ziyodulla+Norzullayevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-048",fullName:"Xodjinazarov Laziz Tadjibayevich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Xodjinazarov+Laziz+Tadjibayevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-049",fullName:"Noraliyeva Sabohat Zaynilabidinovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Noraliyeva+Sabohat+Zaynilabidinovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-050",fullName:"Raxmanova Nargiza Jorayevna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Raxmanova+Nargiza+Jorayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-051",fullName:"Turgunova Munavvar Zikirillayevna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Turgunova+Munavvar+Zikirillayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-052",fullName:"Butayev Sharifjon Abdug'apparovich",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Butayev+Sharifjon+Abdug'apparovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-053",fullName:"Sirojeva Ma'mura Abduraupovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Sirojeva+Ma'mura+Abduraupovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-054",fullName:"Temirov Nodir To'lqinovich",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Temirov+Nodir+To'lqinovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-055",fullName:"Abdullayeva Tojinur Amirovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Abdullayeva+Tojinur+Amirovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-056",fullName:"Otaboyeva Minavvarxon Xasanovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Otaboyeva+Minavvarxon+Xasanovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-057",fullName:"Shirinova Maxliyo Xayrullayevna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Shirinova+Maxliyo+Xayrullayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-058",fullName:"Davletova Svetlana Askarovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Davletova+Svetlana+Askarovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-059",fullName:"Abdug'affarova Sayyora Nodirjon qizi",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Abdug'affarova+Sayyora+Nodirjon+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-060",fullName:"Burxanova Marhabo Abdurahmanovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Burxanova+Marhabo+Abdurahmanovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-061",fullName:"Abduhamidov Qudrat Obidjonovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Abduhamidov+Qudrat+Obidjonovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-062",fullName:"Jo'raqulov Abbasjon Quvondik o'g'li",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Jo'raqulov+Abbasjon+Quvondik+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-063",fullName:"Mamataliyev Axror Baxromjon o'g'li",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Mamataliyev+Axror+Baxromjon+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-064",fullName:"Niridinov Azimjon Kamoliddin o'g'li",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Niridinov+Azimjon+Kamoliddin+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-065",fullName:"Botirova Feruza Fazliddinovna",degree:"Kabinet mudiri",academicTitle:"Kabinet mudiri",avatar:"https://ui-avatars.com/api/?name=Botirova+Feruza+Fazliddinovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-066",fullName:"Shaismatova Gulboxor Xikmatovna",degree:"Dotsent v.b., katta o'qituvchi",academicTitle:"Dotsent v.b., katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Shaismatova+Gulboxor+Xikmatovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-067",fullName:"Kobilov Gayratjon Umbarovich",degree:"Professor v.b., dotsent",academicTitle:"Professor v.b., dotsent",avatar:"https://ui-avatars.com/api/?name=Kobilov+Gayratjon+Umbarovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-068",fullName:"Mirkomilov Eldor Mirqodir o'g'li",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Mirkomilov+Eldor+Mirqodir+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-069",fullName:"Axmedov Abduvosiljon Tursunovich",degree:"Dotsent v.b., katta o'qituvchi",academicTitle:"Dotsent v.b., katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Axmedov+Abduvosiljon+Tursunovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-070",fullName:"Raubjonov Xusanboy Mamatolibovich",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Raubjonov+Xusanboy+Mamatolibovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-071",fullName:"Eshbayeva Feruza Xalmuratovna",degree:"Kafedra mudiri / dotsent v.b.",academicTitle:"Kafedra mudiri / dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Eshbayeva+Feruza+Xalmuratovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-072",fullName:"Yarmatov Isamidin Turgunovich",degree:"Professor v.b.",academicTitle:"Professor v.b.",avatar:"https://ui-avatars.com/api/?name=Yarmatov+Isamidin+Turgunovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-073",fullName:"Nasirov Isxak XXX",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Nasirov+Isxak+XXX&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-074",fullName:"Soy Alla Pavlovna",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Soy+Alla+Pavlovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-075",fullName:"Xolboyeva Muhabbat Mirjalovna",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Xolboyeva+Muhabbat+Mirjalovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-076",fullName:"Maxmadiyarov Avazmed Bakimadovich",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Maxmadiyarov+Avazmed+Bakimadovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-077",fullName:"Zokirova Hulkar Izzatillayevna",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Zokirova+Hulkar+Izzatillayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-078",fullName:"Babaxanov Laziz Abdullaxanovich",degree:"Dotsent v.b., katta o'qituvchi",academicTitle:"Dotsent v.b., katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Babaxanov+Laziz+Abdullaxanovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-079",fullName:"Maxmatkulov Xolmurat Maxmudovich",degree:"Dotsent v.b., katta o'qituvchi",academicTitle:"Dotsent v.b., katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Maxmatkulov+Xolmurat+Maxmudovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-080",fullName:"Dexqonova Muattar Ilxomovna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Dexqonova+Muattar+Ilxomovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-081",fullName:"Raxmanova Gulnoz Gaybullayevna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Raxmanova+Gulnoz+Gaybullayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-082",fullName:"Axmedova Feruza Jabborali qizi",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Axmedova+Feruza+Jabborali+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-083",fullName:"Nabiyeva Kamilya Azimovna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Nabiyeva+Kamilya+Azimovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-084",fullName:"Tadjiboyev Kamoldin Abdusadikovich",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Tadjiboyev+Kamoldin+Abdusadikovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-085",fullName:"Xakimova Xosiyat Jurayevna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Xakimova+Xosiyat+Jurayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-086",fullName:"Kurnaliyev Husniddin Niyazovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Kurnaliyev+Husniddin+Niyazovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-087",fullName:"Gilyaziyeva Nasiba Mixaylovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Gilyaziyeva+Nasiba+Mixaylovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-088",fullName:"Ismailova Osuda Fayzullayevna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Ismailova+Osuda+Fayzullayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-089",fullName:"Buxarova Alima Nogayevna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Buxarova+Alima+Nogayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-090",fullName:"Matasimova Dilbar Yaxshibayevna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Matasimova+Dilbar+Yaxshibayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-091",fullName:"Mamataliyev Davronbek Baxromjon o'g'li",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Mamataliyev+Davronbek+Baxromjon+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-092",fullName:"Xudoyberdiyeva Shirinoy Akmalovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Xudoyberdiyeva+Shirinoy+Akmalovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-093",fullName:"Mamayusupova Nihola Ulug'bek qizi",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Mamayusupova+Nihola+Ulug'bek+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-094",fullName:"Mirzarayimova Xadicha Abdimalikovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Mirzarayimova+Xadicha+Abdimalikovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-095",fullName:"Dodomatov Muhammad Abdullamitovich",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Dodomatov+Muhammad+Abdullamitovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-096",fullName:"Doniyarova Maftuna Obidjon qizi",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Doniyarova+Maftuna+Obidjon+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-097",fullName:"Kugunbayeva Sevinch Muzaffar qizi",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Kugunbayeva+Sevinch+Muzaffar+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-098",fullName:"Karimov Abdulhamid Abdulboriyevich",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Karimov+Abdulhamid+Abdulboriyevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-099",fullName:"Tabayeva Mohinaxon Ismailxanovna",degree:"Kabinet mudiri",academicTitle:"Kabinet mudiri",avatar:"https://ui-avatars.com/api/?name=Tabayeva+Mohinaxon+Ismailxanovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-100",fullName:"Burxanov Zaydullaxon Bakirovich",degree:"PTF dekani, filologiya fanlari nomzodi, dotsent v.b.",academicTitle:"PTF dekani, filologiya fanlari nomzodi, dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Burxanov+Zaydullaxon+Bakirovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-101",fullName:"Ismatilayeva Soxiba Uktamovna",degree:"DIF dekani, dotsent v.b., katta o'qituvchi",academicTitle:"DIF dekani, dotsent v.b., katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Ismatilayeva+Soxiba+Uktamovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-102",fullName:"Soxibov Isomiddin Yuldashevich",degree:"IHF dekani, PhD, dotsent",academicTitle:"IHF dekani, PhD, dotsent",avatar:"https://ui-avatars.com/api/?name=Soxibov+Isomiddin+Yuldashevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-103",fullName:"Abdujabbarova (Akbarova) Laylo Ilhomjon qizi",degree:"IHF ish yurituvchisi",academicTitle:"IHF ish yurituvchisi",avatar:"https://ui-avatars.com/api/?name=Abdujabbarova+(Akbarova)+Laylo+Ilhomjon+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-104",fullName:"G'afurova Soliya Sattajonovna",degree:"PTF tyutori",academicTitle:"PTF tyutori",avatar:"https://ui-avatars.com/api/?name=G'afurova+Soliya+Sattajonovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-105",fullName:"Qayumova Gulsanam Umidjon qizi",degree:"PTF tyutori",academicTitle:"PTF tyutori",avatar:"https://ui-avatars.com/api/?name=Qayumova+Gulsanam+Umidjon+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-106",fullName:"Manazarova Sarvinoz Zokirjon qizi",degree:"PTF tyutori",academicTitle:"PTF tyutori",avatar:"https://ui-avatars.com/api/?name=Manazarova+Sarvinoz+Zokirjon+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-107",fullName:"Mavliyanova Ra'no Shamsuddinovna",degree:"IHF tyutori",academicTitle:"IHF tyutori",avatar:"https://ui-avatars.com/api/?name=Mavliyanova+Ra'no+Shamsuddinovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-108",fullName:"Shaymurodova Kamola Anvarovna",degree:"IHF tyutori",academicTitle:"IHF tyutori",avatar:"https://ui-avatars.com/api/?name=Shaymurodova+Kamola+Anvarovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-109",fullName:"Boltayev Abdisalom Nurali o'g'li",degree:"DIF tyutori",academicTitle:"DIF tyutori",avatar:"https://ui-avatars.com/api/?name=Boltayev+Abdisalom+Nurali+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-110",fullName:"Kuralov Shukurulla Uktamovich",degree:"DIF tyutori",academicTitle:"DIF tyutori",avatar:"https://ui-avatars.com/api/?name=Kuralov+Shukurulla+Uktamovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-111",fullName:"Axmedov Ergash Kuldashevich",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Axmedov+Ergash+Kuldashevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-112",fullName:"Rahmatullayev Alimjan Riskulovich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Rahmatullayev+Alimjan+Riskulovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-113",fullName:"Zakirov Shakirdjan",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Zakirov+Shakirdjan&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-114",fullName:"Djo'rayev Avaz Axmedjanovich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Djo'rayev+Avaz+Axmedjanovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-115",fullName:"Kunisheva Nadira Julanovna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Kunisheva+Nadira+Julanovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-116",fullName:"Mirzimidinova Shahnoza Abidinovna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Mirzimidinova+Shahnoza+Abidinovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-117",fullName:"Kadirov Farxod Absattarovich",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Kadirov+Farxod+Absattarovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-118",fullName:"Normo'minova Nasiba Dilshod qizi",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Normo'minova+Nasiba+Dilshod+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-119",fullName:"Sindarov Komil Oydinovich",degree:"Professor",academicTitle:"Professor",avatar:"https://ui-avatars.com/api/?name=Sindarov+Komil+Oydinovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-120",fullName:"Mamatkulov Davlatjon Maxamatjonovich",degree:"Professor v.b.",academicTitle:"Professor v.b.",avatar:"https://ui-avatars.com/api/?name=Mamatkulov+Davlatjon+Maxamatjonovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-121",fullName:"Salamov Xurshid Bariddinovich",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Salamov+Xurshid+Bariddinovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-122",fullName:"Yusupova Gulbahor Turdiali qizi",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Yusupova+Gulbahor+Turdiali+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-123",fullName:"Gafurova Shoira Baxodirovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Gafurova+Shoira+Baxodirovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-124",fullName:"To'ychiyev Ulash",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=To'ychiyev+Ulash&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-125",fullName:"Bobomatov Tulkinjan Muxamadjanovich",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Bobomatov+Tulkinjan+Muxamadjanovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-126",fullName:"Ibragimova Maftuna Abdulazizovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Ibragimova+Maftuna+Abdulazizovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-127",fullName:"Jakbarov Rovshan Q'ochqorovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Jakbarov+Rovshan+Q'ochqorovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-128",fullName:"Saxiyev Nizomiddin Isanbayevich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Saxiyev+Nizomiddin+Isanbayevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-129",fullName:"Xolbayev Obid Zakirjanovich",degree:"Akademik faoliyat va registrator ofisi boshlig'i",academicTitle:"Akademik faoliyat va registrator ofisi boshlig'i",avatar:"https://ui-avatars.com/api/?name=Xolbayev+Obid+Zakirjanovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-130",fullName:"Tursunov Nodir Berdiqulovich",degree:"Ofis boshlig'i o'rinbosari",academicTitle:"Ofis boshlig'i o'rinbosari",avatar:"https://ui-avatars.com/api/?name=Tursunov+Nodir+Berdiqulovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-131",fullName:"Shaniyazov Sharif Safarovich",degree:"Akademik faoliyat va kredit tizimini boshqarish bo'limi boshlig'i",academicTitle:"Akademik faoliyat va kredit tizimini boshqarish bo'limi boshlig'i",avatar:"https://ui-avatars.com/api/?name=Shaniyazov+Sharif+Safarovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-132",fullName:"Jo'rayeva (Abdurazakova) Sarvinoz Bahtiyor qizi",degree:"Mutaxassis",academicTitle:"Mutaxassis",avatar:"https://ui-avatars.com/api/?name=Jo'rayeva+(Abdurazakova)+Sarvinoz+Bahtiyor+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-133",fullName:"Uralov Sharaf Abdusamatovich",degree:"Mutaxassis",academicTitle:"Mutaxassis",avatar:"https://ui-avatars.com/api/?name=Uralov+Sharaf+Abdusamatovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-134",fullName:"Axmedova Saodat Xusanovna",degree:"Menedjer",academicTitle:"Menedjer",avatar:"https://ui-avatars.com/api/?name=Axmedova+Saodat+Xusanovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-135",fullName:"Xamzayev Mardon Nishonxo'jayevich",degree:"Menedjer",academicTitle:"Menedjer",avatar:"https://ui-avatars.com/api/?name=Xamzayev+Mardon+Nishonxo'jayevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-136",fullName:"Xazratkulova Gulyora Tojiboyevna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Xazratkulova+Gulyora+Tojiboyevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-137",fullName:"Mo'minova Feruza Farxodovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Mo'minova+Feruza+Farxodovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-138",fullName:"Daminova Sangina Akmal qizi",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Daminova+Sangina+Akmal+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-139",fullName:"Usmonaliyeva Yulduz Baxrom qizi",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Usmonaliyeva+Yulduz+Baxrom+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-140",fullName:"Tashkenbayeva Fotima Abdurazzakovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Tashkenbayeva+Fotima+Abdurazzakovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-141",fullName:"Mamataliyeva Mardona Hamza qizi",degree:"Kabinet mudiri",academicTitle:"Kabinet mudiri",avatar:"https://ui-avatars.com/api/?name=Mamataliyeva+Mardona+Hamza+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-142",fullName:"Ishankulov Muhamadjan Umurzakovich",degree:"Professor v.b., dotsent",academicTitle:"Professor v.b., dotsent",avatar:"https://ui-avatars.com/api/?name=Ishankulov+Muhamadjan+Umurzakovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-143",fullName:"Kurbanov Fazliddin Batirovich",degree:"Kafedra mudiri, dotsent v.b., katta o'qituvchi",academicTitle:"Kafedra mudiri, dotsent v.b., katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Kurbanov+Fazliddin+Batirovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-144",fullName:"Hakimov Olimjon Ne'matovich",degree:"Dotsent v.b., katta o'qituvchi",academicTitle:"Dotsent v.b., katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Hakimov+Olimjon+Ne'matovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-145",fullName:"Isabekova Dilafruz Shermirzayevna",degree:"Dotsent v.b., katta o'qituvchi",academicTitle:"Dotsent v.b., katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Isabekova+Dilafruz+Shermirzayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-146",fullName:"Qurbonova Maxtuma Fazliddinovna",degree:"Dotsent v.b., katta o'qituvchi",academicTitle:"Dotsent v.b., katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Qurbonova+Maxtuma+Fazliddinovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-147",fullName:"Gazibekova Gulavza Ergashevna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Gazibekova+Gulavza+Ergashevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-148",fullName:"Giyasova Mushtariy Abduganievna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Giyasova+Mushtariy+Abduganievna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-149",fullName:"Xolbayeva Dildora Azizovna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Xolbayeva+Dildora+Azizovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-150",fullName:"Gaziyeva Nigora Shamsiddinovna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Gaziyeva+Nigora+Shamsiddinovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-151",fullName:"Suyunov Mamatkarim Uralovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Suyunov+Mamatkarim+Uralovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-152",fullName:"Xasanov Ergash Shonazarovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Xasanov+Ergash+Shonazarovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-153",fullName:"Djumayev Mamanazar Irgashevich",degree:"Professor",academicTitle:"Professor",avatar:"https://ui-avatars.com/api/?name=Djumayev+Mamanazar+Irgashevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-154",fullName:"Sanaqulov Xamrakul Rizakulovich",degree:"Professor",academicTitle:"Professor",avatar:"https://ui-avatars.com/api/?name=Sanaqulov+Xamrakul+Rizakulovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-155",fullName:"Norimbetov Turgun Burxanovich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Norimbetov+Turgun+Burxanovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-156",fullName:"Kayunov Baxtiyar Ishbayevich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Kayunov+Baxtiyar+Ishbayevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-157",fullName:"Pardayev Bekmurat O'tapulatovich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Pardayev+Bekmurat+O'tapulatovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-158",fullName:"Giyasova Nilufar Barotbayevna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Giyasova+Nilufar+Barotbayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-159",fullName:"Mamedova Maxfuza Erkinovna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Mamedova+Maxfuza+Erkinovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-160",fullName:"Mallayeva Gulshada Maxmudjonovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Mallayeva+Gulshada+Maxmudjonovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-161",fullName:"Shadiyeva Dilfuza Urinbayevna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Shadiyeva+Dilfuza+Urinbayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-162",fullName:"Xodjimatova Nazira Toshmatovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Xodjimatova+Nazira+Toshmatovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-163",fullName:"Saidov Axmatsultan Abumanabovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Saidov+Axmatsultan+Abumanabovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-164",fullName:"Tashmatov Xudayberdi Kurbanovich",degree:"O'qituvchi, assistent",academicTitle:"O'qituvchi, assistent",avatar:"https://ui-avatars.com/api/?name=Tashmatov+Xudayberdi+Kurbanovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-165",fullName:"Kuchkarova Xumrinisa Shermatovna",degree:"O'qituvchi, assistent",academicTitle:"O'qituvchi, assistent",avatar:"https://ui-avatars.com/api/?name=Kuchkarova+Xumrinisa+Shermatovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-166",fullName:"Muminova Munojat Yuldashevna",degree:"O'qituvchi, assistent",academicTitle:"O'qituvchi, assistent",avatar:"https://ui-avatars.com/api/?name=Muminova+Munojat+Yuldashevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-167",fullName:"Omonova Gulandom Davlatovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Omonova+Gulandom+Davlatovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-168",fullName:"Maxmudov Yusup Ganiyevich",degree:"Professor",academicTitle:"Professor",avatar:"https://ui-avatars.com/api/?name=Maxmudov+Yusup+Ganiyevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-169",fullName:"Abduraxmanov Abdulvaxid Abduxamidovich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Abduraxmanov+Abdulvaxid+Abduxamidovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-170",fullName:"Nazarova Huriniso Pakirovna",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Nazarova+Huriniso+Pakirovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-171",fullName:"Axmedov Kuldash Mutalevich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Axmedov+Kuldash+Mutalevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-172",fullName:"Abdiyev Ubaydulla Nasirovich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Abdiyev+Ubaydulla+Nasirovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-173",fullName:"Muxiddinov Baxriddin",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Muxiddinov+Baxriddin&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-174",fullName:"Irbutayev Nurali Xolbayevich",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Irbutayev+Nurali+Xolbayevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-175",fullName:"Kuralova Xaytnisa Razzakovna",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Kuralova+Xaytnisa+Razzakovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-176",fullName:"Usmanov Esanbay Shirmatovich",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Usmanov+Esanbay+Shirmatovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-177",fullName:"Izaitullayeva Lazakat Eshimbayevna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Izaitullayeva+Lazakat+Eshimbayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-178",fullName:"Rustamova Risolat Shamsiyevna",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Rustamova+Risolat+Shamsiyevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-179",fullName:"Mutalov Sultonbek Abduraim o'g'li",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Mutalov+Sultonbek+Abduraim+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-180",fullName:"Abdullayeva Shoxista Abdukarimovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Abdullayeva+Shoxista+Abdukarimovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-181",fullName:"Axmedova Nigora Djabbaraliyevna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Axmedova+Nigora+Djabbaraliyevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-182",fullName:"Pardayeva Durdona Muxrittinovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Pardayeva+Durdona+Muxrittinovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-183",fullName:"Toxirova Mavjuda Qosimovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Toxirova+Mavjuda+Qosimovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-184",fullName:"Xodjamberdiyeva Dilnoza Baxtiyarovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Xodjamberdiyeva+Dilnoza+Baxtiyarovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-185",fullName:"Rayev Saydulla Jarkinbayevich",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Rayev+Saydulla+Jarkinbayevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-186",fullName:"Safaraliyev Shoakbar Farhod o'g'li",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Safaraliyev+Shoakbar+Farhod+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-187",fullName:"Davranova Gulnora Nuritdinovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Davranova+Gulnora+Nuritdinovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-188",fullName:"Ibrohimov Behzodbek Baxromjon o'g'li",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Ibrohimov+Behzodbek+Baxromjon+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-189",fullName:"Ganiyeva Akida Abdunamatovna",degree:"Kabinet mudiri",academicTitle:"Kabinet mudiri",avatar:"https://ui-avatars.com/api/?name=Ganiyeva+Akida+Abdunamatovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-190",fullName:"Yusupov Ulugbek Mamayusupovich",degree:"Kafedra mudiri, dotsent v.b.",academicTitle:"Kafedra mudiri, dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Yusupov+Ulugbek+Mamayusupovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-191",fullName:"Djabbarov Anvar Muxammadsaliyevich",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Djabbarov+Anvar+Muxammadsaliyevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-192",fullName:"Baymanova Mavlyuda Djurayevna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Baymanova+Mavlyuda+Djurayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-193",fullName:"Shoraxmatov Abduraxim Abdulamitovich",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Shoraxmatov+Abduraxim+Abdulamitovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-194",fullName:"Begalov Sherzod Maxsutaliyevich",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Begalov+Sherzod+Maxsutaliyevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-195",fullName:"Bustonov Mansur Mardanakulovich",degree:"Professor",academicTitle:"Professor",avatar:"https://ui-avatars.com/api/?name=Bustonov+Mansur+Mardanakulovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-196",fullName:"Raximov Baxromjon Ibroximovich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Raximov+Baxromjon+Ibroximovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-197",fullName:"Raximboyev Sardor Qaxramonovich",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Raximboyev+Sardor+Qaxramonovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-198",fullName:"Tuxtayev Ulugbek Mamatkulovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Tuxtayev+Ulugbek+Mamatkulovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-199",fullName:"Tulyaganov Erkabay Jumabekovich",degree:"Fan nomzodi, dotsent",academicTitle:"Fan nomzodi, dotsent",avatar:"https://ui-avatars.com/api/?name=Tulyaganov+Erkabay+Jumabekovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-200",fullName:"Salimov Burxon Abubakirovich",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Salimov+Burxon+Abubakirovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-201",fullName:"Aipova Iroda Ikramovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Aipova+Iroda+Ikramovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-202",fullName:"Ubaydullayeva Gulchehra Erkabayevna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Ubaydullayeva+Gulchehra+Erkabayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-203",fullName:"Sharipov Daler Kuchkarovich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Sharipov+Daler+Kuchkarovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-204",fullName:"Uralov Sirojiddin Axmadaliyevich",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Uralov+Sirojiddin+Axmadaliyevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-205",fullName:"Djabbarov Odil Djurayevich",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Djabbarov+Odil+Djurayevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-206",fullName:"Ibragimov Nuxriddin Madazimovich",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Ibragimov+Nuxriddin+Madazimovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-207",fullName:"Umarova Nigora Alisherovna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Umarova+Nigora+Alisherovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-208",fullName:"Saidov Ulug'bek Xasanovich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Saidov+Ulug'bek+Xasanovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-209",fullName:"Sadiyev Anvar Ayubjonovich",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Sadiyev+Anvar+Ayubjonovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-210",fullName:"Abdullayev Raxmon Gulamovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Abdullayev+Raxmon+Gulamovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-211",fullName:"Ergasheva Zulxumor Abdaaliyevna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Ergasheva+Zulxumor+Abdaaliyevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-212",fullName:"Elmurotov G'ulomjon Choriyevich",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Elmurotov+G'ulomjon+Choriyevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-213",fullName:"Irkabayev Djumanali Usmanovich",degree:"Kafedra mudiri, dotsent v.b.",academicTitle:"Kafedra mudiri, dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Irkabayev+Djumanali+Usmanovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-214",fullName:"Sharipov Yashnarbek Ilhom o'g'li",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Sharipov+Yashnarbek+Ilhom+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-215",fullName:"Solixov Javlonbek Tohir o'g'li",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Solixov+Javlonbek+Tohir+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-216",fullName:"Ergasheva Muborak Qozoqboyevna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Ergasheva+Muborak+Qozoqboyevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-217",fullName:"Xasanova Nodira G'ayratovna",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Xasanova+Nodira+G'ayratovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-218",fullName:"Mamajonova Zahro Rahmonjon qizi",degree:"Kabinet mudiri",academicTitle:"Kabinet mudiri",avatar:"https://ui-avatars.com/api/?name=Mamajonova+Zahro+Rahmonjon+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-219",fullName:"Djalalova Shaxnoz Badambayevna",degree:"Professor v.b.",academicTitle:"Professor v.b.",avatar:"https://ui-avatars.com/api/?name=Djalalova+Shaxnoz+Badambayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-220",fullName:"Fidayev Djurabay Tursunbayevich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Fidayev+Djurabay+Tursunbayevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-221",fullName:"Bekmatov Shaxabidin XXX",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Bekmatov+Shaxabidin+XXX&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-222",fullName:"Abdurahmonova Iroda Sobir qizi",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Abdurahmonova+Iroda+Sobir+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-223",fullName:"Xolisov Alisher Farxod o'g'li",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Xolisov+Alisher+Farxod+o'g'li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-224",fullName:"Juginisov Tangirbergen Isayevich",degree:"Professor",academicTitle:"Professor",avatar:"https://ui-avatars.com/api/?name=Juginisov+Tangirbergen+Isayevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-225",fullName:"Alimjanova Xolishon XXX",degree:"Professor",academicTitle:"Professor",avatar:"https://ui-avatars.com/api/?name=Alimjanova+Xolishon+XXX&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-226",fullName:"Xojimatov Olimjan Kaxxarovich",degree:"Professor",academicTitle:"Professor",avatar:"https://ui-avatars.com/api/?name=Xojimatov+Olimjan+Kaxxarovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-227",fullName:"Shakarbayev Ulug'bek Abdulakimovich",degree:"Professor v.b.",academicTitle:"Professor v.b.",avatar:"https://ui-avatars.com/api/?name=Shakarbayev+Ulug'bek+Abdulakimovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-228",fullName:"Mutalova Dilnoza Karimberdiyevna",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Mutalova+Dilnoza+Karimberdiyevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-229",fullName:"Raxmanova Shaxnoza Abdivaitovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Raxmanova+Shaxnoza+Abdivaitovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-230",fullName:"Madaminov Zaxidjan Vaxidovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Madaminov+Zaxidjan+Vaxidovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-231",fullName:"Salimova Rushana Abubakirovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Salimova+Rushana+Abubakirovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-232",fullName:"Madaminova Nargiza Artikovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Madaminova+Nargiza+Artikovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-233",fullName:"Mutaliboyev Baxtiyorjon Qaimovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Mutaliboyev+Baxtiyorjon+Qaimovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-234",fullName:"Turdibekov Sherzod Mamatqulovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Turdibekov+Sherzod+Mamatqulovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-235",fullName:"Gaffarov Nizomjon Abdiqadirovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Gaffarov+Nizomjon+Abdiqadirovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-236",fullName:"Rabbimov Abduvali Mansurovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Rabbimov+Abduvali+Mansurovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-237",fullName:"Abdumavlonova Nasiba Abdugodirovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Abdumavlonova+Nasiba+Abdugodirovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-238",fullName:"Gaziyeva Mahbuda Jumabayevna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Gaziyeva+Mahbuda+Jumabayevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-239",fullName:"Rustamova Maftuna Rustamovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Rustamova+Maftuna+Rustamovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-240",fullName:"Egamberdiyev Xoshimjan Raximberdiyevich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Egamberdiyev+Xoshimjan+Raximberdiyevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-241",fullName:"Xolmatova Firuzxon Muxtarjanovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Xolmatova+Firuzxon+Muxtarjanovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-243",fullName:"Salimbayeva Nodira Komiljonovna",degree:"Direktor o'rinbosari",academicTitle:"Direktor o'rinbosari",avatar:"https://ui-avatars.com/api/?name=Salimbayeva+Nodira+Komiljonovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-244",fullName:"Bazarov Ixtiyor Raxmatullayevich",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Bazarov+Ixtiyor+Raxmatullayevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-245",fullName:"Mirzakarimova Zamira Dadamatovna",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Mirzakarimova+Zamira+Dadamatovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-246",fullName:"Jabborov Ilyosjon Abduraim o'g'li",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Jabborov+Ilyosjon+Abduraim+o%27g%27li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-247",fullName:"Sulaymonova Nafisa Yashin qizi",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Sulaymonova+Nafisa+Yashin+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-248",fullName:"Jalolova Aziza Sultamurat qizi",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Jalolova+Aziza+Sultamurat+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-249",fullName:"Kobayev Jurabek Eshmatovich",degree:"Kafedra mudiri / dotsent v.b.",academicTitle:"Kafedra mudiri / dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Kobayev+Jurabek+Eshmatovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-250",fullName:"Sobirov Vahobjon Xusanovich",degree:"Professor v.b.",academicTitle:"Professor v.b.",avatar:"https://ui-avatars.com/api/?name=Sobirov+Vahobjon+Xusanovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-251",fullName:"Turdaliyeva Hurmatoy Sultanovna",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Turdaliyeva+Hurmatoy+Sultanovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-252",fullName:"Xusanova Mamlakat Furkatovna",degree:"Dotsent",academicTitle:"Dotsent",avatar:"https://ui-avatars.com/api/?name=Xusanova+Mamlakat+Furkatovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-253",fullName:"Djabbarov Muxamadsalim Mamatkarimovich",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Djabbarov+Muxamadsalim+Mamatkarimovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-254",fullName:"Shodmonova Muxlisa Komilovna",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Shodmonova+Muxlisa+Komilovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-255",fullName:"Yuldasheva Zarofat Igamberdiyevna",degree:"Dotsent v.b. katta o'qituvchi",academicTitle:"Dotsent v.b. katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Yuldasheva+Zarofat+Igamberdiyevna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-256",fullName:"Ergasheva Yulduzoy Olimovna",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Ergasheva+Yulduzoy+Olimovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-257",fullName:"Yusupov Murodjon Urinboyevich",degree:"Katta o'qituvchi",academicTitle:"Katta o'qituvchi",avatar:"https://ui-avatars.com/api/?name=Yusupov+Murodjon+Urinboyevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-258",fullName:"Normurodov Xurshid Tursunmurodovich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Normurodov+Xurshid+Tursunmurodovich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-259",fullName:"Normurodova Shahnoza Shokirjon qizi",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Normurodova+Shahnoza+Shokirjon+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-260",fullName:"Axmadaliyeva Nargiza Jabbarovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Axmadaliyeva+Nargiza+Jabbarovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-261",fullName:"G'anibekova Maxliyo Farxod qizi",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=G%27anibekova+Maxliyo+Farxod+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-262",fullName:"Ibragimova Firuza Farxadovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Ibragimova+Firuza+Farxadovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-263",fullName:"Ishankulova Mexri Muratovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Ishankulova+Mexri+Muratovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-264",fullName:"Ishonkulova Gulxon Tagaymuratovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Ishonkulova+Gulxon+Tagaymuratovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-265",fullName:"Nasirova Durdonaxon Yusupjonovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Nasirova+Durdonaxon+Yusupjonovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-266",fullName:"Pardayev Sardor Ma'murvay o'g'li",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Pardayev+Sardor+Ma%27murvay+o%27g%27li&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-267",fullName:"Xodjimuratov Davronjon Ikramaliyevich",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Xodjimuratov+Davronjon+Ikramaliyevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-268",fullName:"Ikramova Sokina Bonu Ravshanzoda",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Ikramova+Sokina+Bonu+Ravshanzoda&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-269",fullName:"G'ayimova Shoxista Abdivaxabovna",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=G%27ayimova+Shoxista+Abdivaxabovna&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-270",fullName:"Bayjumanova O'lmasoy Jamoliddin qizi",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Bayjumanova+O%27lmasoy+Jamoliddin+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-271",fullName:"Axmedova Iroda Komiljon qizi",degree:"O'qituvchi",academicTitle:"O'qituvchi",avatar:"https://ui-avatars.com/api/?name=Axmedova+Iroda+Komiljon+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-272",fullName:"Zokirova Ziyoda Javdad qizi",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Zokirova+Ziyoda+Javdad+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-273",fullName:"Xasanova Sayyora Shomurot qizi",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Xasanova+Sayyora+Shomurot+qizi&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-274",fullName:"Xusanov Sharofiddin O'rolboyevich",degree:"Assistent",academicTitle:"Assistent",avatar:"https://ui-avatars.com/api/?name=Xusanov+Sharofiddin+O%27rolboyevich&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-275",fullName:"Alimjanova Xolishon",degree:"Professor",academicTitle:"Professor",avatar:"https://ui-avatars.com/api/?name=Alimjanova+Xolishon&background=2563eb&color=fff&size=400",likes:0},
+{id:"au-276",fullName:"Bekmatov Shaxabidin",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Bekmatov+Shaxabidin&background=2563eb&color=fff&size=400",likes:0},
+];
+
+// Default Seed Wishes Data
+
+const initialWishesData = [
+
+{
+
+id: "wish-101",
+
+teacherId: "tech-01",
+
+senderName: "Sardor Azimov",
+
+senderGroup: "21-04 Guruh",
+
+isAnonymous: false,
+
+text: "Diyorbek Rustamovich, dasturlash va algoritmlar fanidan bergan chuqur bilimlaringiz uchun kattakon rahmat! Sizning darslaringiz tufayli IT sohasiga bo'lgan qiziqishim ortdi.",
+
+photoUrl: null,
+
+audioUrl: null,
+
+status: "approved", // 'pending' | 'approved' | 'rejected'
+
+date: "2026-03-15 10:30"
+
+},
+
+{
+
+id: "wish-102",
+
+teacherId: "tech-04",
+
+senderName: "Anonim",
+
+senderGroup: "19-01 Guruh",
+
+isAnonymous: true,
+
+text: "Gulnora Alisherovna, IELTS topshirishimda bergan maslahatlaringiz va motivatsiyangiz uchun tashakkur! Universitetimizdagi eng mehribon ustozsiz!",
+
+photoUrl: null,
+
+audioUrl: null,
+
+status: "approved",
+
+date: "2026-03-18 14:20"
+
+}
+
+];
+
+
+
+// App Application State
+
+let teachers = [];
+
+let wishes = [];
+
+let isAdminLoggedIn = false;
+
+let activeAdminTab = 'pending';
+
+let mediaRecorder = null;
+
+let audioChunks = [];
+
+let currentAudioBlob = null;
+let currentAudioDataUrl = null;
+
+let uploadedPhotoBase64 = null;
+
+
+
+// Initialize State from LocalStorage or Defaults
+
+function initApp() {
+const storedTeachers = localStorage.getItem('au_teachers_data');
+const storedWishes = localStorage.getItem('au_wishes_data');
+const storedVersion = localStorage.getItem('au_teachers_version');
+const DATA_VERSION = '2026-09-24-v6';
+
+if (!storedTeachers || storedVersion !== DATA_VERSION) {
+  teachers = [...initialTeachersData];
+  localStorage.setItem('au_teachers_version', DATA_VERSION);
+  saveTeachersToStorage();
+} else {
+  teachers = JSON.parse(storedTeachers);
+}
+
+// Only these fields are used for employees: F.I.SH, lavozimi, avatar and likes.
+teachers = teachers.map((t, i) => ({
+  id: t.id || `au-${String(i+1).padStart(3,'0')}`,
+  fullName: t.fullName || '',
+  degree: t.degree || t.academicTitle || '',
+  academicTitle: t.academicTitle || t.degree || '',
+  avatar: t.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(t.fullName || 'Xodim')}&background=2563eb&color=fff&size=400`,
+  likes: Number(t.likes || 0)
+}));
+saveTeachersToStorage();
+
+if (storedWishes) {
+  wishes = JSON.parse(storedWishes);
+} else {
+  wishes = [...initialWishesData];
+  saveWishesToStorage();
+}
+
+populateTeacherSelectOptions();
+renderStats();
+renderHomeTopTeachers();
+renderHomeWishesFeed();
+renderTeachersGrid(teachers);
+renderTopRanking();
+}
+
+function saveTeachersToStorage() {
+
+localStorage.setItem('au_teachers_data', JSON.stringify(teachers));
+localStorage.setItem('au_teachers_version', '2026-09-24-v6');
+
+}
+
+
+
+function saveWishesToStorage() {
+
+localStorage.setItem('au_wishes_data', JSON.stringify(wishes));
+
+}
+
+
+
+// Navigation Controller
+
+function navigateTo(viewName, teacherId = null) {
+
+const views = ['home', 'teachers', 'top', 'profile', 'admin'];
+
+views.forEach(v => {
+
+const el = document.getElementById(`view-${v}`);
+
+if (el) el.classList.add('hidden');
+
+});
+
+
+
+const targetView = document.getElementById(`view-${viewName}`);
+
+if (targetView) targetView.classList.remove('hidden');
+
+
+
+window.scrollTo({ top: 0, behavior: 'smooth' });
+
+
+
+if (viewName === 'profile' && teacherId) {
+
+renderTeacherProfile(teacherId);
+
+} else if (viewName === 'top') {
+
+renderTopRanking();
+
+} else if (viewName === 'admin') {
+
+checkAdminState();
+
+} else if (viewName === 'home') {
+
+renderStats();
+
+renderHomeTopTeachers();
+
+renderHomeWishesFeed();
+
+}
+
+}
+
+
+
+function toggleMobileMenu() {
+
+const menu = document.getElementById('mobileMenu');
+
+menu.classList.toggle('hidden');
+
+}
+
+
+
+function toggleTheme() {
+
+const html = document.documentElement;
+
+const themeIcon = document.getElementById('themeIcon');
+
+if (html.classList.contains('dark')) {
+
+html.classList.remove('dark');
+
+themeIcon.className = 'fa-solid fa-moon';
+
+localStorage.setItem('au_theme', 'light');
+
+} else {
+
+html.classList.add('dark');
+
+themeIcon.className = 'fa-solid fa-sun';
+
+localStorage.setItem('au_theme', 'dark');
+
+}
+
+}
+
+
+
+function renderStats() {
+
+document.getElementById('stat-teachers-count').innerText = teachers.length;
+
+
+const totalLikes = teachers.reduce((acc, curr) => acc + (curr.likes || 0), 0);
+
+document.getElementById('stat-likes-count').innerText = totalLikes;
+
+
+
+const approvedWishes = wishes.filter(w => w.status === 'approved').length;
+
+document.getElementById('stat-wishes-count').innerText = approvedWishes;
+
+}
+
+
+
+
+
+function populateTeacherSelectOptions() {
+
+const select = document.getElementById('wish-teacher-id');
+
+select.innerHTML = '<option value="">-- O\'qituvchini tanlang --</option>';
+
+teachers.forEach(t => {
+
+const opt = document.createElement('option');
+
+opt.value = t.id;
+
+opt.innerText = t.fullName;
+
+select.appendChild(opt);
+
+});
+
+}
+
+
+
+// Home View Top Teachers
+
+function renderHomeTopTeachers() {
+
+const container = document.getElementById('home-top-teachers');
+
+const sorted = [...teachers].sort((a, b) => b.likes - a.likes).slice(0, 3);
+
+
+
+container.innerHTML = sorted.map(t => `
+
+<div class="glass-card rounded-2xl p-5 border shadow-sm hover:shadow-md transition flex flex-col justify-between">
+
+<div class="flex items-start space-x-4">
+
+<img src="${t.avatar}" alt="${t.fullName}" class="w-16 h-16 rounded-xl object-cover border border-blue-500/30">
+
+<div class="flex-1 min-w-0">
+
+<h4 class="font-bold text-base truncate hover:text-blue-600 cursor-pointer" onclick="navigateTo('profile', '${t.id}')">${t.fullName}</h4>
+
+
+<span class="inline-block mt-2 px-2 py-0.5 bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-[10px] font-semibold rounded">
+
+${t.degree}
+
+</span>
+
+</div>
+
+</div>
+
+<div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
+
+<button onclick="toggleLike('${t.id}')" class="flex items-center space-x-1.5 text-xs text-rose-500 font-semibold bg-rose-50 dark:bg-rose-950/50 px-3 py-1.5 rounded-lg hover:bg-rose-100 transition">
+
+<i class="fa-solid fa-heart"></i>
+
+<span>${t.likes} Liked</span>
+
+</button>
+
+<button onclick="navigateTo('profile', '${t.id}')" class="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+
+Profil <i class="fa-solid fa-arrow-right ml-0.5"></i>
+
+</button>
+
+</div>
+
+</div>
+
+`).join('');
+
+}
+
+
+
+// Home View Recent Wishes Feed
+
+function renderHomeWishesFeed() {
+
+const container = document.getElementById('home-wishes-feed');
+
+const approved = wishes.filter(w => w.status === 'approved').slice(-4).reverse();
+
+
+
+if (approved.length === 0) {
+
+container.innerHTML = `<p class="text-xs text-slate-500 italic">Hozircha tasdiqlangan tilaklar yo'q.</p>`;
+
+return;
+
+}
+
+
+
+container.innerHTML = approved.map(w => {
+
+const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Ustoz" };
+
+return `
+
+<div class="glass-card p-4 rounded-2xl border space-y-2">
+
+<div class="flex justify-between items-center text-xs">
+
+<span class="font-bold text-slate-700 dark:text-slate-300">
+
+<i class="fa-solid fa-user-circle text-blue-500 mr-1"></i>
+
+${w.isAnonymous ? "Anonim Talaba" : w.senderName} (${w.senderGroup || 'Talaba'})
+
+</span>
+
+<span class="text-slate-400 text-[10px]">${w.date}</span>
+
+</div>
+
+<p class="text-xs text-slate-600 dark:text-slate-300 italic">"${w.text}"</p>
+
+<div class="text-[11px] font-semibold text-blue-600 dark:text-blue-400 pt-1 border-t border-slate-100 dark:border-slate-800">
+
+Kimga: ${teacher.fullName}
+
+</div>
+
+</div>
+
+`;
+
+}).join('');
+
+}
+
+
+
+// Filtering teachers logic
+
+function applyFilters() {
+const search = (document.getElementById('search-input')?.value || '').toLowerCase();
+const degree = document.getElementById('filter-degree')?.value || '';
+const sort = document.getElementById('filter-sort')?.value || 'likes-desc';
+let filtered = teachers.filter(t => {
+  const matchesSearch = t.fullName.toLowerCase().includes(search) || t.degree.toLowerCase().includes(search);
+  const matchesDegree = degree === "" || t.degree === degree;
+  return matchesSearch && matchesDegree;
+});
+if (sort === 'likes-desc') filtered.sort((a,b)=>b.likes-a.likes);
+else if (sort === 'name-asc') filtered.sort((a,b)=>a.fullName.localeCompare(b.fullName));
+renderTeachersGrid(filtered);
+}
+
+function renderTeachersGrid(list = teachers) {
+  const container = document.getElementById('teachers-grid');
+  if (!container) return;
+  if (!list.length) {
+    container.innerHTML = '<div class="col-span-full text-center py-12 text-slate-400">Xodim topilmadi.</div>';
+    return;
+  }
+  container.innerHTML = list.map(t => `
+    <div class="glass-card rounded-2xl p-5 border shadow-sm hover:shadow-lg transition">
+      <div class="flex items-start gap-4">
+        <img src="${t.avatar}" alt="${t.fullName}" class="w-20 h-20 rounded-2xl object-cover border border-blue-500/20 flex-shrink-0">
+        <div class="min-w-0 flex-1">
+          <button onclick="navigateTo('profile','${t.id}')" class="text-left font-bold text-base leading-snug hover:text-blue-600 transition">${t.fullName}</button>
+          <div class="mt-2 text-xs font-semibold text-blue-600 dark:text-blue-400">${t.degree || ''}</div>
+        </div>
+      </div>
+      <div class="mt-5 pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+        <button onclick="toggleLike('${t.id}')" class="flex items-center gap-1.5 text-xs text-rose-500 font-semibold bg-rose-50 dark:bg-rose-950/50 px-3 py-1.5 rounded-lg hover:bg-rose-100 transition">
+          <i class="fa-solid fa-heart"></i><span>${t.likes || 0}</span>
+        </button>
+        <button onclick="navigateTo('profile','${t.id}')" class="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline">Profil <i class="fa-solid fa-arrow-right ml-1"></i></button>
+      </div>
+    </div>`).join('');
+}
+
+function renderTopRanking() {
+  const container = document.getElementById('top-teachers-list');
+  if (!container) return;
+  const sorted = [...teachers].sort((a,b) => (b.likes || 0) - (a.likes || 0) || a.fullName.localeCompare(b.fullName));
+  container.innerHTML = sorted.map((t, i) => `
+    <button onclick="navigateTo('profile','${t.id}')" class="w-full text-left flex items-center gap-4 p-4 hover:bg-blue-50 dark:hover:bg-slate-800 transition">
+      <div class="w-8 text-center font-black ${i < 3 ? 'text-amber-500' : 'text-slate-400'}">${i + 1}</div>
+      <img src="${t.avatar}" alt="${t.fullName}" class="w-12 h-12 rounded-full object-cover border border-blue-500/20">
+      <div class="min-w-0 flex-1"><div class="font-bold text-sm truncate">${t.fullName}</div><div class="text-xs text-slate-500 truncate">${t.degree || ''}</div></div>
+      <div class="text-rose-500 font-bold text-sm"><i class="fa-solid fa-heart mr-1"></i>${t.likes || 0}</div>
+    </button>`).join('');
+}
+
+function toggleLike(teacherId) {
+  const t = teachers.find(item => item.id === teacherId);
+  if (!t) return;
+  t.likes = Number(t.likes || 0) + 1;
+  saveTeachersToStorage();
+  renderStats();
+  renderHomeTopTeachers();
+  renderTeachersGrid(teachers);
+  renderTopRanking();
+  const profileVisible = !document.getElementById('view-profile')?.classList.contains('hidden');
+  if (profileVisible) renderTeacherProfile(teacherId);
+}
+
+function renderTeacherProfile(teacherId) {
+const t = teachers.find(item => item.id === teacherId);
+const container = document.getElementById('teacher-profile-container');
+if (!t) { container.innerHTML = `<p class="text-center text-slate-400 py-10">Xodim topilmadi.</p>`; return; }
+const teacherWishes = wishes.filter(w => w.teacherId === t.id && w.status === 'approved');
+container.innerHTML = `
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+  <div class="space-y-6">
+    <div class="glass-card rounded-3xl p-6 border shadow-lg text-center space-y-4">
+      <img src="${t.avatar}" alt="${t.fullName}" class="w-36 h-36 rounded-3xl object-cover mx-auto border-4 border-blue-500/30 shadow-xl">
+      <div><span class="px-3 py-1 bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-xs font-bold rounded-full">${t.degree}</span><h2 class="text-2xl font-bold mt-2">${t.fullName}</h2></div>
+      <div class="flex justify-center space-x-3 pt-2">
+        <button onclick="toggleLike('${t.id}')" class="flex items-center space-x-2 px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-bold shadow-md transition"><i class="fa-solid fa-heart"></i><span>${t.likes} E'tirof</span></button>
+        <button onclick="openWishModalForTeacher('${t.id}')" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-md transition"><i class="fa-solid fa-paper-plane mr-1"></i> Tilak Yuborish</button>
+      </div>
+    </div>
+    <div class="glass-card rounded-3xl p-6 border shadow-sm text-center space-y-3">
+      <h3 class="font-bold text-sm text-slate-700 dark:text-slate-300">Profil QR-Kodi</h3>
+      <p class="text-[11px] text-slate-400">Ushbu xodim profiliga o'tish uchun skaner qiling</p>
+      <div id="qrcode" class="flex justify-center p-3 bg-white rounded-2xl border w-fit mx-auto"></div>
+    </div>
+  </div>
+  <div class="lg:col-span-2 space-y-6">
+    <div class="glass-card rounded-3xl p-6 sm:p-8 border shadow-sm space-y-4">
+      <h3 class="text-xl font-bold">Xodim haqida</h3>
+      <div class="p-4 rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50">
+        <div class="text-xs text-slate-500 dark:text-slate-400 mb-1">F.I.SH</div>
+        <div class="text-lg font-bold">${t.fullName}</div>
+      </div>
+      <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+        <div class="text-xs text-slate-500 dark:text-slate-400 mb-1">Lavozimi</div>
+        <div class="text-base font-semibold">${t.degree}</div>
+      </div>
+    </div>
+    <div class="glass-card rounded-3xl p-6 sm:p-8 border shadow-sm space-y-4">
+      <h3 class="text-xl font-bold">Talabalarning Tilaklari (${teacherWishes.length})</h3>
+      ${teacherWishes.length === 0 ? `<div class="text-center py-8 text-slate-400 text-sm">Hali ushbu xodim uchun tilaklar bildirilmagan. Birinchi bo'lib siz tilak yo'llang!</div>` : `<div class="space-y-4">${teacherWishes.map(w => `
+        <div class="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border space-y-3">
+          <div class="flex justify-between items-center text-xs"><span class="font-bold text-blue-600 dark:text-blue-400"><i class="fa-solid fa-user-graduate mr-1"></i>${w.isAnonymous ? "Anonim Talaba" : w.senderName} (${w.senderGroup || 'Talaba'})</span><span class="text-slate-400 text-[10px]">${w.date}</span></div>
+          <p class="text-xs text-slate-700 dark:text-slate-200">${w.text}</p>
+          ${w.photoUrl ? `<img src="${w.photoUrl}" class="w-full max-h-48 object-cover rounded-xl border">` : ''}
+          ${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="w-full h-8"></audio>` : ''}
+        </div>`).join('')}</div>`}
+    </div>
+  </div>
+</div>`;
+setTimeout(() => {
+  const qrContainer = document.getElementById('qrcode');
+  if (qrContainer) { qrContainer.innerHTML=''; new QRCode(qrContainer,{text:window.location.href.split('#')[0] + '#teacher-' + t.id,width:120,height:120,colorDark:'#1d4ed8',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H}); }
+},100);
+}
+
+function openWishModal() {
+
+document.getElementById('wishModal').classList.remove('hidden');
+
+}
+
+
+
+function openWishModalForTeacher(teacherId) {
+
+openWishModal();
+
+const select = document.getElementById('wish-teacher-id');
+
+select.value = teacherId;
+
+}
+
+
+
+function closeWishModal() {
+
+document.getElementById('wishModal').classList.add('hidden');
+
+uploadedPhotoBase64 = null;
+
+currentAudioBlob = null;
+currentAudioDataUrl = null;
+if (mediaRecorder && mediaRecorder.state === 'recording') {
+  mediaRecorder.stop();
+}
+mediaRecorder = null;
+audioChunks = [];
+document.getElementById('audio-preview').removeAttribute('src');
+document.getElementById('photo-preview').removeAttribute('src');
+document.getElementById('photo-preview-container').classList.add('hidden');
+
+document.getElementById('audio-preview').classList.add('hidden');
+
+document.getElementById('recording-status').innerText = "Ovozli xabar yo'q";
+
+}
+
+
+
+// Photo Upload Handler
+
+function handlePhotoUpload(event) {
+
+const file = event.target.files[0];
+
+if (file) {
+
+const reader = new FileReader();
+
+reader.onload = function (e) {
+
+uploadedPhotoBase64 = e.target.result;
+
+const preview = document.getElementById('photo-preview');
+
+preview.src = uploadedPhotoBase64;
+
+document.getElementById('photo-preview-container').classList.remove('hidden');
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+}
+
+
+
+function removeUploadedPhoto() {
+
+uploadedPhotoBase64 = null;
+
+document.getElementById('wish-photo-input').value = "";
+
+document.getElementById('photo-preview-container').classList.add('hidden');
+
+}
+
+
+
+// Audio Recording Logic
+
+async function toggleAudioRecording() {
+  const recordBtn = document.getElementById('record-btn');
+  const recordText = document.getElementById('record-text');
+  const recordingStatus = document.getElementById('recording-status');
+  const audioPreview = document.getElementById('audio-preview');
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    alert("Mikrofon brauzer tomonidan bloklangan. Saytni VS Code Live Server orqali http://localhost manzilida oching va mikrofon uchun Allow bosing.");
+    return;
+  }
+
+  if (mediaRecorder && mediaRecorder.state === 'recording') {
+    mediaRecorder.stop();
+    recordText.innerText = "Yozishni Boshlash";
+    recordBtn.classList.remove('bg-amber-600');
+    recordBtn.classList.add('bg-rose-600');
+    recordingStatus.innerText = "Ovoz qayta ishlanmoqda...";
+    return;
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const mimeCandidates = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus'];
+    const mimeType = mimeCandidates.find(type => window.MediaRecorder && MediaRecorder.isTypeSupported(type)) || '';
+    mediaRecorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+    audioChunks = [];
+    currentAudioBlob = null;
+    currentAudioDataUrl = null;
+
+    mediaRecorder.ondataavailable = event => {
+      if (event.data && event.data.size > 0) audioChunks.push(event.data);
+    };
+
+    mediaRecorder.onstop = () => {
+      const finalType = mediaRecorder.mimeType || mimeType || 'audio/webm';
+      currentAudioBlob = new Blob(audioChunks, { type: finalType });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        currentAudioDataUrl = reader.result;
+        audioPreview.src = currentAudioDataUrl;
+        audioPreview.classList.remove('hidden');
+        recordingStatus.innerText = "Ovozli xabar tayyor!";
+      };
+      reader.readAsDataURL(currentAudioBlob);
+      stream.getTracks().forEach(track => track.stop());
+    };
+
+    mediaRecorder.start();
+    recordText.innerText = "To'xtatish";
+    recordBtn.classList.remove('bg-rose-600');
+    recordBtn.classList.add('bg-amber-600');
+    recordingStatus.innerText = "Ovoz yozilmoqda...";
+  } catch (err) {
+    console.error(err);
+    alert("Mikrofonga ruxsat berilmadi. Brauzerda mikrofon uchun Allow bosing va saytni localhost orqali oching.");
+  }
+}
+
+
+// Submit Wish Form
+
+async function submitWishForm(event) {
+  event.preventDefault();
+
+  const teacherId = document.getElementById('wish-teacher-id').value;
+  const senderName = document.getElementById('wish-sender-name').value || "Anonim Talaba";
+  const senderGroup = document.getElementById('wish-sender-group').value || "Angren Univ";
+  const isAnonymous = document.getElementById('wish-is-anonymous').checked;
+  const text = document.getElementById('wish-text').value.trim();
+
+  if (!teacherId) {
+    alert("Avval xodimni tanlang.");
+    return;
+  }
+  if (!text && !uploadedPhotoBase64 && !currentAudioDataUrl) {
+    alert("Iltimos, matn, rasm yoki ovozli xabardan kamida bittasini yuboring.");
+    return;
+  }
+
+  const newWish = {
+    id: "wish-" + Date.now(),
+    teacherId,
+    senderName: isAnonymous ? "Anonim" : senderName,
+    senderGroup,
+    isAnonymous,
+    text,
+    photoUrl: uploadedPhotoBase64 || null,
+    audioUrl: currentAudioDataUrl || null,
+    status: "pending",
+    date: new Date().toISOString().replace('T', ' ').substring(0, 16)
+  };
+
+  wishes.push(newWish);
+  saveWishesToStorage();
+  renderHomeWishesFeed();
+
+  alert("Ehtirom tilagingiz muvaffaqiyatli yuborildi! Admin moderatsiyasidan so'ng e'lon qilinadi.");
+  event.target.reset();
+  closeWishModal();
+}
+
+
+// Admin Login Controller
+
+function checkAdminState() {
+
+const loginBox = document.getElementById('admin-login-box');
+
+const dashboard = document.getElementById('admin-dashboard');
+
+
+
+if (isAdminLoggedIn) {
+
+loginBox.classList.add('hidden');
+
+dashboard.classList.remove('hidden');
+
+renderAdminDashboard();
+
+} else {
+
+loginBox.classList.remove('hidden');
+
+dashboard.classList.add('hidden');
+
+}
+
+}
+
+
+
+function handleAdminLogin(event) {
+
+event.preventDefault();
+
+const pass = document.getElementById('admin-password').value;
+
+if (pass === 'Madina200@') {
+
+isAdminLoggedIn = true;
+
+checkAdminState();
+
+} else {
+
+alert("Parol noto'g'ri! Qayta urinib ko'ring.");
+
+}
+
+}
+
+
+
+function adminLogout() {
+
+isAdminLoggedIn = false;
+
+checkAdminState();
+
+}
+
+
+
+function switchAdminTab(tab) {
+
+activeAdminTab = tab;
+
+const pendingBtn = document.getElementById('tab-pending-btn');
+
+const approvedBtn = document.getElementById('tab-approved-btn');
+
+const pendingList = document.getElementById('admin-pending-list');
+
+const approvedList = document.getElementById('admin-approved-list');
+
+
+
+if (tab === 'pending') {
+
+pendingBtn.className = "pb-3 border-b-2 border-blue-600 font-bold text-blue-600 text-sm";
+
+approvedBtn.className = "pb-3 border-b-2 border-transparent font-medium text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 text-sm";
+
+pendingList.classList.remove('hidden');
+
+approvedList.classList.add('hidden');
+
+} else {
+
+approvedBtn.className = "pb-3 border-b-2 border-blue-600 font-bold text-blue-600 text-sm";
+
+pendingBtn.className = "pb-3 border-b-2 border-transparent font-medium text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 text-sm";
+
+approvedList.classList.remove('hidden');
+
+pendingList.classList.add('hidden');
+
+}
+
+renderAdminDashboard();
+
+}
+
+
+
+function renderAdminTeachers() {
+  const box = document.getElementById('admin-teachers-list');
+  if (!box) return;
+  const q = (document.getElementById('admin-teacher-search')?.value || '').toLowerCase();
+  const list = teachers.filter(t => t.fullName.toLowerCase().includes(q));
+  box.innerHTML = list.map(t => `
+    <div class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-800/50">
+      <img src="${t.avatar}" class="w-11 h-11 rounded-full object-cover border border-blue-500/20">
+      <div class="min-w-0 flex-1"><div class="font-semibold text-sm truncate">${t.fullName}</div><div class="text-[11px] text-slate-500 truncate">${t.degree || t.academicTitle || ''}</div></div>
+      <button onclick="openTeacherEditor('${t.id}')" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"><i class="fa-solid fa-pen"></i></button>
+      <button onclick="deleteTeacherFromAdmin('${t.id}')" class="p-2 text-rose-600 hover:bg-rose-50 rounded-lg"><i class="fa-solid fa-trash"></i></button>
+    </div>`).join('') || '<div class="text-center py-6 text-slate-400">Xodim topilmadi.</div>';
+}
+
+let adminAvatarBase64 = null;
+function openTeacherEditor(id='') {
+  const modal=document.getElementById('teacherEditorModal'); modal.classList.remove('hidden'); modal.classList.add('flex');
+  adminAvatarBase64=null; document.getElementById('edit-teacher-id').value=id;
+  if(id){ const t=teachers.find(x=>x.id===id); if(!t)return; document.getElementById('teacher-editor-title').innerText='Xodimni tahrirlash'; document.getElementById('edit-teacher-name').value=t.fullName; document.getElementById('edit-teacher-role').value=t.degree||t.academicTitle||''; document.getElementById('edit-teacher-avatar-preview').src=t.avatar; document.getElementById('edit-teacher-avatar-preview').classList.remove('hidden'); }
+  else { document.getElementById('teacher-editor-title').innerText="Xodim qo'shish"; document.querySelector('#teacherEditorModal form').reset(); document.getElementById('edit-teacher-avatar-preview').classList.add('hidden'); }
+}
+function closeTeacherEditor(){const m=document.getElementById('teacherEditorModal');m.classList.add('hidden');m.classList.remove('flex');}
+function previewAdminAvatar(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=x=>{adminAvatarBase64=x.target.result;const p=document.getElementById('edit-teacher-avatar-preview');p.src=adminAvatarBase64;p.classList.remove('hidden')};r.readAsDataURL(f);}
+function saveTeacherFromAdmin(e){e.preventDefault();const id=document.getElementById('edit-teacher-id').value;const name=document.getElementById('edit-teacher-name').value.trim();const role=document.getElementById('edit-teacher-role').value.trim();if(id){const t=teachers.find(x=>x.id===id);if(t){t.fullName=name;t.degree=role;t.academicTitle=role;if(adminAvatarBase64)t.avatar=adminAvatarBase64;}}else{teachers.push({id:'au-'+Date.now(),fullName:name,degree:role,academicTitle:role,avatar:adminAvatarBase64||`https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=2563eb&color=fff&size=400`,likes:0});}saveTeachersToStorage();populateTeacherSelectOptions();renderTeachersGrid(teachers);renderStats();renderHomeTopTeachers();renderTopRanking();renderAdminTeachers();closeTeacherEditor();}
+function deleteTeacherFromAdmin(id){const t=teachers.find(x=>x.id===id);if(!t)return;if(!confirm(`“${t.fullName}”ni o'chirishni tasdiqlaysizmi?`))return;teachers=teachers.filter(x=>x.id!==id);wishes=wishes.filter(w=>w.teacherId!==id);saveTeachersToStorage();saveWishesToStorage();populateTeacherSelectOptions();renderTeachersGrid(teachers);renderStats();renderHomeTopTeachers();renderTopRanking();renderAdminTeachers();}
+
+function renderAdminDashboard() {
+
+const pendingList = document.getElementById('admin-pending-list');
+
+const approvedList = document.getElementById('admin-approved-list');
+
+
+
+const pendingWishes = wishes.filter(w => w.status === 'pending');
+
+const approvedWishes = wishes.filter(w => w.status === 'approved');
+
+renderAdminTeachers();
+
+
+
+document.getElementById('count-pending').innerText = pendingWishes.length;
+
+document.getElementById('count-approved').innerText = approvedWishes.length;
+
+
+
+// Render Pending
+
+if (pendingWishes.length === 0) {
+
+pendingList.innerHTML = `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Kutish jarayonida hech qanday murojaat yo'q.</div>`;
+
+} else {
+
+pendingList.innerHTML = pendingWishes.map(w => {
+
+const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Noma'lum" };
+
+return `
+
+<div class="glass-card p-5 rounded-2xl border flex flex-col md:flex-row justify-between gap-4">
+
+<div class="space-y-2 flex-1">
+
+<div class="flex items-center space-x-2 text-xs">
+
+<span class="font-bold text-blue-600">${w.senderName} (${w.senderGroup})</span>
+
+<span class="text-slate-400">• ${w.date}</span>
+
+</div>
+
+<p class="text-xs text-slate-700 dark:text-slate-300 font-medium">"${w.text}"</p>
+
+<div class="text-[11px] text-slate-500">
+
+Mo'ljallangan ustoz: <strong class="text-slate-800 dark:text-slate-200">${teacher.fullName}</strong>
+
+</div>
+${w.photoUrl ? `<img src="${w.photoUrl}" alt="Yuborilgan rasm" class="mt-3 max-w-xs max-h-56 object-cover rounded-xl border border-slate-200 dark:border-slate-700">` : ''}
+${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="mt-3 w-full max-w-md h-10"></audio>` : ''}
+
+</div>
+
+
+
+<div class="flex items-center space-x-2 flex-shrink-0">
+
+<button onclick="approveWish('${w.id}')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">
+
+<i class="fa-solid fa-check mr-1"></i> Tasdiqlash
+
+</button>
+
+<button onclick="rejectWish('${w.id}')" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition">
+
+<i class="fa-solid fa-xmark mr-1"></i> Rad etish
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}).join('');
+
+}
+
+
+
+// Render Approved
+
+if (approvedWishes.length === 0) {
+
+approvedList.innerHTML = `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Tasdiqlangan murojaatlar hozircha yo'q.</div>`;
+
+} else {
+
+approvedList.innerHTML = approvedWishes.map(w => {
+
+const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Noma'lum" };
+
+return `
+
+<div class="glass-card p-5 rounded-2xl border flex flex-col md:flex-row justify-between gap-4">
+
+<div class="space-y-2 flex-1">
+
+<div class="flex items-center space-x-2 text-xs">
+
+<span class="font-bold text-blue-600">${w.senderName} (${w.senderGroup})</span>
+
+<span class="text-slate-400">• ${w.date}</span>
+
+</div>
+
+<p class="text-xs text-slate-700 dark:text-slate-300">"${w.text}"</p>
+
+<div class="text-[11px] text-slate-500">
+
+Mo'ljallangan ustoz: <strong>${teacher.fullName}</strong>
+
+</div>
+${w.photoUrl ? `<img src="${w.photoUrl}" alt="Yuborilgan rasm" class="mt-3 max-w-xs max-h-56 object-cover rounded-xl border border-slate-200 dark:border-slate-700">` : ''}
+${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="mt-3 w-full max-w-md h-10"></audio>` : ''}
+
+</div>
+
+<div class="flex items-center space-x-2">
+
+<button onclick="rejectWish('${w.id}')" class="px-3 py-1.5 bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 rounded-xl text-xs font-semibold hover:bg-rose-200 transition">
+
+O'chirish
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}).join('');
+
+}
+
+}
+
+
+
+function approveWish(wishId) {
+
+const w = wishes.find(item => item.id === wishId);
+
+if (w) {
+
+w.status = 'approved';
+
+saveWishesToStorage();
+
+renderAdminDashboard();
+
+renderStats();
+
+}
+
+}
+
+
+
+function rejectWish(wishId) {
+
+wishes = wishes.filter(item => item.id !== wishId);
+
+saveWishesToStorage();
+
+renderAdminDashboard();
+
+renderStats();
+
+}
+
+
+
+// Initialize App On DOM Load
+
+window.addEventListener('DOMContentLoaded', () => {
+  initApp();
+  const match = window.location.hash.match(/^#teacher-(.+)$/);
+  if (match && teachers.some(t => t.id === match[1])) navigateTo('profile', match[1]);
+});
+
+</script>
+
 </body>
+
 </html>
