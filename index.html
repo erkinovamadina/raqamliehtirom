@@ -2219,35 +2219,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 </script>
 <script type="module">
-  // 1. Firebase va Firestore SDK larini yuklaymiz
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  // Loyiha sozlamalari
-  const firebaseConfig = {
-    apiKey: "AIzaSyCqIBAh69Pu0mFIp6Y8FaC4sB6fprb5Gl4",
-    authDomain: "raqamli-ehtirom.firebaseapp.com",
-    projectId: "raqamli-ehtirom",
-    storageBucket: "raqamli-ehtirom.firebasestorage.app",
-    messagingSenderId: "84914510064",
-    appId: "1:84914510064:web:27a5efbf0e6a1e5bbc0a35",
-    measurementId: "G-1NYBZH9THE"
-  };
-
-  // 2. Firebase-ni ishga tushirish
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // 3. Funksiyalarni umumiy JavaScript kodingizga ulaymiz
-  window.db = db;
-  window.collection = collection;
-  window.addDoc = addDoc;
-  window.onSnapshot = onSnapshot;
-  window.doc = doc;
-  window.updateDoc = updateDoc;
-  window.deleteDoc = deleteDoc;
-</script><!-- Firebase SDK va Real-Vaqt rejimida xabarlarni eshitish (Listening) -->
-<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -2264,7 +2235,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Global o'zgaruvchilarga chiqarib olamiz
+  // Global o'zgaruvchilarni ulash
   window.db = db;
   window.collection = collection;
   window.addDoc = addDoc;
@@ -2273,7 +2244,7 @@ window.addEventListener('DOMContentLoaded', () => {
   window.updateDoc = updateDoc;
   window.deleteDoc = deleteDoc;
 
-  // 1. Zayavka va tilaklarni REAL-VAQT rejimida barcha qurilmalarga chiqarish
+  // Real-vaqt rejimida zayavkalar/tilaklarni yangilash
   onSnapshot(collection(db, "wishes"), (snapshot) => {
     window.wishes = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
     if (typeof renderAdminDashboard === "function") renderAdminDashboard();
@@ -2281,19 +2252,18 @@ window.addEventListener('DOMContentLoaded', () => {
     if (typeof renderWishes === "function") renderWishes();
   });
 
-  // 2. Ustozlar, likelar va rasmlarni REAL-VAQT rejimida barcha qurilmalarda yangilash
+  // Real-vaqt rejimida ustozlar (like va rasm)ni yangilash
   onSnapshot(collection(db, "teachers"), (snapshot) => {
     window.teachers = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
     if (typeof renderTeachers === "function") renderTeachers();
   });
 </script>
 
-<!-- Zayavka yuborish va harakatlar funksiyasi -->
 <script>
-  // 1. Yangi Zayavka/Tilak yuborish funksiyasi (Telefon va Noutbukda birdek saqlaydi)
+  // 1. Zayavka (tilak) yuborish
   async function submitWish(teacherId, text, senderName) {
     if (!text || text.trim() === "") {
-      alert("Iltimos, tilak matnini kiriting!");
+alert("Iltimos, tilak matnini kiriting!");
       return;
     }
     try {
@@ -2301,31 +2271,30 @@ window.addEventListener('DOMContentLoaded', () => {
         teacherId: teacherId,
         text: text,
         sender: senderName || "Anonim",
-        status: "pending", // admin panelga zayavka bo'lib tushadi
+        status: "pending",
         createdAt: new Date()
       });
-      alert("Tilagingiz muvaffaqiyatli yuborildi! Admin tasdiqlagach ko'rinadi.");
+      alert("Tilagingiz yuborildi! Admin tasdiqlagach ko'rinadi.");
     } catch (err) {
-      console.error("Zayavka yuborishda xatolik:", err);
-      alert("Xatolik yuz berdi. Qayta urinib ko'ring.");
+      console.error("Zayavka yuborishda xato:", err);
     }
   }
 
-  // 2. Zayavkani tasdiqlash (Admin paneldan)
+  // 2. Zayavkani tasdiqlash
   async function approveWish(wishId) {
     try {
       await updateDoc(doc(db, "wishes", wishId), { status: 'approved' });
     } catch (err) {
-      console.error("Xato:", err);
+      console.error("Tasdiqlashda xato:", err);
     }
   }
 
-  // 3. Zayavkani o'chirish/rad etish
+  // 3. Zayavkani o'chirish
   async function rejectWish(wishId) {
     try {
-      await deleteDoc(doc(doc(db, "wishes", wishId)));
+      await deleteDoc(doc(db, "wishes", wishId));
     } catch (err) {
-      console.error("Xato:", err);
+      console.error("O'chirishda xato:", err);
     }
   }
 
@@ -2346,13 +2315,13 @@ window.addEventListener('DOMContentLoaded', () => {
       await updateDoc(doc(db, "teachers", teacherId), {
         image: newImageUrl
       });
-      alert("Rasm muvaffaqiyatli yangilandi va barchaga ko'rindi!");
+      alert("Rasm muvaffaqiyatli yangilandi!");
     } catch (err) {
       console.error("Rasm yangilanmadi:", err);
     }
   }
 
-  // Sahifa yuklanganda ishga tushishi
+  // Sahifa yuklanganda ishga tushish
   window.addEventListener('DOMContentLoaded', () => {
     if (typeof initApp === "function") initApp();
     const match = window.location.hash.match(/^#teacher-(.+)$/);
@@ -2362,7 +2331,4 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 </script>
 </body>
-
-
-
 </html>
