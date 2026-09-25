@@ -2049,177 +2049,176 @@ document.getElementById('count-approved').innerText = approvedWishes.length;
 
 
 
-<script>
 // Render Pending
-if (typeof pendingWishes !== 'undefined' && typeof pendingList !== 'undefined') {
-  if (pendingWishes.length === 0) {
-    pendingList.innerHTML = `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Kutish jarayonida hech qanday murojaat yo'q.</div>`;
-  } else {
-    pendingList.innerHTML = pendingWishes.map(w => {
-      const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Noma'lum" };
-      return `
-        <div class="glass-card p-5 rounded-2xl border flex flex-col md:flex-row justify-between gap-4">
-          <div class="space-y-2 flex-1">
-            <div class="flex items-center space-x-2 text-xs">
-              <span class="font-bold text-blue-600">${w.senderName || w.sender || 'Anonim'} (${w.senderGroup || ''})</span>
-              <span class="text-slate-400">• ${w.date || ''}</span>
-            </div>
-            <p class="text-xs text-slate-700 dark:text-slate-300 font-medium">"${w.text}"</p>
-            <div class="text-[11px] text-slate-500">
-              Mo'ljallangan ustoz: <strong class="text-slate-800 dark:text-slate-200">${teacher.fullName}</strong>
-            </div>
-            ${w.photoUrl ? `<img src="${w.photoUrl}" alt="Yuborilgan rasm" class="mt-3 max-w-xs max-h-56 object-cover rounded-xl border border-slate-200 dark:border-slate-700">` : ''}
-            ${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="mt-3 w-full max-w-md h-10"></audio>` : ''}
-          </div>
-          <div class="flex items-center space-x-2 flex-shrink-0">
-            <button onclick="approveWish('${w.id}')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">
-              <i class="fa-solid fa-check mr-1"></i> Tasdiqlash
-            </button>
-            <button onclick="rejectWish('${w.id}')" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition">
-              <i class="fa-solid fa-xmark mr-1"></i> Rad etish
-            </button>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
+
+if (pendingWishes.length === 0) {
+
+pendingList.innerHTML = `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Kutish jarayonida hech qanday murojaat yo'q.</div>`;
+
+} else {
+
+pendingList.innerHTML = pendingWishes.map(w => {
+
+const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Noma'lum" };
+
+return `
+
+<div class="glass-card p-5 rounded-2xl border flex flex-col md:flex-row justify-between gap-4">
+
+<div class="space-y-2 flex-1">
+
+<div class="flex items-center space-x-2 text-xs">
+
+<span class="font-bold text-blue-600">${w.senderName} (${w.senderGroup})</span>
+
+<span class="text-slate-400">• ${w.date}</span>
+
+</div>
+
+<p class="text-xs text-slate-700 dark:text-slate-300 font-medium">"${w.text}"</p>
+
+<div class="text-[11px] text-slate-500">
+
+Mo'ljallangan ustoz: <strong class="text-slate-800 dark:text-slate-200">${teacher.fullName}</strong>
+
+</div>
+${w.photoUrl ? `<img src="${w.photoUrl}" alt="Yuborilgan rasm" class="mt-3 max-w-xs max-h-56 object-cover rounded-xl border border-slate-200 dark:border-slate-700">` : ''}
+${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="mt-3 w-full max-w-md h-10"></audio>` : ''}
+
+</div>
+
+
+
+<div class="flex items-center space-x-2 flex-shrink-0">
+
+<button onclick="approveWish('${w.id}')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">
+
+<i class="fa-solid fa-check mr-1"></i> Tasdiqlash
+
+</button>
+
+<button onclick="rejectWish('${w.id}')" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition">
+
+<i class="fa-solid fa-xmark mr-1"></i> Rad etish
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}).join('');
+
 }
+
+
 
 // Render Approved
-if (typeof approvedWishes !== 'undefined' && typeof approvedList !== 'undefined') {
-  if (approvedWishes.length === 0) {
-    approvedList.innerHTML = `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Tasdiqlangan murojaatlar hozircha yo'q.</div>`;
-  } else {
-    approvedList.innerHTML = approvedWishes.map(w => {
-      const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Noma'lum" };
-      return `
-        <div class="glass-card p-5 rounded-2xl border flex flex-col md:flex-row justify-between gap-4">
-          <div class="space-y-2 flex-1">
-            <div class="flex items-center space-x-2 text-xs">
-              <span class="font-bold text-blue-600">${w.senderName || w.sender || 'Anonim'} (${w.senderGroup || ''})</span>
-              <span class="text-slate-400">• ${w.date || ''}</span>
-            </div>
-            <p class="text-xs text-slate-700 dark:text-slate-300">"${w.text}"</p>
-            <div class="text-[11px] text-slate-500">
-              Mo'ljallangan ustoz: <strong>${teacher.fullName}</strong>
-            </div>
-            ${w.photoUrl ? `<img src="${w.photoUrl}" alt="Yuborilgan rasm" class="mt-3 max-w-xs max-h-56 object-cover rounded-xl border border-slate-200 dark:border-slate-700">` : ''}
-            ${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="mt-3 w-full max-w-md h-10"></audio>` : ''}
-          </div>
-          <div class="flex items-center space-x-2">
-            <button onclick="rejectWish('${w.id}')" class="px-3 py-1.5 bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 rounded-xl text-xs font-semibold hover:bg-rose-200 transition">
-              O'chirish
-            </button>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
+
+if (approvedWishes.length === 0) {
+
+approvedList.innerHTML = `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Tasdiqlangan murojaatlar hozircha yo'q.</div>`;
+
+} else {
+
+approvedList.innerHTML = approvedWishes.map(w => {
+
+const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Noma'lum" };
+
+return `
+
+<div class="glass-card p-5 rounded-2xl border flex flex-col md:flex-row justify-between gap-4">
+
+<div class="space-y-2 flex-1">
+
+<div class="flex items-center space-x-2 text-xs">
+
+<span class="font-bold text-blue-600">${w.senderName} (${w.senderGroup})</span>
+
+<span class="text-slate-400">• ${w.date}</span>
+
+</div>
+
+<p class="text-xs text-slate-700 dark:text-slate-300">"${w.text}"</p>
+
+<div class="text-[11px] text-slate-500">
+
+Mo'ljallangan ustoz: <strong>${teacher.fullName}</strong>
+
+</div>
+${w.photoUrl ? `<img src="${w.photoUrl}" alt="Yuborilgan rasm" class="mt-3 max-w-xs max-h-56 object-cover rounded-xl border border-slate-200 dark:border-slate-700">` : ''}
+${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="mt-3 w-full max-w-md h-10"></audio>` : ''}
+
+</div>
+
+<div class="flex items-center space-x-2">
+
+<button onclick="rejectWish('${w.id}')" class="px-3 py-1.5 bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 rounded-xl text-xs font-semibold hover:bg-rose-200 transition">
+
+O'chirish
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}).join('');
+
 }
+
+}
+
+
+
+function approveWish(wishId) {
+
+const w = wishes.find(item => item.id === wishId);
+
+if (w) {
+
+w.status = 'approved';
+
+saveWishesToStorage();
+
+renderAdminDashboard();
+
+renderStats();
+
+}
+
+}
+
+
+
+function rejectWish(wishId) {
+
+wishes = wishes.filter(item => item.id !== wishId);
+
+saveWishesToStorage();
+
+renderAdminDashboard();
+
+renderStats();
+
+}
+
+
+
+// Initialize App On DOM Load
+
+window.addEventListener('DOMContentLoaded', () => {
+  initApp();
+  const match = window.location.hash.match(/^#teacher-(.+)$/);
+  if (match && teachers.some(t => t.id === match[1])) navigateTo('profile', match[1]);
+});
+
 </script>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCqIBAh69Pu0mFIp6Y8FaC4sB6fprb5Gl4",
-    authDomain: "raqamli-ehtirom.firebaseapp.com",
-    projectId: "raqamli-ehtirom",
-    storageBucket: "raqamli-ehtirom.firebasestorage.app",
-    messagingSenderId: "84914510064",
-    appId: "1:84914510064:web:27a5efbf0e6a1e5bbc0a35",
-    measurementId: "G-1NYBZH9THE"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  window.db = db;
-  window.collection = collection;
-  window.addDoc = addDoc;
-  window.onSnapshot = onSnapshot;
-  window.doc = doc;
-  window.updateDoc = updateDoc;
-  window.deleteDoc = deleteDoc;
-
-  onSnapshot(collection(db, "wishes"), (snapshot) => {
-    window.wishes = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-    if (typeof renderAdminDashboard === "function") renderAdminDashboard();
-    if (typeof renderStats === "function") renderStats();
-    if (typeof renderWishes === "function") renderWishes();
-  });
-
-  onSnapshot(collection(db, "teachers"), (snapshot) => {
-    window.teachers = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-    if (typeof renderTeachers === "function") renderTeachers();
-  });
-</script>
-
-<script>
-  async function submitWish(teacherId, text, senderName) {
-    if (!text || text.trim() === "") {
-      alert("Iltimos, tilak matnini kiriting!");
-      return;
-    }
-    try {
-      await addDoc(collection(db, "wishes"), {
-        teacherId: teacherId,
-        text: text,
-        sender: senderName || "Anonim",
-        status: "pending",
-        createdAt: new Date()
-      });
-      alert("Tilagingiz yuborildi! Admin tasdiqlagach ko'rinadi.");
-    } catch (err) {
-      console.error("Zayavka yuborishda xato:", err);
-    }
-  }
-
-  async function approveWish(wishId) {
-    try {
-      await updateDoc(doc(db, "wishes", wishId), { status: 'approved' });
-    } catch (err) {
-      console.error("Tasdiqlashda xato:", err);
-    }
-  }
-
-  async function rejectWish(wishId) {
-    try {
-      await deleteDoc(doc(db, "wishes", wishId));
-    } catch (err) {
-      console.error("O'chirishda xato:", err);
-    }
-  }
-
-  async function handleLike(teacherId, currentLikes) {
-    try {
-      await updateDoc(doc(db, "teachers", teacherId), {
-        likes: (currentLikes || 0) + 1
-      });
-    } catch (err) {
-      console.error("Like saqlanmadi:", err);
-    }
-  }
-
-  async function updateTeacherImage(teacherId, newImageUrl) {
-    try {
-      await updateDoc(doc(db, "teachers", teacherId), {
-        image: newImageUrl
-      });
-      alert("Rasm muvaffaqiyatli yangilandi!");
-    } catch (err) {
-      console.error("Rasm yangilanmadi:", err);
-    }
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    if (typeof initApp === "function") initApp();
-    const match = window.location.hash.match(/^#teacher-(.+)$/);
-    if (match && typeof teachers !== 'undefined' && teachers.some(t => t.id === match[1])) {
-      navigateTo('profile', match[1]);
-    }
-  });
-</script>
 </body>
+
 </html>
