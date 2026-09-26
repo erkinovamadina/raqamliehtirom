@@ -1,674 +1,328 @@
 <!DOCTYPE html>
-
 <html lang="uz" class="light">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Raqamli Ehtirom - Angren Universiteti</title>
-
 <!-- Tailwind CSS CDN -->
-
 <script src="https://cdn.tailwindcss.com"></script>
-
 <script>
-
 tailwind.config = {
-
 darkMode: 'class',
-
 theme: {
-
 extend: {
-
 colors: {
-
 brand: {
-
 50: '#f0fdf4',
-
 100: '#dcfce7',
-
 500: '#2563eb',
-
 600: '#1d4ed8',
-
 700: '#1d4ed8',
-
 800: '#1e40af',
-
 900: '#14532d',
-
 navy: '#0f172a',
-
 gold: '#d97706'
-
 }
-
 },
-
 fontFamily: {
-
 sans: ['Inter', 'sans-serif'],
-
 }
-
 }
-
 }
-
 }
-
 </script>
-
 <!-- Google Fonts -->
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
 <!-- FontAwesome Icons -->
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 <!-- QRCode.js for generating QR code for teachers -->
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
+<!-- Firebase (Firestore + Auth) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <style>
-
 body { font-family: 'Inter', sans-serif; }
-
 .glass-card {
-
 background: rgba(255, 255, 255, 0.85);
-
 backdrop-filter: blur(12px);
-
 border: 1px solid rgba(229, 231, 235, 0.5);
-
 }
-
 .dark .glass-card {
-
 background: rgba(30, 41, 59, 0.85);
-
 border: 1px solid rgba(51, 65, 85, 0.5);
-
 }
-
 .custom-scrollbar::-webkit-scrollbar {
-
 width: 6px;
-
 height: 6px;
-
 }
-
 .custom-scrollbar::-webkit-scrollbar-track {
-
 background: transparent;
-
 }
-
 .custom-scrollbar::-webkit-scrollbar-thumb {
-
 background: rgba(156, 163, 175, 0.5);
-
 border-radius: 9999px;
-
 }
-
 </style>
-
 </head>
-
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-300 flex flex-col">
-
-
-
 <!-- Navigation Bar -->
-
 <header class="sticky top-0 z-40 w-full glass-card border-b border-slate-200 dark:border-slate-800 shadow-sm">
-
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
 <div class="flex justify-between items-center h-20">
-
 <!-- Logo & Title -->
-
 <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
-
 <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
-
 <i class="fa-solid fa-graduation-cap text-2xl"></i>
-
 </div>
-
 <div>
-
 <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-700 dark:from-blue-400 dark:to-cyan-300 bg-clip-text text-transparent">
-
 RAQAMLI EHTIROM
-
 </h1>
-
 <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Angren Universiteti Portal</p>
-
 </div>
-
 </div>
-
-
-
 <!-- Desktop Navigation Links -->
-
 <nav class="hidden md:flex items-center space-x-6 font-medium text-sm">
-
 <button onclick="navigateTo('home')" class="hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center gap-2">
-
 <i class="fa-solid fa-house"></i> Bosh sahifa
-
 </button>
-
 <button onclick="navigateTo('teachers')" class="hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center gap-2">
-
 <i class="fa-solid fa-chalkboard-user"></i> O'qituvchilar
-
 </button>
-
 <button onclick="navigateTo('top')" class="hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center gap-2">
-
 <i class="fa-solid fa-award"></i> Top Reyting
-
 </button>
-
 <button onclick="navigateTo('admin')" class="hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center gap-2">
-
 <i class="fa-solid fa-user-shield"></i> Admin Panel
-
 </button>
-
 </nav>
-
-
-
 <!-- Action Controls -->
-
 <div class="flex items-center space-x-3">
-
 <!-- Theme Switcher -->
-
 <button id="themeToggle" onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
-
 <i id="themeIcon" class="fa-solid fa-moon"></i>
-
 </button>
-
 <!-- Wish Button -->
-
 <button onclick="openWishModal()" class="hidden sm:flex items-center space-x-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-lg shadow-blue-600/30 transition hover:scale-[1.02] active:scale-[0.98]">
-
 <i class="fa-solid fa-heart"></i>
-
 <span>Ehtirom Bildirish</span>
-
 </button>
-
 <!-- Mobile Menu Button -->
-
 <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-
 <i class="fa-solid fa-bars text-xl"></i>
-
 </button>
-
 </div>
-
 </div>
-
 </div>
-
-
-
 <!-- Mobile Navigation Menu -->
-
 <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-2 pb-4 space-y-2">
-
 <button onclick="navigateTo('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800">
-
 <i class="fa-solid fa-house mr-2"></i> Bosh sahifa
-
 </button>
-
 <button onclick="navigateTo('teachers'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800">
-
 <i class="fa-solid fa-chalkboard-user mr-2"></i> O'qituvchilar
-
 </button>
-
 <button onclick="navigateTo('top'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800">
-
 <i class="fa-solid fa-award mr-2"></i> Top Reyting
-
 </button>
-
 <button onclick="navigateTo('admin'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800">
-
 <i class="fa-solid fa-user-shield mr-2"></i> Admin Panel
-
 </button>
-
 <button onclick="openWishModal(); toggleMobileMenu()" class="w-full text-center px-4 py-2.5 bg-blue-600 text-white rounded-xl font-semibold shadow">
-
 <i class="fa-solid fa-heart mr-2"></i> Ehtirom Bildirish
-
 </button>
-
 </div>
-
 </header>
-
-
-
+<!-- Baza sozlanmagan ogohlantirishi -->
+<div id="db-banner" class="hidden bg-amber-100 text-amber-900 text-sm text-center px-4 py-2 border-b border-amber-300">
+<i class="fa-solid fa-triangle-exclamation mr-1"></i> Ma'lumotlar bazasi (Firebase) hali ulanmagan — kod ichidagi <b>firebaseConfig</b> ni to'ldiring.
+</div>
+<!-- Xabarlar (toast) -->
+<div id="toast-box" class="fixed bottom-4 right-4 z-[70] space-y-2"></div>
 <!-- Main Content Container -->
-
 <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
-
 <!-- SECTION: Home / Dashboard View -->
-
 <section id="view-home" class="space-y-10">
-
 <!-- Hero Banner -->
-
 <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-800 via-cyan-800 to-slate-900 text-white p-8 md:p-12 shadow-2xl">
-
 <div class="absolute -right-10 -bottom-10 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
 <div class="relative z-10 max-w-3xl space-y-6">
-
 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">
-
 <i class="fa-solid fa-star mr-1.5 text-amber-400"></i> Angren Universiteti Rasmiy Platformasi
-
 </span>
-
 <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
-
 Ustozlaringizga Cheksiz Ehtirom Va Minnatdorchilik Bildiring!
-
 </h2>
-
 <p class="text-slate-300 text-base md:text-lg leading-relaxed">
-
 Ushbu raqamli platforma orqali Angren Universiteti talabalari o'z professor-o'qituvchilariga samimiy tilaklarini yo'llashlari, ularning mehnatini munosib e'tirof etishlari mumkin.
-
 </p>
-
 <div class="flex flex-wrap gap-4 pt-2">
-
 <button onclick="navigateTo('teachers')" class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-slate-950 font-bold rounded-xl shadow-lg transition hover:scale-105">
-
 O'qituvchilarni Ko'rish <i class="fa-solid fa-arrow-right ml-2"></i>
-
 </button>
-
 <button onclick="openWishModal()" class="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20 transition">
-
 <i class="fa-solid fa-paper-plane mr-2"></i> Tilak Yo'llash
-
 </button>
-
 </div>
-
 </div>
-
 </div>
-
-
-
 <!-- Stats Overview -->
-
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-
 <div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border shadow-sm">
-
 <div class="p-3 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-xl">
-
 <i class="fa-solid fa-user-graduate text-2xl"></i>
-
 </div>
-
 <div>
-
 <div id="stat-teachers-count" class="text-2xl font-bold">0</div>
-
 <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Professor-o'qituvchilar</div>
-
 </div>
-
 </div>
-
 <div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border shadow-sm">
-
 <div class="p-3 bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 rounded-xl">
-
 <i class="fa-solid fa-heart text-2xl"></i>
-
 </div>
-
 <div>
-
 <div id="stat-likes-count" class="text-2xl font-bold">0</div>
-
 <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Jami Minnatdorchiliklar</div>
-
 </div>
-
 </div>
-
 <div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border shadow-sm">
-
 <div class="p-3 bg-sky-100 dark:bg-sky-900/40 text-sky-600 dark:text-sky-400 rounded-xl">
-
 <i class="fa-solid fa-comment-dots text-2xl"></i>
-
 </div>
-
 <div>
-
 <div id="stat-wishes-count" class="text-2xl font-bold">0</div>
-
 <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Tasdiqlangan Tilaklar</div>
-
 </div>
-
 </div>
-
-
 </div>
-
-
-
 <!-- Featured Top Teachers Preview -->
-
 <div class="space-y-4">
-
 <div class="flex justify-between items-end">
-
 <div>
-
 <h3 class="text-2xl font-bold">Eng Ko'p E'tirof Etilgan Ustozlar</h3>
-
 <p class="text-slate-500 dark:text-slate-400 text-sm">Eng yuqori reyting va mehr qozongan ustozlarimiz</p>
-
 </div>
-
 <button onclick="navigateTo('top')" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline text-sm flex items-center gap-1">
-
 Barchasini ko'rish <i class="fa-solid fa-chevron-right text-xs"></i>
-
 </button>
-
 </div>
-
 <div id="home-top-teachers" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
 <!-- Dynamic rendering -->
-
 </div>
-
 </div>
-
-
-
 <!-- Recent Wishes Feed -->
-
 <div class="space-y-4">
-
 <h3 class="text-2xl font-bold">Samimiy Tilaklar</h3>
-
 <div id="home-wishes-feed" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
 <!-- Dynamic rendering -->
-
 </div>
-
 </div>
-
 </section>
-
-
-
 <!-- SECTION: Teachers Directory -->
-
 <section id="view-teachers" class="space-y-6 hidden">
-
 <div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
-
 <div>
-
 <h2 class="text-3xl font-bold">Xodimlar</h2>
-
 <p class="text-slate-500 dark:text-slate-400 text-sm">Angren Universiteti xodimlari katalogi</p>
-
 </div>
-
 </div>
-
-
-
 <!-- Filter Controls -->
-
 <div class="glass-card p-4 rounded-2xl border shadow-sm space-y-4">
-
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-
 <!-- Search Input -->
-
 <div class="relative">
-
 <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400"></i>
-
 <input type="text" id="search-input" oninput="applyFilters()" placeholder="F.I.SH yoki lavozim bo'yicha qidirish..."
-
 class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
-
 </div>
-
 <!-- Degree Filter -->
-
 <select id="filter-degree" onchange="applyFilters()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
-
 <option value="">Barcha ilmiy darajalar</option>
-
 <option value="Professor">Professor</option>
-
 <option value="Dotsent">Dotsent</option>
-
 <option value="Katta o'qituvchi">Katta o'qituvchi</option>
-
 <option value="O'qituvchi">O'qituvchi</option>
-
 <option value="PhD">PhD</option>
-
 </select>
-
 <!-- Sorting -->
-
 <select id="filter-sort" onchange="applyFilters()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
-
 <option value="likes-desc">E'tirof bo'yicha (Yuqori)</option>
-
 <option value="name-asc">Ism bo'yicha (A-Z)</option>
-
-
 </select>
-
 </div>
-
 </div>
-
-
-
 <!-- Teachers Cards Grid -->
-
 <div id="teachers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
 <!-- Dynamic Content -->
-
 </div>
-
 </section>
-
-
-
 <!-- SECTION: Top Liked Teachers Ranking -->
-
 <section id="view-top" class="space-y-6 hidden">
-
 <div class="text-center max-w-2xl mx-auto space-y-2">
-
 <span class="px-3 py-1 bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 text-xs font-bold rounded-full">
-
 <i class="fa-solid fa-trophy mr-1"></i> Reyting Ro'yxati
-
 </span>
-
 <h2 class="text-3xl font-extrabold">Eng Saviyali Va Hurmatli Ustozlar</h2>
-
 <p class="text-slate-500 dark:text-slate-400 text-sm">Talabalar tomonidan eng ko'p ehtirom va minnatdorchilik toptirilgan professor-o'qituvchilar ro'yxati</p>
-
 </div>
-
-
-
 <div class="max-w-4xl mx-auto glass-card rounded-2xl border shadow-lg overflow-hidden">
-
 <div id="top-teachers-list" class="divide-y divide-slate-200 dark:divide-slate-800">
-
 <!-- Dynamic rendering -->
-
 </div>
-
 </div>
-
 </section>
-
-
-
 <!-- SECTION: Teacher Profile Detail -->
-
 <section id="view-profile" class="space-y-8 hidden">
-
 <button onclick="navigateTo('teachers')" class="flex items-center gap-2 text-slate-500 hover:text-blue-600 font-semibold text-sm transition">
-
 <i class="fa-solid fa-arrow-left"></i> O'qituvchilar ro'yxatiga qaytish
-
 </button>
-
-
-
 <div id="teacher-profile-container">
-
 <!-- Dynamically populated profile content -->
-
 </div>
-
 </section>
-
-
-
 <!-- SECTION: Admin Panel -->
-
 <section id="view-admin" class="space-y-6 hidden">
-
 <!-- Admin Login Box -->
-
 <div id="admin-login-box" class="max-w-md mx-auto glass-card p-8 rounded-3xl border shadow-xl text-center space-y-6">
-
 <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center mx-auto text-2xl">
-
 <i class="fa-solid fa-lock"></i>
-
 </div>
-
 <div>
-
 <h3 class="text-2xl font-bold">Admin Tizimiga Kirish</h3>
-
-<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Admin paroli bilan himoyalangan</p>
-
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Firebase Authentication orqali himoyalangan</p>
 </div>
-
 <form onsubmit="handleAdminLogin(event)" class="space-y-4">
-
 <div>
-
 <input type="password" id="admin-password" placeholder="Parolni kiriting..." required
-
 class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
-
 </div>
-
 <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow transition">
-
 Kirish
-
 </button>
-
 </form>
-
 </div>
-
-
-
 <!-- Admin Dashboard -->
-
 <div id="admin-dashboard" class="hidden space-y-6">
-
 <div class="flex justify-between items-center bg-blue-900 text-white p-6 rounded-2xl shadow-lg">
-
 <div>
-
 <h3 class="text-2xl font-bold">Moderatsiya Paneli</h3>
-
 <p class="text-xs text-blue-200">Kelib tushgan tilaklar va murojaatlarni ko'rib chiqish hamda moderatsiya qilish</p>
-
 </div>
-
 <button onclick="adminLogout()" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-semibold transition">
-
 <i class="fa-solid fa-right-from-bracket mr-1"></i> Chiqish
-
 </button>
-
 </div>
-
-
-
 <!-- Tabs -->
-
 <div class="flex border-b border-slate-200 dark:border-slate-800 space-x-4">
-
 <button id="tab-pending-btn" onclick="switchAdminTab('pending')" class="pb-3 border-b-2 border-blue-600 font-bold text-blue-600 text-sm">
-
 Kutish jarayonidagilar (<span id="count-pending">0</span>)
-
 </button>
-
 <button id="tab-approved-btn" onclick="switchAdminTab('approved')" class="pb-3 border-b-2 border-transparent font-medium text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 text-sm">
-
 Tasdiqlanganlar (<span id="count-approved">0</span>)
-
 </button>
-
 </div>
-
-
-
 <!-- Teacher Management -->
 <div class="glass-card p-5 rounded-2xl border shadow-sm space-y-4">
   <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
@@ -678,7 +332,6 @@ Tasdiqlanganlar (<span id="count-approved">0</span>)
   <input id="admin-teacher-search" oninput="renderAdminTeachers()" placeholder="F.I.SH bo'yicha qidirish..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
   <div id="admin-teachers-list" class="space-y-2 max-h-[520px] overflow-y-auto custom-scrollbar"></div>
 </div>
-
 <div id="teacherEditorModal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
   <div class="glass-card max-w-lg w-full rounded-3xl p-6 border shadow-2xl my-8">
     <div class="flex justify-between items-center mb-5"><h3 id="teacher-editor-title" class="text-xl font-bold">Xodim qo'shish</h3><button onclick="closeTeacherEditor()" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-xl"></i></button></div>
@@ -692,235 +345,107 @@ Tasdiqlanganlar (<span id="count-approved">0</span>)
     </form>
   </div>
 </div>
-
 <!-- Pending Wishes Table / List -->
-
 <div id="admin-pending-list" class="space-y-4">
-
 <!-- Dynamic rendering -->
-
 </div>
-
-
-
 <!-- Approved Wishes List -->
-
 <div id="admin-approved-list" class="space-y-4 hidden">
-
 <!-- Dynamic rendering -->
-
 </div>
-
 </div>
-
 </section>
-
-
-
 </main>
-
-
-
 <!-- Footer -->
-
 <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-8">
-
 <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
-
 <div class="flex justify-center items-center space-x-2 text-blue-600 font-bold">
-
 <i class="fa-solid fa-graduation-cap text-xl"></i>
-
 <span>Angren Universiteti - Raqamli Ehtirom Platformasi</span>
-
 </div>
-
 <p class="text-xs text-slate-500 dark:text-slate-400">
-
 &copy; 2026 Angren Universiteti Axborot Texnologiyalari Markazi. Barcha huquqlar himoyalangan.
-
 </p>
-
 </div>
-
 </footer>
-
-
-
 <!-- WISH SUBMISSION MODAL -->
-
 <div id="wishModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden overflow-y-auto">
-
 <div class="glass-card max-w-lg w-full rounded-3xl p-6 sm:p-8 border shadow-2xl relative my-8">
-
 <button onclick="closeWishModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-
 <i class="fa-solid fa-xmark text-2xl"></i>
-
 </button>
-
-
-
 <div class="text-center space-y-2 mb-6">
-
 <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/40 text-blue-600 rounded-2xl flex items-center justify-center mx-auto text-xl">
-
 <i class="fa-solid fa-paper-plane"></i>
-
 </div>
-
 <h3 class="text-2xl font-bold">Ehtirom Va Tilak Bildirish</h3>
-
 <p class="text-xs text-slate-500 dark:text-slate-400">O'qituvchingizga o'z minnatdorchiligingizni matn, rasm yoki ovozli xabar ko'rinishida yuboring</p>
-
 </div>
-
-
-
 <form onsubmit="submitWishForm(event)" class="space-y-4">
-
 <!-- Select Teacher -->
-
 <div>
-
 <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">O'qituvchini Tanlang *</label>
-
 <select id="wish-teacher-id" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
-
 <option value="">-- O'qituvchini tanlang --</option>
-
 </select>
-
 </div>
-
-
-
 <!-- Student Name & Anonymous Check -->
-
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
 <div>
-
 <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Ismingiz (ixtiyoriy)</label>
-
 <input type="text" id="wish-sender-name" placeholder="Masalan: Ali Valiyev" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
-
 </div>
-
 <div>
-
 <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Guruhingiz / Yil</label>
-
 <input type="text" id="wish-sender-group" placeholder="Masalan: 21-02-guruh" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
-
 </div>
-
 </div>
-
-
-
 <div class="flex items-center space-x-2 pt-1">
-
 <input type="checkbox" id="wish-is-anonymous" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4">
-
 <label for="wish-is-anonymous" class="text-xs font-medium text-slate-600 dark:text-slate-300">Anonim tarzda yuborish</label>
-
 </div>
-
-
-
 <!-- Wish Text -->
-
 <div>
-
 <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Tilak yoki Samimiy So'zlaringiz *</label>
-
 <textarea id="wish-text" rows="4" required placeholder="Ustozingizga bo'lgan samimiy tilar va minnatdorchilik so'zlaringizni yozing..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm custom-scrollbar"></textarea>
-
 </div>
-
-
-
 <!-- Photo Attachment -->
-
 <div>
-
 <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Rasm ilova qilish (Ixtiyoriy)</label>
-
 <input type="file" id="wish-photo-input" accept="image/*" onchange="handlePhotoUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 dark:file:bg-blue-950 dark:file:text-blue-300 hover:file:bg-blue-100">
-
 <div id="photo-preview-container" class="hidden mt-2 relative">
-
 <img id="photo-preview" class="w-full h-32 object-cover rounded-xl border">
-
 <button type="button" onclick="removeUploadedPhoto()" class="absolute top-2 right-2 bg-rose-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
-
 <i class="fa-solid fa-xmark"></i>
-
 </button>
-
 </div>
-
 </div>
-
-
-
 <!-- Audio Recording Capability -->
-
 <div>
-
 <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Ovozli Xabar (Ixtiyoriy)</label>
-
 <div class="flex items-center space-x-3 bg-slate-100 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
-
 <button type="button" id="record-btn" onclick="toggleAudioRecording()" class="px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-lg transition flex items-center space-x-1">
-
 <i id="record-icon" class="fa-solid fa-microphone"></i>
-
 <span id="record-text">Yozishni Boshlash</span>
-
 </button>
-
 <div id="recording-status" class="text-xs text-slate-500 dark:text-slate-400 font-medium flex-1">
-
 Ovozli xabar yo'q
-
 </div>
-
 </div>
-
 <audio id="audio-preview" controls class="hidden w-full mt-2 h-10"></audio>
-
 </div>
-
-
-
 <!-- Submit Button -->
-
 <button type="submit" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition hover:scale-[1.01] active:scale-[0.99]">
-
 <i class="fa-solid fa-paper-plane mr-2"></i> Tilakni Yuborish (Moderatsiyaga)
-
 </button>
-
 </form>
-
 </div>
-
 </div>
-
-
-
 <!-- JAVASCRIPT LOGIC -->
-
 <script>
-
 /**
-
 * Expanded Extensible Database of Faculty Members (Angren University)
-
 */
-
 const initialTeachersData = [
 {id:"au-001",fullName:"Mutalov Shuhrat Axmadjonovich",degree:"Rektor",academicTitle:"Rektor",avatar:"https://ui-avatars.com/api/?name=Mutalov+Shuhrat+Axmadjonovich&background=2563eb&color=fff&size=400",likes:0},
 {id:"au-002",fullName:"Najimadinov Ravshanbek Dushamboevich",degree:"Yoshlar masalalari, ma'naviy-ma'rifiy ishlar bo'yicha birinchi prorektor, dotsent v.b.",academicTitle:"Yoshlar masalalari, ma'naviy-ma'rifiy ishlar bo'yicha birinchi prorektor, dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Najimadinov+Ravshanbek+Dushamboevich&background=2563eb&color=fff&size=400",likes:0},
@@ -1198,397 +723,341 @@ const initialTeachersData = [
 {id:"au-275",fullName:"Alimjanova Xolishon",degree:"Professor",academicTitle:"Professor",avatar:"https://ui-avatars.com/api/?name=Alimjanova+Xolishon&background=2563eb&color=fff&size=400",likes:0},
 {id:"au-276",fullName:"Bekmatov Shaxabidin",degree:"Dotsent v.b.",academicTitle:"Dotsent v.b.",avatar:"https://ui-avatars.com/api/?name=Bekmatov+Shaxabidin&background=2563eb&color=fff&size=400",likes:0},
 ];
+/* =====================================================================
+   FIREBASE SOZLAMALARI  —  shu yerga o'z loyihangiz ma'lumotlarini qo'ying
+   (Firebase Console → Project settings → Your apps → Web app → Config)
+   ===================================================================== */
+const firebaseConfig = {
+  apiKey: "AIzaSyB_bNkof6J7tAX-34aNpEEaCGHuor1KRss",
+  authDomain: "raqamli--ehtirom.firebaseapp.com",
+  projectId: "raqamli--ehtirom",
+  storageBucket: "raqamli--ehtirom.firebasestorage.app",
+  messagingSenderId: "542890228907",
+  appId: "1:542890228907:web:095166aaf1519d84f50bee"
+};
+// Admin hisobi (Firebase Console → Authentication → Users da yaratiladi)
+const ADMIN_EMAIL = "erkinovamadina86@gmail.com";
 
-// Default Seed Wishes Data
-
-const initialWishesData = [
-
-{
-
-id: "wish-101",
-
-teacherId: "tech-01",
-
-senderName: "Sardor Azimov",
-
-senderGroup: "21-04 Guruh",
-
-isAnonymous: false,
-
-text: "Diyorbek Rustamovich, dasturlash va algoritmlar fanidan bergan chuqur bilimlaringiz uchun kattakon rahmat! Sizning darslaringiz tufayli IT sohasiga bo'lgan qiziqishim ortdi.",
-
-photoUrl: null,
-
-audioUrl: null,
-
-status: "approved", // 'pending' | 'approved' | 'rejected'
-
-date: "2026-03-15 10:30"
-
-},
-
-{
-
-id: "wish-102",
-
-teacherId: "tech-04",
-
-senderName: "Anonim",
-
-senderGroup: "19-01 Guruh",
-
-isAnonymous: true,
-
-text: "Gulnora Alisherovna, IELTS topshirishimda bergan maslahatlaringiz va motivatsiyangiz uchun tashakkur! Universitetimizdagi eng mehribon ustozsiz!",
-
-photoUrl: null,
-
-audioUrl: null,
-
-status: "approved",
-
-date: "2026-03-18 14:20"
-
+const DB_ON = typeof firebase !== 'undefined' && !firebaseConfig.apiKey.startsWith('YOUR');
+let db = null, auth = null, FV = null;
+if (DB_ON) {
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.firestore();
+  auth = firebase.auth();
+  FV = firebase.firestore.FieldValue;
 }
-
-];
-
-
 
 // App Application State
-
-let teachers = [];
-
-let wishes = [];
-
+let teachers = [];          // Firestore: teachers
+let wishes = [];            // Firestore: tasdiqlangan tilaklar (hamma ko'radi)
+let adminWishes = [];       // Firestore: barcha tilaklar (faqat admin)
+let teachersSeeded = false;
 let isAdminLoggedIn = false;
-
 let activeAdminTab = 'pending';
-
+let currentProfileId = null;
+let unsubAdminWishes = null;
 let mediaRecorder = null;
-
 let audioChunks = [];
-
 let currentAudioBlob = null;
 let currentAudioDataUrl = null;
-
 let uploadedPhotoBase64 = null;
+let recordTimer = null;
+const MAX_AUDIO_SECONDS = 60;
 
+/* ---------- Yordamchi funksiyalar ---------- */
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function defaultAvatar(name) {
+  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'Xodim')}&background=2563eb&color=fff&size=400`;
+}
+function normalizeTeacher(t, i = 0) {
+  return {
+    id: t.id,
+    fullName: t.fullName || '',
+    degree: t.degree || t.academicTitle || '',
+    academicTitle: t.academicTitle || t.degree || '',
+    avatar: t.avatar || defaultAvatar(t.fullName),
+    likes: Number(t.likes || 0),
+    order: Number(t.order ?? i)
+  };
+}
+function toast(msg, type = 'info') {
+  const box = document.getElementById('toast-box');
+  const el = document.createElement('div');
+  const color = type === 'error' ? 'bg-rose-600' : type === 'ok' ? 'bg-emerald-600' : 'bg-slate-800';
+  el.className = `${color} text-white text-sm px-4 py-3 rounded-xl shadow-lg max-w-sm`;
+  el.textContent = msg;
+  box.appendChild(el);
+  setTimeout(() => el.remove(), 4500);
+}
+function showDbError(err) {
+  console.error(err);
+  const msg = err && err.code === 'permission-denied'
+    ? "Ruxsat yo'q (Firestore qoidalarini tekshiring)."
+    : "Baza bilan bog'lanishda xatolik: " + (err?.message || err);
+  toast(msg, 'error');
+}
+function requireDb() {
+  if (!DB_ON) { toast("Firebase hali sozlanmagan: firebaseConfig ni to'ldiring.", 'error'); return false; }
+  return true;
+}
+// Rasmni kichraytirib JPEG dataURL qilish (Firestore hujjati 1 MB dan oshmasligi uchun)
+function compressImage(file, maxSize = 1000, quality = 0.75) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.width * scale);
+        c.height = Math.round(img.height * scale);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        resolve(c.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+// 500 tadan ortiq amalni bo'lib yozish
+async function commitOps(ops) {
+  for (let i = 0; i < ops.length; i += 450) {
+    const batch = db.batch();
+    ops.slice(i, i + 450).forEach(fn => fn(batch));
+    await batch.commit();
+  }
+}
+function getLikedIds() {
+  try { return JSON.parse(localStorage.getItem('au_liked_ids') || '[]'); } catch { return []; }
+}
+function saveLikedIds(ids) {
+  try { localStorage.setItem('au_liked_ids', JSON.stringify(ids)); } catch {}
+}
 
+/* ---------- Media (rasm/ovoz) alohida `media` kolleksiyasida, kerak bo'lganda yuklanadi ---------- */
+const mediaCache = {};
+function getMedia(id) {
+  if (!mediaCache[id]) {
+    mediaCache[id] = db.collection('media').doc(id).get()
+      .then(d => d.exists ? d.data() : {})
+      .catch(err => { console.error(err); delete mediaCache[id]; return {}; });
+  }
+  return mediaCache[id];
+}
+function mediaSlots(w, imgClass, audioClass) {
+  return (w.hasPhoto ? `<div data-media="${esc(w.id)}" data-kind="photo" data-cls="${imgClass}" class="text-[11px] text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-1"></i>Rasm yuklanmoqda...</div>` : '')
+       + (w.hasAudio ? `<div data-media="${esc(w.id)}" data-kind="audio" data-cls="${audioClass}" class="text-[11px] text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-1"></i>Ovoz yuklanmoqda...</div>` : '');
+}
+function hydrateMedia(root) {
+  if (!root || !DB_ON) return;
+  root.querySelectorAll('[data-media]').forEach(el => {
+    if (el.dataset.loaded) return;
+    el.dataset.loaded = '1';
+    getMedia(el.dataset.media).then(m => {
+      const src = m[el.dataset.kind];
+      if (!src) { el.remove(); return; }
+      el.className = '';
+      el.innerHTML = el.dataset.kind === 'photo'
+        ? `<img src="${src}" alt="Yuborilgan rasm" class="${el.dataset.cls}">`
+        : `<audio controls src="${src}" class="${el.dataset.cls}"></audio>`;
+    });
+  });
+}
 
-// Initialize State from LocalStorage or Defaults
+/* ---------- Ishga tushirish ---------- */
+function renderAll() {
+  populateTeacherSelectOptions();
+  renderStats();
+  renderHomeTopTeachers();
+  renderHomeWishesFeed();
+  applyFilters();
+  renderTopRanking();
+  const profileVisible = !document.getElementById('view-profile')?.classList.contains('hidden');
+  if (profileVisible && currentProfileId) renderTeacherProfile(currentProfileId);
+  if (isAdminLoggedIn) renderAdminDashboard();
+}
 
 function initApp() {
-const storedTeachers = localStorage.getItem('au_teachers_data');
-const storedWishes = localStorage.getItem('au_wishes_data');
-const storedVersion = localStorage.getItem('au_teachers_version');
-const DATA_VERSION = '2026-09-24-v6';
+  // Baza javob berguncha boshlang'ich ro'yxat ko'rsatiladi
+  teachers = initialTeachersData.map(normalizeTeacher);
+  renderAll();
 
-if (!storedTeachers || storedVersion !== DATA_VERSION) {
-  teachers = [...initialTeachersData];
-  localStorage.setItem('au_teachers_version', DATA_VERSION);
-  saveTeachersToStorage();
-} else {
-  teachers = JSON.parse(storedTeachers);
+  if (!DB_ON) {
+    document.getElementById('db-banner').classList.remove('hidden');
+    return;
+  }
+
+  // Xodimlar — real vaqtda
+  db.collection('teachers').onSnapshot(snap => {
+    if (snap.empty) {
+      teachersSeeded = false;
+      teachers = initialTeachersData.map(normalizeTeacher);
+    } else {
+      teachersSeeded = true;
+      teachers = snap.docs.map((d, i) => normalizeTeacher({ ...d.data(), id: d.id }, i))
+        .sort((a, b) => a.order - b.order);
+    }
+    renderAll();
+  }, showDbError);
+
+  // Tasdiqlangan tilaklar — real vaqtda
+  db.collection('wishes').where('status', '==', 'approved').onSnapshot(snap => {
+    wishes = snap.docs.map(d => ({ ...d.data(), id: d.id }))
+      .sort((a, b) => (a.createdAtMs || 0) - (b.createdAtMs || 0));
+    renderAll();
+  }, showDbError);
+
+  // Admin holati
+  auth.onAuthStateChanged(user => {
+    isAdminLoggedIn = !!user && (user.email || '').toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    if (unsubAdminWishes) { unsubAdminWishes(); unsubAdminWishes = null; }
+    adminWishes = [];
+    if (isAdminLoggedIn) {
+      unsubAdminWishes = db.collection('wishes').onSnapshot(snap => {
+        adminWishes = snap.docs.map(d => ({ ...d.data(), id: d.id }))
+          .sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
+        renderAdminDashboard();
+      }, showDbError);
+      seedTeachersIfEmpty();
+    }
+    checkAdminState();
+  });
 }
 
-// Only these fields are used for employees: F.I.SH, lavozimi, avatar and likes.
-teachers = teachers.map((t, i) => ({
-  id: t.id || `au-${String(i+1).padStart(3,'0')}`,
-  fullName: t.fullName || '',
-  degree: t.degree || t.academicTitle || '',
-  academicTitle: t.academicTitle || t.degree || '',
-  avatar: t.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(t.fullName || 'Xodim')}&background=2563eb&color=fff&size=400`,
-  likes: Number(t.likes || 0)
-}));
-saveTeachersToStorage();
-
-if (storedWishes) {
-  wishes = JSON.parse(storedWishes);
-} else {
-  wishes = [...initialWishesData];
-  saveWishesToStorage();
+// Baza bo'sh bo'lsa, admin birinchi marta kirganda xodimlar ro'yxati bazaga yoziladi
+async function seedTeachersIfEmpty() {
+  try {
+    const first = await db.collection('teachers').limit(1).get();
+    if (!first.empty) return;
+    toast("Xodimlar ro'yxati bazaga yuklanmoqda...");
+    await commitOps(initialTeachersData.map((t, i) => batch => {
+      const n = normalizeTeacher(t, i);
+      batch.set(db.collection('teachers').doc(n.id), {
+        fullName: n.fullName, degree: n.degree, academicTitle: n.academicTitle,
+        avatar: n.avatar, likes: 0, order: i
+      });
+    }));
+    toast(`${initialTeachersData.length} ta xodim bazaga yuklandi.`, 'ok');
+  } catch (err) { showDbError(err); }
 }
-
-populateTeacherSelectOptions();
-renderStats();
-renderHomeTopTeachers();
-renderHomeWishesFeed();
-renderTeachersGrid(teachers);
-renderTopRanking();
-}
-
-function saveTeachersToStorage() {
-
-localStorage.setItem('au_teachers_data', JSON.stringify(teachers));
-localStorage.setItem('au_teachers_version', '2026-09-24-v6');
-
-}
-
-
-
-function saveWishesToStorage() {
-
-localStorage.setItem('au_wishes_data', JSON.stringify(wishes));
-
-}
-
-
 
 // Navigation Controller
-
 function navigateTo(viewName, teacherId = null) {
-
 const views = ['home', 'teachers', 'top', 'profile', 'admin'];
-
 views.forEach(v => {
-
 const el = document.getElementById(`view-${v}`);
-
 if (el) el.classList.add('hidden');
-
 });
-
-
-
 const targetView = document.getElementById(`view-${viewName}`);
-
 if (targetView) targetView.classList.remove('hidden');
-
-
-
 window.scrollTo({ top: 0, behavior: 'smooth' });
-
-
-
 if (viewName === 'profile' && teacherId) {
-
+currentProfileId = teacherId;
 renderTeacherProfile(teacherId);
-
 } else if (viewName === 'top') {
-
 renderTopRanking();
-
 } else if (viewName === 'admin') {
-
 checkAdminState();
-
 } else if (viewName === 'home') {
-
 renderStats();
-
 renderHomeTopTeachers();
-
 renderHomeWishesFeed();
-
 }
-
 }
-
-
-
 function toggleMobileMenu() {
-
 const menu = document.getElementById('mobileMenu');
-
 menu.classList.toggle('hidden');
-
 }
-
-
-
 function toggleTheme() {
-
 const html = document.documentElement;
-
 const themeIcon = document.getElementById('themeIcon');
-
 if (html.classList.contains('dark')) {
-
 html.classList.remove('dark');
-
 themeIcon.className = 'fa-solid fa-moon';
-
-localStorage.setItem('au_theme', 'light');
-
+try { localStorage.setItem('au_theme', 'light'); } catch {}
 } else {
-
 html.classList.add('dark');
-
 themeIcon.className = 'fa-solid fa-sun';
-
-localStorage.setItem('au_theme', 'dark');
-
+try { localStorage.setItem('au_theme', 'dark'); } catch {}
 }
-
 }
-
-
-
 function renderStats() {
-
 document.getElementById('stat-teachers-count').innerText = teachers.length;
-
-
 const totalLikes = teachers.reduce((acc, curr) => acc + (curr.likes || 0), 0);
-
 document.getElementById('stat-likes-count').innerText = totalLikes;
-
-
-
-const approvedWishes = wishes.filter(w => w.status === 'approved').length;
-
-document.getElementById('stat-wishes-count').innerText = approvedWishes;
-
+document.getElementById('stat-wishes-count').innerText = wishes.length;
 }
-
-
-
-
-
 function populateTeacherSelectOptions() {
-
 const select = document.getElementById('wish-teacher-id');
-
+const prev = select.value;
 select.innerHTML = '<option value="">-- O\'qituvchini tanlang --</option>';
-
 teachers.forEach(t => {
-
 const opt = document.createElement('option');
-
 opt.value = t.id;
-
 opt.innerText = t.fullName;
-
 select.appendChild(opt);
-
 });
-
+select.value = prev;
 }
-
-
-
 // Home View Top Teachers
-
 function renderHomeTopTeachers() {
-
 const container = document.getElementById('home-top-teachers');
-
 const sorted = [...teachers].sort((a, b) => b.likes - a.likes).slice(0, 3);
-
-
-
 container.innerHTML = sorted.map(t => `
-
 <div class="glass-card rounded-2xl p-5 border shadow-sm hover:shadow-md transition flex flex-col justify-between">
-
 <div class="flex items-start space-x-4">
-
-<img src="${t.avatar}" alt="${t.fullName}" class="w-16 h-16 rounded-xl object-cover border border-blue-500/30">
-
+<img src="${esc(t.avatar)}" alt="${esc(t.fullName)}" class="w-16 h-16 rounded-xl object-cover border border-blue-500/30">
 <div class="flex-1 min-w-0">
-
-<h4 class="font-bold text-base truncate hover:text-blue-600 cursor-pointer" onclick="navigateTo('profile', '${t.id}')">${t.fullName}</h4>
-
-
+<h4 class="font-bold text-base truncate hover:text-blue-600 cursor-pointer" onclick="navigateTo('profile', '${t.id}')">${esc(t.fullName)}</h4>
 <span class="inline-block mt-2 px-2 py-0.5 bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-[10px] font-semibold rounded">
-
-${t.degree}
-
+${esc(t.degree)}
 </span>
-
 </div>
-
 </div>
-
 <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
-
 <button onclick="toggleLike('${t.id}')" class="flex items-center space-x-1.5 text-xs text-rose-500 font-semibold bg-rose-50 dark:bg-rose-950/50 px-3 py-1.5 rounded-lg hover:bg-rose-100 transition">
-
 <i class="fa-solid fa-heart"></i>
-
 <span>${t.likes} Liked</span>
-
 </button>
-
 <button onclick="navigateTo('profile', '${t.id}')" class="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline">
-
 Profil <i class="fa-solid fa-arrow-right ml-0.5"></i>
-
 </button>
-
 </div>
-
 </div>
-
 `).join('');
-
 }
-
-
-
 // Home View Recent Wishes Feed
-
 function renderHomeWishesFeed() {
-
 const container = document.getElementById('home-wishes-feed');
-
-const approved = wishes.filter(w => w.status === 'approved').slice(-4).reverse();
-
-
-
+const approved = wishes.slice(-4).reverse();
 if (approved.length === 0) {
-
 container.innerHTML = `<p class="text-xs text-slate-500 italic">Hozircha tasdiqlangan tilaklar yo'q.</p>`;
-
 return;
-
 }
-
-
-
 container.innerHTML = approved.map(w => {
-
 const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Ustoz" };
-
 return `
-
 <div class="glass-card p-4 rounded-2xl border space-y-2">
-
 <div class="flex justify-between items-center text-xs">
-
 <span class="font-bold text-slate-700 dark:text-slate-300">
-
 <i class="fa-solid fa-user-circle text-blue-500 mr-1"></i>
-
-${w.isAnonymous ? "Anonim Talaba" : w.senderName} (${w.senderGroup || 'Talaba'})
-
+${w.isAnonymous ? "Anonim Talaba" : esc(w.senderName)} (${esc(w.senderGroup || 'Talaba')})
 </span>
-
-<span class="text-slate-400 text-[10px]">${w.date}</span>
-
+<span class="text-slate-400 text-[10px]">${esc(w.date)}</span>
 </div>
-
-<p class="text-xs text-slate-600 dark:text-slate-300 italic">"${w.text}"</p>
-
+${w.text ? `<p class="text-xs text-slate-600 dark:text-slate-300 italic">"${esc(w.text)}"</p>` : ''}
 <div class="text-[11px] font-semibold text-blue-600 dark:text-blue-400 pt-1 border-t border-slate-100 dark:border-slate-800">
-
-Kimga: ${teacher.fullName}
-
+Kimga: ${esc(teacher.fullName)}
 </div>
-
 </div>
-
 `;
-
 }).join('');
-
 }
-
-
-
 // Filtering teachers logic
-
 function applyFilters() {
 const search = (document.getElementById('search-input')?.value || '').toLowerCase();
 const degree = document.getElementById('filter-degree')?.value || '';
@@ -1602,7 +1071,6 @@ if (sort === 'likes-desc') filtered.sort((a,b)=>b.likes-a.likes);
 else if (sort === 'name-asc') filtered.sort((a,b)=>a.fullName.localeCompare(b.fullName));
 renderTeachersGrid(filtered);
 }
-
 function renderTeachersGrid(list = teachers) {
   const container = document.getElementById('teachers-grid');
   if (!container) return;
@@ -1613,10 +1081,10 @@ function renderTeachersGrid(list = teachers) {
   container.innerHTML = list.map(t => `
     <div class="glass-card rounded-2xl p-5 border shadow-sm hover:shadow-lg transition">
       <div class="flex items-start gap-4">
-        <img src="${t.avatar}" alt="${t.fullName}" class="w-20 h-20 rounded-2xl object-cover border border-blue-500/20 flex-shrink-0">
+        <img src="${esc(t.avatar)}" alt="${esc(t.fullName)}" loading="lazy" class="w-20 h-20 rounded-2xl object-cover border border-blue-500/20 flex-shrink-0">
         <div class="min-w-0 flex-1">
-          <button onclick="navigateTo('profile','${t.id}')" class="text-left font-bold text-base leading-snug hover:text-blue-600 transition">${t.fullName}</button>
-          <div class="mt-2 text-xs font-semibold text-blue-600 dark:text-blue-400">${t.degree || ''}</div>
+          <button onclick="navigateTo('profile','${t.id}')" class="text-left font-bold text-base leading-snug hover:text-blue-600 transition">${esc(t.fullName)}</button>
+          <div class="mt-2 text-xs font-semibold text-blue-600 dark:text-blue-400">${esc(t.degree)}</div>
         </div>
       </div>
       <div class="mt-5 pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
@@ -1627,7 +1095,6 @@ function renderTeachersGrid(list = teachers) {
       </div>
     </div>`).join('');
 }
-
 function renderTopRanking() {
   const container = document.getElementById('top-teachers-list');
   if (!container) return;
@@ -1635,36 +1102,34 @@ function renderTopRanking() {
   container.innerHTML = sorted.map((t, i) => `
     <button onclick="navigateTo('profile','${t.id}')" class="w-full text-left flex items-center gap-4 p-4 hover:bg-blue-50 dark:hover:bg-slate-800 transition">
       <div class="w-8 text-center font-black ${i < 3 ? 'text-amber-500' : 'text-slate-400'}">${i + 1}</div>
-      <img src="${t.avatar}" alt="${t.fullName}" class="w-12 h-12 rounded-full object-cover border border-blue-500/20">
-      <div class="min-w-0 flex-1"><div class="font-bold text-sm truncate">${t.fullName}</div><div class="text-xs text-slate-500 truncate">${t.degree || ''}</div></div>
+      <img src="${esc(t.avatar)}" alt="${esc(t.fullName)}" loading="lazy" class="w-12 h-12 rounded-full object-cover border border-blue-500/20">
+      <div class="min-w-0 flex-1"><div class="font-bold text-sm truncate">${esc(t.fullName)}</div><div class="text-xs text-slate-500 truncate">${esc(t.degree)}</div></div>
       <div class="text-rose-500 font-bold text-sm"><i class="fa-solid fa-heart mr-1"></i>${t.likes || 0}</div>
     </button>`).join('');
 }
-
-function toggleLike(teacherId) {
-  const t = teachers.find(item => item.id === teacherId);
-  if (!t) return;
-  t.likes = Number(t.likes || 0) + 1;
-  saveTeachersToStorage();
-  renderStats();
-  renderHomeTopTeachers();
-  renderTeachersGrid(teachers);
-  renderTopRanking();
-  const profileVisible = !document.getElementById('view-profile')?.classList.contains('hidden');
-  if (profileVisible) renderTeacherProfile(teacherId);
+// E'tirof (like) — bazada atomar +1, bir brauzerdan har bir xodimga bir marta
+async function toggleLike(teacherId) {
+  if (!requireDb()) return;
+  if (!teachersSeeded) { toast("Xodimlar hali bazaga yuklanmagan. Admin panelga bir marta kiring.", 'error'); return; }
+  const liked = getLikedIds();
+  if (liked.includes(teacherId)) { toast("Siz bu xodimga allaqachon e'tirof bildirgansiz."); return; }
+  try {
+    await db.collection('teachers').doc(teacherId).update({ likes: FV.increment(1) });
+    liked.push(teacherId);
+    saveLikedIds(liked);
+  } catch (err) { showDbError(err); }
 }
-
 function renderTeacherProfile(teacherId) {
 const t = teachers.find(item => item.id === teacherId);
 const container = document.getElementById('teacher-profile-container');
 if (!t) { container.innerHTML = `<p class="text-center text-slate-400 py-10">Xodim topilmadi.</p>`; return; }
-const teacherWishes = wishes.filter(w => w.teacherId === t.id && w.status === 'approved');
+const teacherWishes = wishes.filter(w => w.teacherId === t.id);
 container.innerHTML = `
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
   <div class="space-y-6">
     <div class="glass-card rounded-3xl p-6 border shadow-lg text-center space-y-4">
-      <img src="${t.avatar}" alt="${t.fullName}" class="w-36 h-36 rounded-3xl object-cover mx-auto border-4 border-blue-500/30 shadow-xl">
-      <div><span class="px-3 py-1 bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-xs font-bold rounded-full">${t.degree}</span><h2 class="text-2xl font-bold mt-2">${t.fullName}</h2></div>
+      <img src="${esc(t.avatar)}" alt="${esc(t.fullName)}" class="w-36 h-36 rounded-3xl object-cover mx-auto border-4 border-blue-500/30 shadow-xl">
+      <div><span class="px-3 py-1 bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-xs font-bold rounded-full">${esc(t.degree)}</span><h2 class="text-2xl font-bold mt-2">${esc(t.fullName)}</h2></div>
       <div class="flex justify-center space-x-3 pt-2">
         <button onclick="toggleLike('${t.id}')" class="flex items-center space-x-2 px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-bold shadow-md transition"><i class="fa-solid fa-heart"></i><span>${t.likes} E'tirof</span></button>
         <button onclick="openWishModalForTeacher('${t.id}')" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-md transition"><i class="fa-solid fa-paper-plane mr-1"></i> Tilak Yuborish</button>
@@ -1681,57 +1146,41 @@ container.innerHTML = `
       <h3 class="text-xl font-bold">Xodim haqida</h3>
       <div class="p-4 rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50">
         <div class="text-xs text-slate-500 dark:text-slate-400 mb-1">F.I.SH</div>
-        <div class="text-lg font-bold">${t.fullName}</div>
+        <div class="text-lg font-bold">${esc(t.fullName)}</div>
       </div>
       <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
         <div class="text-xs text-slate-500 dark:text-slate-400 mb-1">Lavozimi</div>
-        <div class="text-base font-semibold">${t.degree}</div>
+        <div class="text-base font-semibold">${esc(t.degree)}</div>
       </div>
     </div>
     <div class="glass-card rounded-3xl p-6 sm:p-8 border shadow-sm space-y-4">
       <h3 class="text-xl font-bold">Talabalarning Tilaklari (${teacherWishes.length})</h3>
-      ${teacherWishes.length === 0 ? `<div class="text-center py-8 text-slate-400 text-sm">Hali ushbu xodim uchun tilaklar bildirilmagan. Birinchi bo'lib siz tilak yo'llang!</div>` : `<div class="space-y-4">${teacherWishes.map(w => `
+      ${teacherWishes.length === 0 ? `<div class="text-center py-8 text-slate-400 text-sm">Hali ushbu xodim uchun tilaklar bildirilmagan. Birinchi bo'lib siz tilak yo'llang!</div>` : `<div class="space-y-4">${teacherWishes.slice().reverse().map(w => `
         <div class="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border space-y-3">
-          <div class="flex justify-between items-center text-xs"><span class="font-bold text-blue-600 dark:text-blue-400"><i class="fa-solid fa-user-graduate mr-1"></i>${w.isAnonymous ? "Anonim Talaba" : w.senderName} (${w.senderGroup || 'Talaba'})</span><span class="text-slate-400 text-[10px]">${w.date}</span></div>
-          <p class="text-xs text-slate-700 dark:text-slate-200">${w.text}</p>
-          ${w.photoUrl ? `<img src="${w.photoUrl}" class="w-full max-h-48 object-cover rounded-xl border">` : ''}
-          ${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="w-full h-8"></audio>` : ''}
+          <div class="flex justify-between items-center text-xs"><span class="font-bold text-blue-600 dark:text-blue-400"><i class="fa-solid fa-user-graduate mr-1"></i>${w.isAnonymous ? "Anonim Talaba" : esc(w.senderName)} (${esc(w.senderGroup || 'Talaba')})</span><span class="text-slate-400 text-[10px]">${esc(w.date)}</span></div>
+          ${w.text ? `<p class="text-xs text-slate-700 dark:text-slate-200">${esc(w.text)}</p>` : ''}
+          ${mediaSlots(w, 'w-full max-h-48 object-cover rounded-xl border', 'w-full h-8')}
         </div>`).join('')}</div>`}
     </div>
   </div>
 </div>`;
+hydrateMedia(container);
 setTimeout(() => {
   const qrContainer = document.getElementById('qrcode');
   if (qrContainer) { qrContainer.innerHTML=''; new QRCode(qrContainer,{text:window.location.href.split('#')[0] + '#teacher-' + t.id,width:120,height:120,colorDark:'#1d4ed8',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H}); }
 },100);
 }
-
 function openWishModal() {
-
 document.getElementById('wishModal').classList.remove('hidden');
-
 }
-
-
-
 function openWishModalForTeacher(teacherId) {
-
 openWishModal();
-
 const select = document.getElementById('wish-teacher-id');
-
 select.value = teacherId;
-
 }
-
-
-
 function closeWishModal() {
-
 document.getElementById('wishModal').classList.add('hidden');
-
 uploadedPhotoBase64 = null;
-
 currentAudioBlob = null;
 currentAudioDataUrl = null;
 if (mediaRecorder && mediaRecorder.state === 'recording') {
@@ -1742,71 +1191,40 @@ audioChunks = [];
 document.getElementById('audio-preview').removeAttribute('src');
 document.getElementById('photo-preview').removeAttribute('src');
 document.getElementById('photo-preview-container').classList.add('hidden');
-
 document.getElementById('audio-preview').classList.add('hidden');
-
 document.getElementById('recording-status').innerText = "Ovozli xabar yo'q";
-
 }
-
-
-
-// Photo Upload Handler
-
-function handlePhotoUpload(event) {
-
+// Photo Upload Handler (kichraytirib saqlanadi)
+async function handlePhotoUpload(event) {
 const file = event.target.files[0];
-
-if (file) {
-
-const reader = new FileReader();
-
-reader.onload = function (e) {
-
-uploadedPhotoBase64 = e.target.result;
-
-const preview = document.getElementById('photo-preview');
-
-preview.src = uploadedPhotoBase64;
-
-document.getElementById('photo-preview-container').classList.remove('hidden');
-
-};
-
-reader.readAsDataURL(file);
-
+if (!file) return;
+try {
+  uploadedPhotoBase64 = await compressImage(file, 1000, 0.75);
+  const preview = document.getElementById('photo-preview');
+  preview.src = uploadedPhotoBase64;
+  document.getElementById('photo-preview-container').classList.remove('hidden');
+} catch (err) {
+  console.error(err);
+  toast("Rasmni o'qib bo'lmadi.", 'error');
 }
-
 }
-
-
-
 function removeUploadedPhoto() {
-
 uploadedPhotoBase64 = null;
-
 document.getElementById('wish-photo-input').value = "";
-
 document.getElementById('photo-preview-container').classList.add('hidden');
-
 }
-
-
-
-// Audio Recording Logic
-
+// Audio Recording Logic (maksimal 60 soniya)
 async function toggleAudioRecording() {
   const recordBtn = document.getElementById('record-btn');
   const recordText = document.getElementById('record-text');
   const recordingStatus = document.getElementById('recording-status');
   const audioPreview = document.getElementById('audio-preview');
-
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    alert("Mikrofon brauzer tomonidan bloklangan. Saytni VS Code Live Server orqali http://localhost manzilida oching va mikrofon uchun Allow bosing.");
+    alert("Mikrofon brauzer tomonidan bloklangan. Saytni https:// yoki http://localhost orqali oching va mikrofon uchun Allow bosing.");
     return;
   }
-
   if (mediaRecorder && mediaRecorder.state === 'recording') {
+    clearTimeout(recordTimer);
     mediaRecorder.stop();
     recordText.innerText = "Yozishni Boshlash";
     recordBtn.classList.remove('bg-amber-600');
@@ -1814,23 +1232,28 @@ async function toggleAudioRecording() {
     recordingStatus.innerText = "Ovoz qayta ishlanmoqda...";
     return;
   }
-
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const mimeCandidates = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus'];
+    const mimeCandidates = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4'];
     const mimeType = mimeCandidates.find(type => window.MediaRecorder && MediaRecorder.isTypeSupported(type)) || '';
-    mediaRecorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+    const opts = { audioBitsPerSecond: 32000 };
+    if (mimeType) opts.mimeType = mimeType;
+    mediaRecorder = new MediaRecorder(stream, opts);
     audioChunks = [];
     currentAudioBlob = null;
     currentAudioDataUrl = null;
-
     mediaRecorder.ondataavailable = event => {
       if (event.data && event.data.size > 0) audioChunks.push(event.data);
     };
-
     mediaRecorder.onstop = () => {
-      const finalType = mediaRecorder.mimeType || mimeType || 'audio/webm';
+      const finalType = (mediaRecorder && mediaRecorder.mimeType) || mimeType || 'audio/webm';
       currentAudioBlob = new Blob(audioChunks, { type: finalType });
+      stream.getTracks().forEach(track => track.stop());
+      if (currentAudioBlob.size > 550 * 1024) {
+        currentAudioBlob = null;
+        recordingStatus.innerText = "Ovoz juda katta, qisqaroq yozing.";
+        return;
+      }
       const reader = new FileReader();
       reader.onloadend = () => {
         currentAudioDataUrl = reader.result;
@@ -1839,168 +1262,120 @@ async function toggleAudioRecording() {
         recordingStatus.innerText = "Ovozli xabar tayyor!";
       };
       reader.readAsDataURL(currentAudioBlob);
-      stream.getTracks().forEach(track => track.stop());
     };
-
     mediaRecorder.start();
+    recordTimer = setTimeout(() => {
+      if (mediaRecorder && mediaRecorder.state === 'recording') toggleAudioRecording();
+    }, MAX_AUDIO_SECONDS * 1000);
     recordText.innerText = "To'xtatish";
     recordBtn.classList.remove('bg-rose-600');
     recordBtn.classList.add('bg-amber-600');
-    recordingStatus.innerText = "Ovoz yozilmoqda...";
+    recordingStatus.innerText = `Ovoz yozilmoqda... (maks. ${MAX_AUDIO_SECONDS} soniya)`;
   } catch (err) {
     console.error(err);
-    alert("Mikrofonga ruxsat berilmadi. Brauzerda mikrofon uchun Allow bosing va saytni localhost orqali oching.");
+    alert("Mikrofonga ruxsat berilmadi. Brauzerda mikrofon uchun Allow bosing.");
   }
 }
-
-
-// Submit Wish Form
-
+// Submit Wish Form — bazaga "pending" holatida yoziladi
 async function submitWishForm(event) {
   event.preventDefault();
-
+  if (!requireDb()) return;
+  const form = event.target;
   const teacherId = document.getElementById('wish-teacher-id').value;
-  const senderName = document.getElementById('wish-sender-name').value || "Anonim Talaba";
-  const senderGroup = document.getElementById('wish-sender-group').value || "Angren Univ";
+  const senderName = document.getElementById('wish-sender-name').value.trim() || "Anonim Talaba";
+  const senderGroup = document.getElementById('wish-sender-group').value.trim() || "Angren Univ";
   const isAnonymous = document.getElementById('wish-is-anonymous').checked;
   const text = document.getElementById('wish-text').value.trim();
-
-  if (!teacherId) {
-    alert("Avval xodimni tanlang.");
-    return;
-  }
+  if (!teacherId) { alert("Avval xodimni tanlang."); return; }
+  if (!teachersSeeded) { toast("Xodimlar hali bazaga yuklanmagan. Admin panelga bir marta kiring.", 'error'); return; }
   if (!text && !uploadedPhotoBase64 && !currentAudioDataUrl) {
     alert("Iltimos, matn, rasm yoki ovozli xabardan kamida bittasini yuboring.");
     return;
   }
-
-  const newWish = {
-    id: "wish-" + Date.now(),
-    teacherId,
-    senderName: isAnonymous ? "Anonim" : senderName,
-    senderGroup,
-    isAnonymous,
-    text,
-    photoUrl: uploadedPhotoBase64 || null,
-    audioUrl: currentAudioDataUrl || null,
-    status: "pending",
-    date: new Date().toISOString().replace('T', ' ').substring(0, 16)
-  };
-
-  wishes.push(newWish);
-  saveWishesToStorage();
-  renderHomeWishesFeed();
-
-  alert("Ehtirom tilagingiz muvaffaqiyatli yuborildi! Admin moderatsiyasidan so'ng e'lon qilinadi.");
-  event.target.reset();
-  closeWishModal();
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  const oldHtml = btn.innerHTML;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Yuborilmoqda...';
+  try {
+    const ref = db.collection('wishes').doc();
+    const batch = db.batch();
+    batch.set(ref, {
+      teacherId,
+      senderName: isAnonymous ? "Anonim" : senderName.slice(0, 100),
+      senderGroup: senderGroup.slice(0, 60),
+      isAnonymous,
+      text: text.slice(0, 3000),
+      hasPhoto: !!uploadedPhotoBase64,
+      hasAudio: !!currentAudioDataUrl,
+      status: "pending",
+      date: new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Tashkent' }).slice(0, 16),
+      createdAtMs: Date.now(),
+      createdAt: FV.serverTimestamp()
+    });
+    if (uploadedPhotoBase64 || currentAudioDataUrl) {
+      batch.set(db.collection('media').doc(ref.id), {
+        photo: uploadedPhotoBase64 || null,
+        audio: currentAudioDataUrl || null
+      });
+    }
+    await batch.commit();
+    alert("Ehtirom tilagingiz muvaffaqiyatli yuborildi! Admin moderatsiyasidan so'ng e'lon qilinadi.");
+    form.reset();
+    closeWishModal();
+  } catch (err) {
+    showDbError(err);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = oldHtml;
+  }
 }
-
-
-// Admin Login Controller
-
+// Admin Login Controller (Firebase Authentication)
 function checkAdminState() {
-
 const loginBox = document.getElementById('admin-login-box');
-
 const dashboard = document.getElementById('admin-dashboard');
-
-
-
 if (isAdminLoggedIn) {
-
 loginBox.classList.add('hidden');
-
 dashboard.classList.remove('hidden');
-
 renderAdminDashboard();
-
 } else {
-
 loginBox.classList.remove('hidden');
-
 dashboard.classList.add('hidden');
-
 }
-
 }
-
-
-
-function handleAdminLogin(event) {
-
+async function handleAdminLogin(event) {
 event.preventDefault();
-
-const pass = document.getElementById('admin-password').value;
-
-if (pass === 'Madina200@') {
-
-isAdminLoggedIn = true;
-
-checkAdminState();
-
-} else {
-
-alert("Parol noto'g'ri! Qayta urinib ko'ring.");
-
+if (!requireDb()) return;
+const input = document.getElementById('admin-password');
+try {
+  await auth.signInWithEmailAndPassword(ADMIN_EMAIL, input.value);
+  input.value = '';
+} catch (err) {
+  console.error(err);
+  alert("Parol noto'g'ri! Qayta urinib ko'ring.");
 }
-
 }
-
-
-
 function adminLogout() {
-
-isAdminLoggedIn = false;
-
-checkAdminState();
-
+if (auth) auth.signOut();
 }
-
-
-
 function switchAdminTab(tab) {
-
 activeAdminTab = tab;
-
 const pendingBtn = document.getElementById('tab-pending-btn');
-
 const approvedBtn = document.getElementById('tab-approved-btn');
-
 const pendingList = document.getElementById('admin-pending-list');
-
 const approvedList = document.getElementById('admin-approved-list');
-
-
-
 if (tab === 'pending') {
-
 pendingBtn.className = "pb-3 border-b-2 border-blue-600 font-bold text-blue-600 text-sm";
-
 approvedBtn.className = "pb-3 border-b-2 border-transparent font-medium text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 text-sm";
-
 pendingList.classList.remove('hidden');
-
 approvedList.classList.add('hidden');
-
 } else {
-
 approvedBtn.className = "pb-3 border-b-2 border-blue-600 font-bold text-blue-600 text-sm";
-
 pendingBtn.className = "pb-3 border-b-2 border-transparent font-medium text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 text-sm";
-
 approvedList.classList.remove('hidden');
-
 pendingList.classList.add('hidden');
-
 }
-
 renderAdminDashboard();
-
 }
-
-
-
 function renderAdminTeachers() {
   const box = document.getElementById('admin-teachers-list');
   if (!box) return;
@@ -2008,217 +1383,134 @@ function renderAdminTeachers() {
   const list = teachers.filter(t => t.fullName.toLowerCase().includes(q));
   box.innerHTML = list.map(t => `
     <div class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-800/50">
-      <img src="${t.avatar}" class="w-11 h-11 rounded-full object-cover border border-blue-500/20">
-      <div class="min-w-0 flex-1"><div class="font-semibold text-sm truncate">${t.fullName}</div><div class="text-[11px] text-slate-500 truncate">${t.degree || t.academicTitle || ''}</div></div>
+      <img src="${esc(t.avatar)}" loading="lazy" class="w-11 h-11 rounded-full object-cover border border-blue-500/20">
+      <div class="min-w-0 flex-1"><div class="font-semibold text-sm truncate">${esc(t.fullName)}</div><div class="text-[11px] text-slate-500 truncate">${esc(t.degree)}</div></div>
       <button onclick="openTeacherEditor('${t.id}')" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"><i class="fa-solid fa-pen"></i></button>
       <button onclick="deleteTeacherFromAdmin('${t.id}')" class="p-2 text-rose-600 hover:bg-rose-50 rounded-lg"><i class="fa-solid fa-trash"></i></button>
     </div>`).join('') || '<div class="text-center py-6 text-slate-400">Xodim topilmadi.</div>';
 }
-
 let adminAvatarBase64 = null;
 function openTeacherEditor(id='') {
   const modal=document.getElementById('teacherEditorModal'); modal.classList.remove('hidden'); modal.classList.add('flex');
   adminAvatarBase64=null; document.getElementById('edit-teacher-id').value=id;
   if(id){ const t=teachers.find(x=>x.id===id); if(!t)return; document.getElementById('teacher-editor-title').innerText='Xodimni tahrirlash'; document.getElementById('edit-teacher-name').value=t.fullName; document.getElementById('edit-teacher-role').value=t.degree||t.academicTitle||''; document.getElementById('edit-teacher-avatar-preview').src=t.avatar; document.getElementById('edit-teacher-avatar-preview').classList.remove('hidden'); }
-  else { document.getElementById('teacher-editor-title').innerText="Xodim qo'shish"; document.querySelector('#teacherEditorModal form').reset(); document.getElementById('edit-teacher-avatar-preview').classList.add('hidden'); }
+  else { document.getElementById('teacher-editor-title').innerText="Xodim qo'shish"; document.querySelector('#teacherEditorModal form').reset(); document.getElementById('edit-teacher-id').value=''; document.getElementById('edit-teacher-avatar-preview').classList.add('hidden'); }
 }
 function closeTeacherEditor(){const m=document.getElementById('teacherEditorModal');m.classList.add('hidden');m.classList.remove('flex');}
-function previewAdminAvatar(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=x=>{adminAvatarBase64=x.target.result;const p=document.getElementById('edit-teacher-avatar-preview');p.src=adminAvatarBase64;p.classList.remove('hidden')};r.readAsDataURL(f);}
-function saveTeacherFromAdmin(e){e.preventDefault();const id=document.getElementById('edit-teacher-id').value;const name=document.getElementById('edit-teacher-name').value.trim();const role=document.getElementById('edit-teacher-role').value.trim();if(id){const t=teachers.find(x=>x.id===id);if(t){t.fullName=name;t.degree=role;t.academicTitle=role;if(adminAvatarBase64)t.avatar=adminAvatarBase64;}}else{teachers.push({id:'au-'+Date.now(),fullName:name,degree:role,academicTitle:role,avatar:adminAvatarBase64||`https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=2563eb&color=fff&size=400`,likes:0});}saveTeachersToStorage();populateTeacherSelectOptions();renderTeachersGrid(teachers);renderStats();renderHomeTopTeachers();renderTopRanking();renderAdminTeachers();closeTeacherEditor();}
-function deleteTeacherFromAdmin(id){const t=teachers.find(x=>x.id===id);if(!t)return;if(!confirm(`“${t.fullName}”ni o'chirishni tasdiqlaysizmi?`))return;teachers=teachers.filter(x=>x.id!==id);wishes=wishes.filter(w=>w.teacherId!==id);saveTeachersToStorage();saveWishesToStorage();populateTeacherSelectOptions();renderTeachersGrid(teachers);renderStats();renderHomeTopTeachers();renderTopRanking();renderAdminTeachers();}
-
+async function previewAdminAvatar(e){
+  const f=e.target.files[0]; if(!f) return;
+  try {
+    adminAvatarBase64 = await compressImage(f, 320, 0.8);
+    const p=document.getElementById('edit-teacher-avatar-preview'); p.src=adminAvatarBase64; p.classList.remove('hidden');
+  } catch (err) { console.error(err); toast("Rasmni o'qib bo'lmadi.", 'error'); }
+}
+async function saveTeacherFromAdmin(e){
+  e.preventDefault();
+  if (!requireDb()) return;
+  const id=document.getElementById('edit-teacher-id').value;
+  const name=document.getElementById('edit-teacher-name').value.trim();
+  const role=document.getElementById('edit-teacher-role').value.trim();
+  try {
+    if (id) {
+      const data = { fullName: name, degree: role, academicTitle: role };
+      if (adminAvatarBase64) data.avatar = adminAvatarBase64;
+      await db.collection('teachers').doc(id).update(data);
+    } else {
+      const newId = 'au-' + Date.now();
+      await db.collection('teachers').doc(newId).set({
+        fullName: name, degree: role, academicTitle: role,
+        avatar: adminAvatarBase64 || defaultAvatar(name), likes: 0, order: Date.now()
+      });
+    }
+    closeTeacherEditor();
+    toast("Saqlandi.", 'ok');
+  } catch (err) { showDbError(err); }
+}
+async function deleteTeacherFromAdmin(id){
+  if (!requireDb()) return;
+  const t=teachers.find(x=>x.id===id); if(!t) return;
+  if(!confirm(`“${t.fullName}”ni o'chirishni tasdiqlaysizmi?`)) return;
+  try {
+    const related = adminWishes.filter(w => w.teacherId === id);
+    const ops = [b => b.delete(db.collection('teachers').doc(id))];
+    related.forEach(w => {
+      ops.push(b => b.delete(db.collection('wishes').doc(w.id)));
+      if (w.hasPhoto || w.hasAudio) ops.push(b => b.delete(db.collection('media').doc(w.id)));
+    });
+    await commitOps(ops);
+    toast("O'chirildi.", 'ok');
+  } catch (err) { showDbError(err); }
+}
+function adminWishCard(w, actions) {
+const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Noma'lum" };
+return `
+<div class="glass-card p-5 rounded-2xl border flex flex-col md:flex-row justify-between gap-4">
+<div class="space-y-2 flex-1">
+<div class="flex items-center space-x-2 text-xs">
+<span class="font-bold text-blue-600">${esc(w.senderName)} (${esc(w.senderGroup)})</span>
+<span class="text-slate-400">• ${esc(w.date)}</span>
+</div>
+${w.text ? `<p class="text-xs text-slate-700 dark:text-slate-300 font-medium">"${esc(w.text)}"</p>` : ''}
+<div class="text-[11px] text-slate-500">
+Mo'ljallangan ustoz: <strong class="text-slate-800 dark:text-slate-200">${esc(teacher.fullName)}</strong>
+</div>
+${mediaSlots(w, 'mt-3 max-w-xs max-h-56 object-cover rounded-xl border border-slate-200 dark:border-slate-700', 'mt-3 w-full max-w-md h-10')}
+</div>
+<div class="flex items-center space-x-2 flex-shrink-0">${actions}</div>
+</div>`;
+}
 function renderAdminDashboard() {
-
+if (!isAdminLoggedIn) return;
 const pendingList = document.getElementById('admin-pending-list');
-
 const approvedList = document.getElementById('admin-approved-list');
-
-
-
-const pendingWishes = wishes.filter(w => w.status === 'pending');
-
-const approvedWishes = wishes.filter(w => w.status === 'approved');
-
+const pendingWishes = adminWishes.filter(w => w.status === 'pending');
+const approvedWishes = adminWishes.filter(w => w.status === 'approved');
 renderAdminTeachers();
-
-
-
 document.getElementById('count-pending').innerText = pendingWishes.length;
-
 document.getElementById('count-approved').innerText = approvedWishes.length;
-
-
-
-// Render Pending
-
-if (pendingWishes.length === 0) {
-
-pendingList.innerHTML = `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Kutish jarayonida hech qanday murojaat yo'q.</div>`;
-
-} else {
-
-pendingList.innerHTML = pendingWishes.map(w => {
-
-const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Noma'lum" };
-
-return `
-
-<div class="glass-card p-5 rounded-2xl border flex flex-col md:flex-row justify-between gap-4">
-
-<div class="space-y-2 flex-1">
-
-<div class="flex items-center space-x-2 text-xs">
-
-<span class="font-bold text-blue-600">${w.senderName} (${w.senderGroup})</span>
-
-<span class="text-slate-400">• ${w.date}</span>
-
-</div>
-
-<p class="text-xs text-slate-700 dark:text-slate-300 font-medium">"${w.text}"</p>
-
-<div class="text-[11px] text-slate-500">
-
-Mo'ljallangan ustoz: <strong class="text-slate-800 dark:text-slate-200">${teacher.fullName}</strong>
-
-</div>
-${w.photoUrl ? `<img src="${w.photoUrl}" alt="Yuborilgan rasm" class="mt-3 max-w-xs max-h-56 object-cover rounded-xl border border-slate-200 dark:border-slate-700">` : ''}
-${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="mt-3 w-full max-w-md h-10"></audio>` : ''}
-
-</div>
-
-
-
-<div class="flex items-center space-x-2 flex-shrink-0">
-
+pendingList.innerHTML = pendingWishes.length === 0
+  ? `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Kutish jarayonida hech qanday murojaat yo'q.</div>`
+  : pendingWishes.map(w => adminWishCard(w, `
 <button onclick="approveWish('${w.id}')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">
-
 <i class="fa-solid fa-check mr-1"></i> Tasdiqlash
-
 </button>
-
 <button onclick="rejectWish('${w.id}')" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition">
-
 <i class="fa-solid fa-xmark mr-1"></i> Rad etish
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}).join('');
-
-}
-
-
-
-// Render Approved
-
-if (approvedWishes.length === 0) {
-
-approvedList.innerHTML = `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Tasdiqlangan murojaatlar hozircha yo'q.</div>`;
-
-} else {
-
-approvedList.innerHTML = approvedWishes.map(w => {
-
-const teacher = teachers.find(t => t.id === w.teacherId) || { fullName: "Noma'lum" };
-
-return `
-
-<div class="glass-card p-5 rounded-2xl border flex flex-col md:flex-row justify-between gap-4">
-
-<div class="space-y-2 flex-1">
-
-<div class="flex items-center space-x-2 text-xs">
-
-<span class="font-bold text-blue-600">${w.senderName} (${w.senderGroup})</span>
-
-<span class="text-slate-400">• ${w.date}</span>
-
-</div>
-
-<p class="text-xs text-slate-700 dark:text-slate-300">"${w.text}"</p>
-
-<div class="text-[11px] text-slate-500">
-
-Mo'ljallangan ustoz: <strong>${teacher.fullName}</strong>
-
-</div>
-${w.photoUrl ? `<img src="${w.photoUrl}" alt="Yuborilgan rasm" class="mt-3 max-w-xs max-h-56 object-cover rounded-xl border border-slate-200 dark:border-slate-700">` : ''}
-${w.audioUrl ? `<audio controls src="${w.audioUrl}" class="mt-3 w-full max-w-md h-10"></audio>` : ''}
-
-</div>
-
-<div class="flex items-center space-x-2">
-
+</button>`)).join('');
+approvedList.innerHTML = approvedWishes.length === 0
+  ? `<div class="p-8 text-center text-slate-400 glass-card rounded-2xl">Tasdiqlangan murojaatlar hozircha yo'q.</div>`
+  : approvedWishes.map(w => adminWishCard(w, `
 <button onclick="rejectWish('${w.id}')" class="px-3 py-1.5 bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 rounded-xl text-xs font-semibold hover:bg-rose-200 transition">
-
 O'chirish
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}).join('');
-
+</button>`)).join('');
+hydrateMedia(activeAdminTab === 'pending' ? pendingList : approvedList);
 }
-
+async function approveWish(wishId) {
+  try { await db.collection('wishes').doc(wishId).update({ status: 'approved' }); }
+  catch (err) { showDbError(err); }
 }
-
-
-
-function approveWish(wishId) {
-
-const w = wishes.find(item => item.id === wishId);
-
-if (w) {
-
-w.status = 'approved';
-
-saveWishesToStorage();
-
-renderAdminDashboard();
-
-renderStats();
-
+async function rejectWish(wishId) {
+  if (!confirm("Ushbu tilakni o'chirishni tasdiqlaysizmi?")) return;
+  const w = adminWishes.find(x => x.id === wishId);
+  try {
+    const batch = db.batch();
+    batch.delete(db.collection('wishes').doc(wishId));
+    if (!w || w.hasPhoto || w.hasAudio) batch.delete(db.collection('media').doc(wishId));
+    await batch.commit();
+  } catch (err) { showDbError(err); }
 }
-
-}
-
-
-
-function rejectWish(wishId) {
-
-wishes = wishes.filter(item => item.id !== wishId);
-
-saveWishesToStorage();
-
-renderAdminDashboard();
-
-renderStats();
-
-}
-
-
-
 // Initialize App On DOM Load
-
 window.addEventListener('DOMContentLoaded', () => {
+  try {
+    if (localStorage.getItem('au_theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.getElementById('themeIcon').className = 'fa-solid fa-sun';
+    }
+  } catch {}
   initApp();
   const match = window.location.hash.match(/^#teacher-(.+)$/);
-  if (match && teachers.some(t => t.id === match[1])) navigateTo('profile', match[1]);
+  if (match) navigateTo('profile', match[1]);
 });
-
 </script>
-
 </body>
-
 </html>
