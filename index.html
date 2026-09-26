@@ -756,6 +756,7 @@ let isAdminLoggedIn = false;
 let activeAdminTab = 'pending';
 let currentProfileId = null;
 let unsubAdminWishes = null;
+let unsubAdminTeachers = null;
 let mediaRecorder = null;
 let audioChunks = [];
 let currentAudioBlob = null;
@@ -801,6 +802,40 @@ function showDbError(err) {
 function requireDb() {
   if (!DB_ON) { toast("Firebase hali sozlanmagan: firebaseConfig ni to'ldiring.", 'error'); return false; }
   return true;
+}
+
+/* ---------- Xodimlar keshi (Firestore o'qish limitini tejash uchun) ----------
+   Oddiy tashrif buyuruvchilar uchun xodimlar ro'yxati brauzerda (localStorage)
+   bir necha daqiqaga saqlanadi, shunda har bir sahifa ochilishida bazadan
+   qayta-qayta o'qilmaydi. Admin panelda esa ma'lumot doim real vaqtda. */
+const TEACHERS_CACHE_KEY = 'teachersCache_v1';
+const TEACHERS_CACHE_TIME_KEY = 'teachersCacheTime_v1';
+const TEACHERS_CACHE_TTL_MS = 10 * 60 * 1000; // 10 daqiqa
+function loadTeachersFromCache() {
+  try {
+    const raw = localStorage.getItem(TEACHERS_CACHE_KEY);
+    const ts = parseInt(localStorage.getItem(TEACHERS_CACHE_TIME_KEY) || '0', 10);
+    if (raw && (Date.now() - ts) < TEACHERS_CACHE_TTL_MS) {
+      const list = JSON.parse(raw);
+      if (Array.isArray(list) && list.length) return list;
+    }
+  } catch (e) {}
+  return null;
+}
+function saveTeachersToCache(list) {
+  try {
+    localStorage.setItem(TEACHERS_CACHE_KEY, JSON.stringify(list));
+    localStorage.setItem(TEACHERS_CACHE_TIME_KEY, String(Date.now()));
+  } catch (e) {}
+}
+function updateTeacherLikeInCache(teacherId, likes) {
+  try {
+    const raw = localStorage.getItem(TEACHERS_CACHE_KEY);
+    if (!raw) return;
+    const list = JSON.parse(raw);
+    const item = list.find(x => x.id === teacherId);
+    if (item) { item.likes = likes; localStorage.setItem(TEACHERS_CACHE_KEY, JSON.stringify(list)); }
+  } catch (e) {}
 }
 // Rasmni kichraytirib JPEG dataURL qilish (Firestore hujjati 1 MB dan oshmasligi uchun)
 function compressImage(file, maxSize = 1000, quality = 0.75) {
@@ -891,18 +926,27 @@ function initApp() {
     return;
   }
 
-  // Xodimlar — real vaqtda
-  db.collection('teachers').onSnapshot(snap => {
-    if (snap.empty) {
-      teachersSeeded = false;
-      teachers = initialTeachersData.map(normalizeTeacher);
-    } else {
-      teachersSeeded = true;
-      teachers = snap.docs.map((d, i) => normalizeTeacher({ ...d.data(), id: d.id }, i))
-        .sort((a, b) => a.order - b.order);
-    }
+  // Xodimlar — avval brauzer keshidan (Firestore o'qish limitini tejash uchun),
+  // topilmasa bazadan bir martalik o'qish (real-vaqtli tinglovchi emas)
+  const cachedTeachers = loadTeachersFromCache();
+  if (cachedTeachers) {
+    teachersSeeded = true;
+    teachers = cachedTeachers.map((d, i) => normalizeTeacher(d, i)).sort((a, b) => a.order - b.order);
     renderAll();
-  }, showDbError);
+  } else {
+    db.collection('teachers').get().then(snap => {
+      if (snap.empty) {
+        teachersSeeded = false;
+        teachers = initialTeachersData.map(normalizeTeacher);
+      } else {
+        teachersSeeded = true;
+        const raw = snap.docs.map(d => ({ ...d.data(), id: d.id }));
+        saveTeachersToCache(raw);
+        teachers = raw.map((d, i) => normalizeTeacher(d, i)).sort((a, b) => a.order - b.order);
+      }
+      renderAll();
+    }).catch(showDbError);
+  }
 
   // Tasdiqlangan tilaklar — real vaqtda
   db.collection('wishes').where('status', '==', 'approved').onSnapshot(snap => {
@@ -915,12 +959,22 @@ function initApp() {
   auth.onAuthStateChanged(user => {
     isAdminLoggedIn = !!user && (user.email || '').toLowerCase() === ADMIN_EMAIL.toLowerCase();
     if (unsubAdminWishes) { unsubAdminWishes(); unsubAdminWishes = null; }
+    if (unsubAdminTeachers) { unsubAdminTeachers(); unsubAdminTeachers = null; }
     adminWishes = [];
     if (isAdminLoggedIn) {
       unsubAdminWishes = db.collection('wishes').onSnapshot(snap => {
         adminWishes = snap.docs.map(d => ({ ...d.data(), id: d.id }))
           .sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
         renderAdminDashboard();
+      }, showDbError);
+      // Admin panelda xodimlar ro'yxati real vaqtda (tahrirlash/qo'shish darhol ko'rinishi uchun),
+      // shu bilan birga kesh ham yangilanib turadi, shunda keyingi tashrifchilar yangi ma'lumotni oladi
+      unsubAdminTeachers = db.collection('teachers').onSnapshot(snap => {
+        teachersSeeded = !snap.empty;
+        const raw = snap.docs.map(d => ({ ...d.data(), id: d.id }));
+        saveTeachersToCache(raw);
+        teachers = raw.map((d, i) => normalizeTeacher(d, i)).sort((a, b) => a.order - b.order);
+        renderAll();
       }, showDbError);
       seedTeachersIfEmpty();
     }
@@ -1117,6 +1171,13 @@ async function toggleLike(teacherId) {
     await db.collection('teachers').doc(teacherId).update({ likes: FV.increment(1) });
     liked.push(teacherId);
     saveLikedIds(liked);
+    // Real-vaqtli tinglovchi ishlatilmagani uchun, o'zimiz darhol ekranda va keshda yangilaymiz
+    const t = teachers.find(x => x.id === teacherId);
+    if (t) {
+      t.likes = (t.likes || 0) + 1;
+      updateTeacherLikeInCache(teacherId, t.likes);
+      renderAll();
+    }
   } catch (err) { showDbError(err); }
 }
 function renderTeacherProfile(teacherId) {
